@@ -1,24 +1,19 @@
-import logo from './logo.svg';
 import './App.css';
+import useWindowDimensions from './utils/window-resizer';
 
 function App() {
+  const { height, width } = useWindowDimensions();
+  const margin = 10;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div className="App" style={{
+      margin: margin + "px",
+      width: width - 2 * margin,
+      height: height - 2 * margin,
+    }}>
+
+      <h1 style={{ backgroundColor: "lightblue" }}>OuRoom!</h1>
+
+    </div >
   );
 }
 
