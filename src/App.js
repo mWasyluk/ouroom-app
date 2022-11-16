@@ -1,10 +1,11 @@
 import './App.css';
 import useWindowDimensions from './utils/window-resizer';
-import WebSocketService from './components/WebSocketService';
+import Chat from './components/Chat';
 
 function App() {
   const { height, width } = useWindowDimensions();
   const margin = 10;
+
 
   return (
     <div className="App" style={{
@@ -12,10 +13,10 @@ function App() {
       width: width - 2 * margin,
       height: height - 2 * margin,
     }}>
-
-
       <h1 style={{ backgroundColor: "lightblue" }}>OuRoom!</h1>
-      <WebSocketService userId={"randomID"}></WebSocketService>
+
+      <Chat></Chat>
+
     </div >
   );
 }

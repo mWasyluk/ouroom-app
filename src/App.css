@@ -12,3 +12,35 @@ body {
   flex-wrap: wrap;
   flex-flow: column;
 }
+
+.chat {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 10;
+  justify-content: center;
+  align-items: center;
+  margin: auto 20px;
+}
+
+.chat * {
+  margin: 3px;
+}
+
+.input {
+  padding: 3px;
+}
+
+.chat .input-username {
+  width: 25%;
+  max-width: 200px;
+}
+
+.chat .input-message {
+  width: 60%;
+  max-width: 600px;
+}
+
+.chat button {
+  width: 15%;
+  max-width: 100px;
+}
