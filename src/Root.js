@@ -7,13 +7,19 @@ function Root() {
   const { height, width } = useWindowDimensions();
   const margin = 10;
 
+  const user = {
+    id: '6b84e369-28fa-456d-83ff-b19de75ad6bb',
+    name: 'Marek Wasyluk'
+  }
+
   return (
     <div className="root" style={{
       margin: margin + "px",
       width: width - 2 * margin,
       height: height - 2 * margin,
+      minWidth: "500px",
     }}>
-      <Header></Header>
+      <Header user={user}></Header>
       <App></App>
     </div >
   );

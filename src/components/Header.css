@@ -1,0 +1,48 @@
+.Header {
+    display: flex;
+    flex-direction: row;
+    height: 64px;
+    align-items: center;
+    border-radius: 10px 10px 0 0;
+
+    background-color: rgb(61, 190, 147);
+    justify-content: space-between;
+}
+
+.left,
+.right {
+    padding: 10px;
+}
+
+.left {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.user {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.user * {
+    padding: 5px;
+}
+
+.user .avatar {
+    width: 44px;
+    border-radius: 50%;
+}
+
+.user .name {
+    font-size: 1.3em;
+}
+
+.title {
+    font-size: 2em;
+    font-weight: 900;
+}
