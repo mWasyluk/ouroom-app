@@ -10,16 +10,19 @@ const serverUrl = 'http://' + serverHost + ':8080/msender';
 
 export default class Chat extends React.Component {
     stompClient;
-    state = {
-        isConnected: false,
-        channels: null,
-        messages: [],
-    }
 
     constructor(props) {
         super(props)
 
-        // this.connectStomp();
+        this.state = {
+            isConnected: false,
+            channel: null,
+            messages: props.messages
+        }
+    }
+
+    componentWillReceiveProps(props) {
+        this.setState({ messages: props.messages })
     }
 
     connectStomp(channel) {

@@ -8,39 +8,49 @@ export default class FriendsList extends Component {
         friends: [],
     }
 
+    getData = () => {
+        fetch(
+            'friends.json',
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            }
+        ).then((response) => {
+            return response.json();
+        }).then((friends) => {
+            this.setState({ friends: friends.friends })
+        });
+    }
+
     constructor(props) {
         super(props)
 
         this.state = ({
-            friends: [
-                {
-                    id: v4(),
-                    name: "Jan Wonsz",
-                    messages: [{ content: 'co tam' }, { content: 'elo' }]
-                },
-                {
-                    id: v4(),
-                    name: "Karol Boń",
-                    messages: [{ content: 'Może jutro' }]
-                },
-                {
-                    id: v4(),
-                    name: "Aaa aaa",
-                    messages: [{ content: 'Może jutro' }]
-                }
-            ],
-            selectedId: ''
+            friends: [],
+            select: props.select,
+            selectedFriend: null
         })
+
+        this.getData()
     }
+
     handleSelection = (e) => {
-        if (this.state.selectedId) {
-            this.resetColor(this.state.selectedId)
+        if (this.state.selectedFriend) {
+            this.resetColor(this.state.selectedFriend.id)
         }
         this.setState(
-            { selectedId: e.target.id },
-            () => this.setColor(this.state.selectedId, 'yellow')
+            {
+                selectedFriend: this.state.friends.filter(
+                    friend => friend.id == e.target.id
+                )[0]
+            },
+            () => {
+                this.setColor(this.state.selectedFriend.id, 'yellow')
+                this.state.select(this.state.selectedFriend)
+            }
         );
-        console.log(e.target.id)
     }
 
     resetColor = (id) => {
