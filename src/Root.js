@@ -20,7 +20,7 @@ function Root() {
       minWidth: "500px",
     }}>
       <Header user={user}></Header>
-      <App></App>
+      <App user={user}></App>
     </div >
   );
 }

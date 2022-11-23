@@ -6,7 +6,7 @@ import FriendsList from './FriendsList';
 export default class App extends Component {
     constructor(props) {
         super(props)
-        this.state = { conversation: [] }
+        this.state = { conversation: [], user: props.user }
     }
 
     fetchFriendMessages = (friend) => {
@@ -21,8 +21,17 @@ export default class App extends Component {
         ).then((response) => {
             return response.json();
         }).then((messages) => {
-            let messagesFrom = messages.messages.filter(message => message.author === friend.id)
-            messagesFrom.map(message => message.author = friend.name)
+            let messagesFrom = messages.messages.filter(message =>
+                message.author === friend.id || (
+                    message.target === friend.id &&
+                    message.author === this.state.user.id)
+            )
+            messagesFrom.map(message => {
+                if (message.author != this.state.user.id)
+                    message.author = friend.name
+                else
+                    message.author = this.state.user.name
+            })
             this.setState({ conversation: messagesFrom })
         });
     }
