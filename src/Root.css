@@ -4,7 +4,7 @@ body {
   font-size: 1.2em;
 }
 
-.App {
+.root {
   text-align: center;
   background-color: rgb(226, 236, 255);
   border-radius: 10px;

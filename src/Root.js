@@ -1,24 +1,22 @@
-import './App.css';
+import './Root.css';
 import useWindowDimensions from './utils/window-resizer';
-import Chat from './components/Chat';
+import Header from './components/Header';
+import App from './components/App';
 
-function App() {
+function Root() {
   const { height, width } = useWindowDimensions();
   const margin = 10;
 
-
   return (
-    <div className="App" style={{
+    <div className="root" style={{
       margin: margin + "px",
       width: width - 2 * margin,
       height: height - 2 * margin,
     }}>
-      <h1 style={{ backgroundColor: "lightblue" }}>OuRoom!</h1>
-
-      <Chat></Chat>
-
+      <Header></Header>
+      <App></App>
     </div >
   );
 }
 
-export default App;
+export default Root;
