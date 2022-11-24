@@ -3,6 +3,7 @@ import SockJS from 'sockjs-client'
 import { Stomp } from '@stomp/stompjs'
 import React from 'react';
 import { v4 } from 'uuid'
+import getUsernameById from '../utils/fetch';
 
 // const serverHost = 'localhost'
 const serverHost = '192.168.0.24'
@@ -15,33 +16,36 @@ export default class Chat extends React.Component {
         super(props)
 
         this.state = {
+            user: props.user,
+            target: props.target,
             isConnected: false,
-            channel: null,
             messages: props.messages
         }
+
+        this.connectStomp()
     }
 
     componentWillReceiveProps(props) {
-        this.setState({ messages: props.messages })
+        this.setState({ messages: props.messages, target: props.target })
     }
 
-    connectStomp(channel) {
+    connectStomp() {
+
         this.stompClient = Stomp.over(() => new SockJS(serverUrl));
         this.stompClient.connect(
             {},
-            () => this.stompOnConnectCallBack(channel),
+            () => this.stompOnConnectCallBack(),
             (err) => this.stompErrorCallBack(err)
         );
         this.stompClient.onWebSocketClose = this.stompOnCloseCallBack
     }
 
-    stompOnConnectCallBack(channel) {
+    stompOnConnectCallBack() {
         console.log("WebSocket is connected.")
         this.setState({ isConnected: true });
         this.stompClient.subscribe(
-            '/conversations.' + channel,
+            '/conversations.' + this.state.user.id,
             (message) => this.stompSubscriptionCallBack(message));
-        this.setState({ channel: channel })
     }
 
     stompOnCloseCallBack = () => {
@@ -55,7 +59,11 @@ export default class Chat extends React.Component {
     stompSubscriptionCallBack(message) {
         if (message.body) {
             const mess = JSON.parse(message.body);
-            this.setState({ messages: [...this.state.messages, mess] });
+            getUsernameById(mess.author).then((username) => {
+                mess.author = username
+                this.setState({ messages: [...this.state.messages, mess] });
+            })
+
         }
     }
 
@@ -69,18 +77,18 @@ export default class Chat extends React.Component {
     handleConnectToChannel(e) {
         e.preventDefault();
 
-        let channel = e.target[0].value;
+        let target = e.target[0].value;
 
-        this.connectStomp(channel);
+        this.connectStomp(target);
     }
 
     // TODO: Check if stompClient is null
     handleSendMessage(e) {
         e.preventDefault();
 
-        let author = e.target[0].value
-        let target = this.state.channel;
-        let content = e.target[1].value
+        let author = this.state.user.id;
+        let target = this.state.target.id;
+        let content = e.target[0].value
         if (target) {
             let message = {
                 id: v4(),
@@ -89,10 +97,10 @@ export default class Chat extends React.Component {
                 content: content
             }
 
-            e.target[1].value = ''
+            e.target[0].value = ''
             this.stompClient.send("/app/chat/", {}, JSON.stringify(message));
         } else {
-            console.log("Channel is null");
+            console.log("target is null");
         }
     }
 
@@ -108,13 +116,7 @@ export default class Chat extends React.Component {
         return (
             <div >
                 {status}
-                <form className='channel' onSubmit={this.handleConnectToChannel.bind(this)}>
-                    <input className='input input-channel' type='text' placeholder='Nazwa kanału'></input >
-                    <button type="submit">Wyślij</button>
-                </form>
-
                 <form className='chat' onSubmit={this.handleSendMessage.bind(this)}>
-                    <input className='input input-username' type='text' placeholder='Nazwa użytkownika' ></input >
                     <input className='input input-message' type="text" placeholder="Treść wiadomości" />
                     <button type="submit">Wyślij</button>
                 </form>

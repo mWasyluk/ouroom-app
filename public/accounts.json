@@ -1,0 +1,26 @@
+[
+    {
+        "account": {
+            "id": "4b214f91-d2b0-427d-8182-c1a6a27c359c",
+            "name": "Jan Wonsz"
+        }
+    },
+    {
+        "account": {
+            "id": "d53b45c8-2212-4113-9a8d-94424744b3ac",
+            "name": "Karol Boń"
+        }
+    },
+    {
+        "account": {
+            "id": "cab4a63b-0f90-4e7f-ae60-18015063b27c",
+            "name": "Marian Wanian"
+        }
+    },
+    {
+        "account": {
+            "id": "6b84e369-28fa-456d-83ff-b19de75ad6bb",
+            "name": "Marek Wasyluk"
+        }
+    }
+]

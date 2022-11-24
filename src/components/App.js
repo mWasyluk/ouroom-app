@@ -6,10 +6,10 @@ import FriendsList from './FriendsList';
 export default class App extends Component {
     constructor(props) {
         super(props)
-        this.state = { conversation: [], user: props.user }
+        this.state = { conversation: [], user: props.user, targetFriend: null }
     }
 
-    fetchFriendMessages = (friend) => {
+    handleFriendSelection = (friend) => {
         fetch(
             'messages.json',
             {
@@ -32,15 +32,15 @@ export default class App extends Component {
                 else
                     message.author = this.state.user.name
             })
-            this.setState({ conversation: messagesFrom })
+            this.setState({ conversation: messagesFrom, targetFriend: friend })
         });
     }
 
     render() {
         return (
             <div className="App">
-                <FriendsList select={this.fetchFriendMessages.bind(this)}></FriendsList>
-                <Chat messages={this.state.conversation}></Chat>
+                <FriendsList select={this.handleFriendSelection.bind(this)}></FriendsList>
+                <Chat user={this.state.user} target={this.state.targetFriend} messages={this.state.conversation}></Chat>
             </div>
         )
     }
