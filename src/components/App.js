@@ -15,11 +15,43 @@ export default class App extends Component {
         this.setState({ conversation: messagess, targetFriend: friend })
     }
 
+    login = (e) => {
+        e.preventDefault();
+
+        const uuidRegex = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
+        const userId = e.target[0].value
+
+        if (uuidRegex.test(userId)) {
+            let user = {
+                id: userId
+            }
+            this.setState({ user: user })
+        } else {
+            throw new Error("Wprowadzono nieprawidłowy UUID")
+        }
+    }
+
     render() {
-        return (
-            <div className="App">
+        const login = (
+            <div className="login">
+                <form className="popup" onSubmit={this.login.bind(this)}>
+                    <span>Zaloguj się do<strong>OurRoom!</strong></span>
+                    <input type="text" name="user-id" id="user-id" placeholder="ID użytkownika" />
+                    <button type="submit" id="submit">Zaloguj się</button>
+                </form>
+            </div>
+        )
+
+        const logged = (
+            <div className="logged" >
                 <FriendsList select={this.handleFriendSelection.bind(this)}></FriendsList>
                 <Chat user={this.state.user} target={this.state.targetFriend} messages={this.state.conversation}></Chat>
+            </div >
+        )
+
+        return (
+            <div className="App">
+                {this.state.user.id ? logged : login}
             </div>
         )
     }

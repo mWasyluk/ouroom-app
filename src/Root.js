@@ -8,8 +8,8 @@ function Root() {
   const margin = 10;
 
   const user = {
-    id: '6b84e369-28fa-456d-83ff-b19de75ad6bb',
-    name: 'Marek Wasyluk'
+    // id: '6b84e369-28fa-456d-83ff-b19de75ad6bb',
+    // name: 'Marek Wasyluk'
   }
 
   return (
