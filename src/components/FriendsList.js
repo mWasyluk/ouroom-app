@@ -1,27 +1,11 @@
 import { Component } from "react";
 import Friend from "./Friend";
-import { v4 } from 'uuid'
 import './FirendsList.css'
+import { getFriends } from '../utils/fetch'
 
 export default class FriendsList extends Component {
     state = {
         friends: [],
-    }
-
-    getData = () => {
-        fetch(
-            'friends.json',
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            }
-        ).then((response) => {
-            return response.json();
-        }).then((friends) => {
-            this.setState({ friends: friends.friends })
-        });
     }
 
     constructor(props) {
@@ -33,7 +17,13 @@ export default class FriendsList extends Component {
             selectedFriend: null
         })
 
-        this.getData()
+        this.getFriends()
+    }
+
+    getFriends = () => {
+        getFriends().then((friends) => {
+            this.setState({ friends: friends })
+        })
     }
 
     handleSelection = (e) => {
@@ -43,7 +33,7 @@ export default class FriendsList extends Component {
         this.setState(
             {
                 selectedFriend: this.state.friends.filter(
-                    friend => friend.id == e.target.id
+                    friend => friend.id === e.target.id
                 )[0]
             },
             () => {

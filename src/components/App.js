@@ -2,6 +2,7 @@ import './App.css'
 import { Component } from "react";
 import Chat from './Chat';
 import FriendsList from './FriendsList';
+import { getMessagesWith } from '../utils/fetch'
 
 export default class App extends Component {
     constructor(props) {
@@ -9,31 +10,9 @@ export default class App extends Component {
         this.state = { conversation: [], user: props.user, targetFriend: null }
     }
 
-    handleFriendSelection = (friend) => {
-        fetch(
-            'messages.json',
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            }
-        ).then((response) => {
-            return response.json();
-        }).then((messages) => {
-            let messagesFrom = messages.messages.filter(message =>
-                message.author === friend.id || (
-                    message.target === friend.id &&
-                    message.author === this.state.user.id)
-            )
-            messagesFrom.map(message => {
-                if (message.author != this.state.user.id)
-                    message.author = friend.name
-                else
-                    message.author = this.state.user.name
-            })
-            this.setState({ conversation: messagesFrom, targetFriend: friend })
-        });
+    async handleFriendSelection(friend) {
+        let messagess = await getMessagesWith(this.state.user.id, friend.id);
+        this.setState({ conversation: messagess, targetFriend: friend })
     }
 
     render() {

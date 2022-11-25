@@ -3,7 +3,7 @@ import SockJS from 'sockjs-client'
 import { Stomp } from '@stomp/stompjs'
 import React from 'react';
 import { v4 } from 'uuid'
-import getUsernameById from '../utils/fetch';
+import { getUsernameById } from '../utils/fetch';
 
 // const serverHost = 'localhost'
 const serverHost = '192.168.0.24'
@@ -25,8 +25,12 @@ export default class Chat extends React.Component {
         this.connectStomp()
     }
 
-    componentWillReceiveProps(props) {
-        this.setState({ messages: props.messages, target: props.target })
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.messages !== prevState.messages ||
+            nextProps.target !== prevState.target) {
+            return ({ messages: nextProps.messages, target: nextProps.target })
+        }
+        return null
     }
 
     connectStomp() {
