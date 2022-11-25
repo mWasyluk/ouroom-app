@@ -26,7 +26,8 @@ export default class Chat extends React.Component {
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.messages !== prevState.messages ||
+        if ((nextProps.messages !== prevState.messages &&
+            nextProps.messages.length > prevState.messages.length) ||
             nextProps.target !== prevState.target) {
             return ({ messages: nextProps.messages, target: nextProps.target })
         }
@@ -93,7 +94,7 @@ export default class Chat extends React.Component {
         let author = this.state.user.id;
         let target = this.state.target.id;
         let content = e.target[0].value
-        if (target) {
+        if (target && content) {
             let message = {
                 id: v4(),
                 author: author,
@@ -101,10 +102,10 @@ export default class Chat extends React.Component {
                 content: content
             }
 
-            e.target[0].value = ''
             this.stompClient.send("/app/chat/", {}, JSON.stringify(message));
+            e.target[0].value = ''
         } else {
-            console.log("target is null");
+            console.log("target or content is null");
         }
     }
 
