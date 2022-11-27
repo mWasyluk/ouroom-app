@@ -4,6 +4,7 @@ import { Stomp } from '@stomp/stompjs'
 import React from 'react';
 import { v4 } from 'uuid'
 import { getFriends } from '../utils/fetch';
+import { AiOutlineSend } from 'react-icons/ai';
 
 // const serverHost = 'localhost'
 const serverHost = '192.168.0.24'
@@ -149,8 +150,11 @@ export default class Chat extends React.Component {
         let messagesList = null
         if (conversation) {
             let messages = conversation ? conversation.messages : null
-            messagesList = messages.map(message =>
-                <p key={message.id}><strong>{message.author}: </strong>{message.content}</p>
+            messagesList = messages.map(message => {
+                let positionClass = message.author === this.state.user.name ?
+                    'sent' : 'received'
+                return <div className={positionClass} key={message.id}>{message.content}</div>
+            }
             )
         }
 
@@ -158,7 +162,7 @@ export default class Chat extends React.Component {
             <div className='chat'>
                 <form className='content-bar' onSubmit={this.handleSendMessage.bind(this)}>
                     <input className='content' type="text" placeholder="Treść wiadomości" />
-                    <button className='send' type="submit">Wyślij</button>
+                    <button className='send' type="submit"><AiOutlineSend size={'2.5em'} /></button>
                 </form>
                 <div className='messages'>
                     {messagesList}
