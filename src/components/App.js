@@ -2,28 +2,38 @@ import './App.css'
 import { Component } from "react";
 import Chat from './Chat';
 import FriendsList from './FriendsList';
-import { getMessagesWith } from '../utils/fetch'
+import { getMessagesWith, getUsernameById } from '../utils/fetch'
 
 export default class App extends Component {
     constructor(props) {
         super(props)
-        this.state = { conversation: [], user: props.user, targetFriend: null }
+        this.state = { conversations: [], user: props.user, targetFriend: null }
     }
 
     async handleFriendSelection(friend) {
         let messagess = await getMessagesWith(this.state.user.id, friend.id);
-        this.setState({ conversation: messagess, targetFriend: friend })
+        if (!this.state.conversations.some((con) => con.friend === friend)) {
+            this.setState({
+                conversations: [{ friend: friend, messages: messagess }, ...this.state.conversations]
+            })
+        }
+        this.setState({
+            targetFriend: friend
+        })
+
     }
 
-    login = (e) => {
+    login = async (e) => {
         e.preventDefault();
 
         const uuidRegex = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
         const userId = e.target[0].value
 
         if (uuidRegex.test(userId)) {
+            let username = await getUsernameById(userId)
             let user = {
-                id: userId
+                id: userId,
+                name: username
             }
             this.setState({ user: user })
         } else {
@@ -45,7 +55,7 @@ export default class App extends Component {
         const logged = (
             <div className="logged" >
                 <FriendsList select={this.handleFriendSelection.bind(this)}></FriendsList>
-                <Chat user={this.state.user} target={this.state.targetFriend} messages={this.state.conversation}></Chat>
+                <Chat user={this.state.user} target={this.state.targetFriend} conversations={this.state.conversations}></Chat>
             </div >
         )
 

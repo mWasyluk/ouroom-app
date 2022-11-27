@@ -3,7 +3,7 @@ import SockJS from 'sockjs-client'
 import { Stomp } from '@stomp/stompjs'
 import React from 'react';
 import { v4 } from 'uuid'
-import { getUsernameById } from '../utils/fetch';
+import { getFriends } from '../utils/fetch';
 
 // const serverHost = 'localhost'
 const serverHost = '192.168.0.24'
@@ -19,17 +19,17 @@ export default class Chat extends React.Component {
             user: props.user,
             target: props.target,
             isConnected: false,
-            messages: props.messages
+            conversations: props.conversations
         }
 
         this.connectStomp()
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if ((nextProps.messages !== prevState.messages &&
-            nextProps.messages.length > prevState.messages.length) ||
+        if ((nextProps.conversations !== prevState.conversations &&
+            nextProps.conversations.length >= prevState.conversations.length) ||
             nextProps.target !== prevState.target) {
-            return ({ messages: nextProps.messages, target: nextProps.target })
+            return ({ conversations: nextProps.conversations, target: nextProps.target })
         }
         return null
     }
@@ -61,13 +61,38 @@ export default class Chat extends React.Component {
         }, 2500);
     }
 
-    stompSubscriptionCallBack(message) {
-        if (message.body) {
-            const mess = JSON.parse(message.body);
-            getUsernameById(mess.author).then((username) => {
-                mess.author = username
-                this.setState({ messages: [...this.state.messages, mess] });
-            })
+    isIncomming = (message) => {
+        return message.author !== this.state.user.id
+    }
+
+    async stompSubscriptionCallBack(subscriptionMessage) {
+        if (subscriptionMessage.body) {
+            const message = JSON.parse(subscriptionMessage.body);
+            let friends = await getFriends();
+            let friend;
+            if (this.isIncomming(message)) {
+                friend = friends
+                    .filter(friend => friend.id === message.author)[0]
+                message.author = friend.name
+            } else {
+                friend = friends
+                    .filter(friend => friend.id === message.target)[0]
+                message.author = this.state.user.name
+            }
+
+            let conversationToUpdate = this.state.conversations
+                .filter(conv => conv.friend.id === friend.id)[0];
+            if (conversationToUpdate) {
+                let conversations = this.state.conversations
+                let toUpdateIndex = conversations.indexOf(conversationToUpdate);
+
+                conversations[toUpdateIndex].messages.push(message)
+                this.setState({ conversations: conversations });
+
+            } else {
+                // TODO: find conversation with the friend (from Root), 
+                // put the message there and push whole conversation to the state
+            }
 
         }
     }
@@ -110,9 +135,19 @@ export default class Chat extends React.Component {
     }
 
     render() {
-        let messages = this.state.messages.map(message =>
-            <p key={message.id}><strong>{message.author}: </strong>{message.content}</p>
-        )
+
+        let conversation = this.state.conversations.filter(conversation =>
+            conversation.friend === this.state.target
+        )[0];
+        let messagesList = null
+        if (conversation) {
+            let messages = conversation ? conversation.messages : null
+            messagesList = messages.map(message =>
+                <p key={message.id}><strong>{message.author}: </strong>{message.content}</p>
+            )
+        }
+
+        console.log(this.state.conversations)
 
         let status = this.state.isConnected ?
             <p style={{ color: "green" }}>Jesteś online</p> :
@@ -126,7 +161,7 @@ export default class Chat extends React.Component {
                     <button type="submit">Wyślij</button>
                 </form>
                 <div>
-                    {messages}
+                    {messagesList}
                 </div>
             </div>
         )
