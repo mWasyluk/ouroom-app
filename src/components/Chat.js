@@ -8,7 +8,7 @@ import { AiOutlineSend } from 'react-icons/ai';
 
 // const serverHost = 'localhost'
 const serverHost = '192.168.0.24'
-const serverUrl = 'http://' + serverHost + ':8080/msender';
+const serverUrl = 'http://' + serverHost + ':8000/msender';
 
 export default class Chat extends React.Component {
     stompClient;
