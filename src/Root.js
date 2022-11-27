@@ -2,15 +2,13 @@ import './Root.css';
 import useWindowDimensions from './utils/window-resizer';
 import Header from './components/Header';
 import App from './components/App';
+import { useState } from 'react';
 
 function Root() {
   const { height, width } = useWindowDimensions();
   const margin = 10;
 
-  const user = {
-    // id: '6b84e369-28fa-456d-83ff-b19de75ad6bb',
-    // name: 'Marek Wasyluk'
-  }
+  let [user, setUser] = useState()
 
   return (
     <div className="root" style={{
@@ -20,7 +18,7 @@ function Root() {
       minWidth: "500px",
     }}>
       <Header user={user}></Header>
-      <App user={user}></App>
+      <App user={user} setUser={setUser}></App>
     </div >
   );
 }

@@ -7,7 +7,12 @@ import { getMessagesWith, getUsernameById } from '../utils/fetch'
 export default class App extends Component {
     constructor(props) {
         super(props)
-        this.state = { conversations: [], user: props.user, targetFriend: null }
+        this.state = {
+            conversations: [],
+            user: props.user,
+            setUser: props.setUser,
+            targetFriend: null
+        }
     }
 
     async handleFriendSelection(friend) {
@@ -36,6 +41,7 @@ export default class App extends Component {
                 name: username
             }
             this.setState({ user: user })
+            this.state.setUser(user);
         } else {
             throw new Error("Wprowadzono nieprawidłowy UUID")
         }
@@ -61,7 +67,7 @@ export default class App extends Component {
 
         return (
             <div className="App">
-                {this.state.user.id ? logged : login}
+                {this.state.user ? logged : login}
             </div>
         )
     }
