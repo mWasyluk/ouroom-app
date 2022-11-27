@@ -35,8 +35,9 @@ export default class Chat extends React.Component {
     }
 
     connectStomp() {
-
         this.stompClient = Stomp.over(() => new SockJS(serverUrl));
+        this.stompClient.debug = () => { }
+
         this.stompClient.connect(
             {},
             () => this.stompOnConnectCallBack(),
@@ -146,8 +147,6 @@ export default class Chat extends React.Component {
                 <p key={message.id}><strong>{message.author}: </strong>{message.content}</p>
             )
         }
-
-        console.log(this.state.conversations)
 
         let status = this.state.isConnected ?
             <p style={{ color: "green" }}>Jesteś online</p> :

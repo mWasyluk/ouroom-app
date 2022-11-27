@@ -18,7 +18,6 @@ export default function Header(props) {
         } else {
             setUserHeader("You should never see this")
         }
-        console.log(userHeader)
     }, [props.user])
 
     return (
