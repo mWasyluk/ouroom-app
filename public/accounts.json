@@ -1,18 +1,22 @@
 [
     {
         "id": "4b214f91-d2b0-427d-8182-c1a6a27c359c",
-        "name": "Jan Wonsz"
+        "name": "Jan Wonsz",
+        "avatar": "http://szkolalubatowa.pl/wp-content/uploads/2019/09/janpawel2.jpg"
     },
     {
         "id": "d53b45c8-2212-4113-9a8d-94424744b3ac",
-        "name": "Karol Boń"
+        "name": "Karol Boń",
+        "avatar": "https://i.iplsc.com/karol-iii-moze-zmienic-swiateczna-tradycje/000GDUYHIMK1F1WG-C122-F4.jpg"
     },
     {
         "id": "cab4a63b-0f90-4e7f-ae60-18015063b27c",
-        "name": "Marian Wanian"
+        "name": "Marian Wanian",
+        "avatar": "https://upload.wikimedia.org/wikipedia/commons/0/04/CyberMarianFamiliada_%28cropped%29.jpg"
     },
     {
         "id": "6b84e369-28fa-456d-83ff-b19de75ad6bb",
-        "name": "Marek Wasyluk"
+        "name": "Marek Wasyluk",
+        "avatar": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Marek_Plura_Kancelaria_Senatu_2019.jpg"
     }
 ]

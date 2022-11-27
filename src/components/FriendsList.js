@@ -57,6 +57,8 @@ export default class FriendsList extends Component {
             <p key={friend.id}>
                 <Friend id={friend.id}
                     name={friend.name}
+                    avatar={friend.avatar}
+                    // TODO: messages???
                     messages={friend.messages}
                     handleSelection={this.handleSelection.bind(this)}
                 />

@@ -13,10 +13,22 @@
     width: 300px;
     background-color: rgb(255, 255, 255);
     padding: 10px;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
 }
 
 .friend input {
     display: none;
+}
+
+.friend img {
+    margin-right: 10px;
+    border-radius: 20px;
+}
+
+.friend .username {
+    font-weight: 500;
 }
 
 .friend:hover {
