@@ -1,6 +1,11 @@
+.App {
+    height: 100%;
+}
+
 .logged {
     display: flex;
     flex-direction: row;
+    height: 100%;
 }
 
 .login {

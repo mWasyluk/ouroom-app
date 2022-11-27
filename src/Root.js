@@ -9,6 +9,12 @@ function Root() {
   const margin = 10;
 
   let [user, setUser] = useState()
+  let [userStatus, setUserStatus] = useState('offline')
+
+  // user = {
+  //   id: '6b84e369-28fa-456d-83ff-b19de75ad6bb',
+  //   name: 'Marek Wasyluk'
+  // }
 
   return (
     <div className="root" style={{
@@ -17,8 +23,8 @@ function Root() {
       height: height - 2 * margin,
       minWidth: "500px",
     }}>
-      <Header user={user}></Header>
-      <App user={user} setUser={setUser}></App>
+      <Header user={user} userStatus={userStatus}></Header>
+      <App user={user} setUser={setUser} setUserStatus={setUserStatus}></App>
     </div >
   );
 }

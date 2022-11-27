@@ -37,7 +37,7 @@ export default class FriendsList extends Component {
                 )[0]
             },
             () => {
-                this.setColor(this.state.selectedFriend.id, 'yellow')
+                this.setColor(this.state.selectedFriend.id, '#47a3ff')
                 this.state.select(this.state.selectedFriend)
             }
         );

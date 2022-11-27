@@ -1,4 +1,4 @@
-import '../Root.css'
+import './Chat.css'
 import SockJS from 'sockjs-client'
 import { Stomp } from '@stomp/stompjs'
 import React from 'react';
@@ -17,12 +17,18 @@ export default class Chat extends React.Component {
 
         this.state = {
             user: props.user,
+            setUserStatus: props.setUserStatus,
             target: props.target,
             isConnected: false,
             conversations: props.conversations
         }
 
         this.connectStomp()
+    }
+
+    componentDidUpdate() {
+        if (this.state.isConnected) this.state.setUserStatus('online')
+        else this.state.setUserStatus('offline')
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -148,18 +154,13 @@ export default class Chat extends React.Component {
             )
         }
 
-        let status = this.state.isConnected ?
-            <p style={{ color: "green" }}>Jesteś online</p> :
-            <p style={{ color: "red" }}>Jesteś offline</p>
-
         return (
-            <div >
-                {status}
-                <form className='chat' onSubmit={this.handleSendMessage.bind(this)}>
-                    <input className='input input-message' type="text" placeholder="Treść wiadomości" />
-                    <button type="submit">Wyślij</button>
+            <div className='chat'>
+                <form className='content-bar' onSubmit={this.handleSendMessage.bind(this)}>
+                    <input className='content' type="text" placeholder="Treść wiadomości" />
+                    <button className='send' type="submit">Wyślij</button>
                 </form>
-                <div>
+                <div className='messages'>
                     {messagesList}
                 </div>
             </div>

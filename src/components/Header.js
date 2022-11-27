@@ -4,21 +4,30 @@ import Img from '../resources/wip-avatar.jpg'
 import { useEffect, useState } from 'react';
 
 export default function Header(props) {
-    let [userHeader, setUserHeader] = useState(0)
+    let [userHeader, setUserHeader] = useState()
+
 
     useEffect(() => {
-        if (props.user) {
-            setUserHeader(
-                <div className='user'>
-                    <img className='avatar' src={Img}></img>
-                    <span className='name'>{props.user.name}</span>
-                </div>
-            )
+        if (!props.user) return;
 
-        } else {
-            setUserHeader("You should never see this")
+        let colorStyle = { backgroundColor: 'grey' }
+        if (props.userStatus) {
+            if (props.userStatus === 'offline') {
+                colorStyle = { backgroundColor: 'red' }
+            } else if (props.userStatus === 'online') {
+                colorStyle = { backgroundColor: 'green' }
+            }
         }
-    }, [props.user])
+        const status = <span className='status' style={colorStyle}></span>;
+
+        setUserHeader(
+            <div className='user'>
+                <img className='avatar' src={Img}></img>
+                <span className='name'>{props.user.name}</span>
+                {status}
+            </div>
+        )
+    }, [props.user, props.userStatus])
 
     return (
         <div className="Header">

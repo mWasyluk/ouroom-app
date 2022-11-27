@@ -11,6 +11,7 @@ export default class App extends Component {
             conversations: [],
             user: props.user,
             setUser: props.setUser,
+            setUserStatus: props.setUserStatus,
             targetFriend: null
         }
     }
@@ -61,7 +62,7 @@ export default class App extends Component {
         const logged = (
             <div className="logged" >
                 <FriendsList select={this.handleFriendSelection.bind(this)}></FriendsList>
-                <Chat user={this.state.user} target={this.state.targetFriend} conversations={this.state.conversations}></Chat>
+                <Chat user={this.state.user} target={this.state.targetFriend} conversations={this.state.conversations} setUserStatus={this.state.setUserStatus}></Chat>
             </div >
         )
 
