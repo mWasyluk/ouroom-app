@@ -3,8 +3,8 @@ import SockJS from 'sockjs-client'
 import { Stomp } from '@stomp/stompjs'
 import React from 'react';
 import { v4 } from 'uuid'
-import { getFriends } from '../utils/fetch';
 import { AiOutlineSend } from 'react-icons/ai';
+import Message from '../domains/Message';
 
 // const serverHost = 'localhost'
 const serverHost = '192.168.0.24'
@@ -19,9 +19,8 @@ export default class Chat extends React.Component {
         this.state = {
             user: props.user,
             setUserStatus: props.setUserStatus,
-            target: props.target,
             isConnected: false,
-            conversations: props.conversations
+            conversation: props.conversation
         }
 
         this.connectStomp()
@@ -33,10 +32,9 @@ export default class Chat extends React.Component {
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if ((nextProps.conversations !== prevState.conversations &&
-            nextProps.conversations.length >= prevState.conversations.length) ||
-            nextProps.target !== prevState.target) {
-            return ({ conversations: nextProps.conversations, target: nextProps.target })
+        if (nextProps.conversation && (nextProps.conversation !== prevState.conversation ||
+            nextProps.conversation.messages !== prevState.conversation.messages)) {
+            return ({ conversation: nextProps.conversation })
         }
         return null
     }
@@ -71,40 +69,19 @@ export default class Chat extends React.Component {
     }
 
     isIncomming = (message) => {
-        return message.author !== this.state.user.id
+        return message.sender !== this.state.user.id
     }
 
     async stompSubscriptionCallBack(subscriptionMessage) {
         if (subscriptionMessage.body) {
-            const message = JSON.parse(subscriptionMessage.body);
-            let friends = await getFriends();
-            let friend;
-            if (this.isIncomming(message)) {
-                friend = friends
-                    .filter(friend => friend.id === message.author)[0]
-                message.author = friend.name
-            } else {
-                friend = friends
-                    .filter(friend => friend.id === message.target)[0]
-                message.author = this.state.user.name
-            }
+            let message = new Message(JSON.parse(subscriptionMessage.body));
 
-            let conversationToUpdate = this.state.conversations
-                .filter(conv => conv.friend.id === friend.id)[0];
-            if (conversationToUpdate) {
-                let conversations = this.state.conversations
-                let toUpdateIndex = conversations.indexOf(conversationToUpdate);
-
-                conversations[toUpdateIndex].messages.push(message)
-                this.setState({ conversations: conversations });
-
-            } else {
-                // TODO: find conversation with the friend (from Root), 
-                // put the message there and push whole conversation to the state
-            }
-
+            // TODO: send to correct conversation if its different than selected
+            this.state.conversation.messages.unshift(message);
+            this.forceUpdate();
         }
     }
+
 
     stompErrorCallBack(err) {
         setTimeout(() => {
@@ -144,15 +121,12 @@ export default class Chat extends React.Component {
     }
 
     render() {
-
-        let conversation = this.state.conversations.filter(conversation =>
-            conversation.friend === this.state.target
-        )[0];
+        let conversation = this.state.conversation;
         let messagesList = null
         if (conversation) {
             let messages = conversation ? conversation.messages : null
             messagesList = messages.map(message => {
-                let positionClass = message.author === this.state.user.name ?
+                let positionClass = message.sender === this.state.user.id ?
                     'sent' : 'received'
                 return <div className={positionClass} key={message.id}>{message.content}</div>
             }
