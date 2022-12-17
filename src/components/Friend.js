@@ -1,7 +1,7 @@
 import { Component } from "react";
-import './FirendsList.css'
+import './ConversationsList.css'
 
-export default class Friend extends Component {
+export default class Conversation extends Component {
     constructor(props) {
         super(props)
         this.id = props.id;

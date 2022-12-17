@@ -1,9 +1,9 @@
 import { Component } from "react";
-import Friend from "./Friend";
-import './FirendsList.css'
+import Conversation from "./Friend";
+import './ConversationsList.css'
 import { getFriends } from '../utils/fetch'
 
-export default class FriendsList extends Component {
+export default class ConversationsList extends Component {
     state = {
         friends: [],
     }
@@ -55,7 +55,7 @@ export default class FriendsList extends Component {
     render() {
         const list = this.state.friends.map(friend =>
             <p key={friend.id}>
-                <Friend id={friend.id}
+                <Conversation id={friend.id}
                     name={friend.name}
                     avatar={friend.avatar}
                     // TODO: messages???

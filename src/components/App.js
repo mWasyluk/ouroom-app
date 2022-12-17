@@ -1,7 +1,7 @@
 import './App.css'
 import { Component } from "react";
 import Chat from './Chat';
-import FriendsList from './FriendsList';
+import ConversationsList from './ConversationsList';
 import { getMessagesWith, getUsernameById } from '../utils/fetch'
 
 export default class App extends Component {
@@ -61,7 +61,7 @@ export default class App extends Component {
 
         const logged = (
             <div className="logged" >
-                <FriendsList select={this.handleFriendSelection.bind(this)}></FriendsList>
+                <ConversationsList select={this.handleFriendSelection.bind(this)} />
                 <Chat user={this.state.user} target={this.state.targetFriend} conversations={this.state.conversations} setUserStatus={this.state.setUserStatus}></Chat>
             </div >
         )

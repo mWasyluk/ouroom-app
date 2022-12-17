@@ -8,7 +8,7 @@ import { AiOutlineSend } from 'react-icons/ai';
 
 // const serverHost = 'localhost'
 const serverHost = '192.168.0.24'
-const serverUrl = 'http://' + serverHost + ':8000/msender';
+const serverUrl = 'http://' + serverHost + ':8080/ouroom';
 
 export default class Chat extends React.Component {
     stompClient;
@@ -57,7 +57,8 @@ export default class Chat extends React.Component {
         console.log("WebSocket is connected.")
         this.setState({ isConnected: true });
         this.stompClient.subscribe(
-            '/conversations.' + this.state.user.id,
+            // '/conversations.' + this.state.user.id,
+            '/topic/03a3c0d9-23ec-4fb1-9ddc-b927bf341381',
             (message) => this.stompSubscriptionCallBack(message));
     }
 
