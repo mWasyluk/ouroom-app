@@ -22,7 +22,7 @@ export default function Header(props) {
 
         setUserHeader(
             <div className='user'>
-                <img className='avatar' src={Img}></img>
+                <img alt='User Avatar' className='avatar' src={Img}></img>
                 <span className='name'>{props.user.name}</span>
                 {status}
             </div>
