@@ -1,7 +1,7 @@
 import { Component } from "react";
-import Conversation from "./Friend";
+import Conversation from "../domains/Conversation";
+import ConversationItem from "./ConversationItem";
 import './ConversationsList.css'
-import { getFriends } from '../utils/fetch'
 
 export default class ConversationsList extends Component {
     state = {
@@ -12,33 +12,35 @@ export default class ConversationsList extends Component {
         super(props)
 
         this.state = ({
-            friends: [],
+            conversations: props.conversations,
             select: props.select,
-            selectedFriend: null
+            selectedConversation: null
         })
-
-        this.getFriends()
     }
 
-    getFriends = () => {
-        getFriends().then((friends) => {
-            this.setState({ friends: friends })
-        })
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.conversations !== prevState.conversations ||
+            nextProps.target !== prevState.target) {
+            return ({ conversations: nextProps.conversations })
+        }
+        return null
     }
 
     handleSelection = (e) => {
-        if (this.state.selectedFriend) {
-            this.resetColor(this.state.selectedFriend.id)
+        if (this.state.selectedConversation) {
+            this.resetColor(this.state.selectedConversation.id)
         }
+        let selected = new Conversation(this.state.conversations.filter(
+            conversation => conversation.id === e.target.id
+        )[0]);
+
         this.setState(
             {
-                selectedFriend: this.state.friends.filter(
-                    friend => friend.id === e.target.id
-                )[0]
+                selectedConversation: selected
             },
             () => {
-                this.setColor(this.state.selectedFriend.id, '#47a3ff')
-                this.state.select(this.state.selectedFriend)
+                this.setColor(this.state.selectedConversation.id, '#47a3ff')
+                this.state.select(this.state.selectedConversation)
             }
         );
     }
@@ -53,13 +55,9 @@ export default class ConversationsList extends Component {
     }
 
     render() {
-        const list = this.state.friends.map(friend =>
-            <p key={friend.id}>
-                <Conversation id={friend.id}
-                    name={friend.name}
-                    avatar={friend.avatar}
-                    // TODO: messages???
-                    messages={friend.messages}
+        const list = this.state.conversations.map(conversation =>
+            <p key={conversation.id}>
+                <ConversationItem conversation={conversation}
                     handleSelection={this.handleSelection.bind(this)}
                 />
             </p>
