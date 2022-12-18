@@ -63,7 +63,7 @@ export default class ConversationsList extends Component {
             </p>
         )
         return (
-            <div className="firends-list">
+            <div className="conversations-list">
                 {list}
             </div>
         )

@@ -10,11 +10,11 @@ export default class ConversationItem extends Component {
 
     render() {
         return (
-            <label id={this.conversation.id} className="friend">
-                <input type="radio" name="friend" id={this.conversation.id}
+            <label id={this.conversation.id} className="conversation">
+                <input type="radio" name="conversation" id={this.conversation.id}
                     onClick={this.handleSelection} />
                 <img alt={this.conversation.name + "conversation image"} src={this.conversation.avatarUrl} width={40} height={40}></img>
-                <span className="username">{this.conversation.name}</span>
+                <span className="name">{this.conversation.name}</span>
             </label>
         )
     }
