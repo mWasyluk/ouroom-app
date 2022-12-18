@@ -30,10 +30,10 @@ export async function getUserConversations() {
     });
 }
 
-export async function getConversationMessages(conversationId) {
+export async function getConversationMessages(conversationId, page = 0) {
 
     return await fetch(
-        apiHostUrl + '/messages/conversation/' + conversationId,
+        apiHostUrl + '/messages/conversation/' + conversationId + '?page=' + page,
         {
             method: 'GET',
             mode: 'cors',
