@@ -6,6 +6,7 @@ import { getConversationMessages, getUserConversations } from '../utils/fetch'
 import '../utils/websocket.js'
 import WebSocketConnection from '../utils/websocket.js';
 import Message from '../domains/Message';
+import LoginForm from './LoginForm';
 
 export default class App extends Component {
     constructor(props) {
@@ -14,6 +15,7 @@ export default class App extends Component {
             conversations: [],
             user: props.user,
             setUser: props.setUser,
+            authToken: '',
             setUserStatus: props.setUserStatus,
             targetConversation: null
         }
@@ -21,6 +23,13 @@ export default class App extends Component {
         getUserConversations().then(conversations =>
             this.setState({ conversations: conversations })
         );
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.user !== prevState.user) {
+            return ({ user: nextProps.user })
+        }
+        return null
     }
 
     subsciptionCallback = (plainMessage) => {
@@ -46,47 +55,34 @@ export default class App extends Component {
         this.setState({ targetConversation: target })
     }
 
-    login = async (e) => {
-        e.preventDefault();
+    setAccount = (account) => {
+        this.state.setUser(account);
+    }
 
-        // const uuidRegex = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
-        // const userId = e.target[0].value
-
-        // if (uuidRegex.test(userId)) {
-        //     let username = await getUsernameById(userId)
-        //     let user = {
-        //         id: userId,
-        //         name: username
-        //     }
-        //     this.setState({ user: user })
-        //     this.state.setUser(user);
-        // } else {
-        //     throw new Error("Wprowadzono nieprawidłowy UUID")
-        // }
+    setAuthToken = (token) => {
+        this.setState({ authToken: token })
     }
 
     render() {
-        const login = (
-            <div className="login">
-                <form className="popup" onSubmit={this.login.bind(this)}>
-                    <span>Zaloguj się do<strong>OurRoom!</strong></span>
-                    <input type="text" name="user-id" id="user-id" placeholder="ID użytkownika" />
-                    <button type="submit" id="submit">Zaloguj się</button>
-                </form>
-            </div>
-        )
-
-        const logged = (
-            <div className="logged" >
-                <WebSocketConnection topicId={this.state.user.id} subscriptionCallback={this.subsciptionCallback.bind(this)} statusChangeCallback={this.connectionStatusChangeCallback.bind(this)} />
-                <ConversationsList conversations={this.state.conversations} select={this.handleConversationSelection.bind(this)} />
-                <Chat user={this.state.user} conversation={this.state.targetConversation}></Chat>
-            </div >
-        )
+        let view;
+        if (!this.state.user)
+            view = (
+                <div className="login">
+                    <LoginForm setAccount={this.setAccount} setAuthToken={this.setAuthToken} />
+                </div>
+            )
+        else
+            view = (
+                <div className="logged" >
+                    <WebSocketConnection topicId={this.state.user.profile.id} subscriptionCallback={this.subsciptionCallback.bind(this)} statusChangeCallback={this.connectionStatusChangeCallback.bind(this)} />
+                    <ConversationsList conversations={this.state.conversations} select={this.handleConversationSelection.bind(this)} />
+                    <Chat user={this.state.user} conversation={this.state.targetConversation}></Chat>
+                </div >
+            )
 
         return (
             <div className="App">
-                {this.state.user ? logged : login}
+                {view}
             </div>
         )
     }
