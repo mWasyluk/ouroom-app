@@ -1,7 +1,6 @@
 import SockJS from 'sockjs-client'
 import { Stomp } from '@stomp/stompjs'
-import React, { Component } from 'react';
-import Message from '../domains/Message';
+import React from 'react';
 
 const serverHost = '192.168.0.24'
 const serverUrl = 'http://' + serverHost + ':8080/ouroom';
