@@ -19,11 +19,11 @@ export default function Header(props) {
             }
         }
         const status = <span className='status' style={colorStyle}></span>;
-
+        const userFullName = props.user.profile.firstName + ' ' + props.user.profile.lastName;
         setUserHeader(
             <div className='user'>
                 <img alt='User Avatar' className='avatar' src={Img}></img>
-                <span className='name'>{props.user.name}</span>
+                <span className='name'>{userFullName}</span>
                 {status}
             </div>
         )

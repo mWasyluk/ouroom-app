@@ -64,7 +64,7 @@ export default class Chat extends React.Component {
         let messagesList = []
         if (conversation) {
             messagesList = conversation.messages.map(message => {
-                let positionClass = message.sender === this.state.user.id ?
+                let positionClass = message.sender === this.state.user.profile.id ?
                     'sent' : 'received'
                 return <div className={positionClass} key={message.id}>{message.content}</div>
             });
