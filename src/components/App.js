@@ -3,6 +3,9 @@ import { Component } from "react";
 import Chat from './Chat';
 import ConversationsList from './ConversationsList';
 import { getConversationMessages, getUserConversations } from '../utils/fetch'
+import '../utils/websocket.js'
+import WebSocketConnection from '../utils/websocket.js';
+import Message from '../domains/Message';
 
 export default class App extends Component {
     constructor(props) {
@@ -18,6 +21,21 @@ export default class App extends Component {
         getUserConversations().then(conversations =>
             this.setState({ conversations: conversations })
         );
+    }
+
+    subsciptionCallback = (plainMessage) => {
+        let message = new Message(JSON.parse(plainMessage.body))
+
+        this.state.conversations.filter((conv) => conv.id === message.conversationId)[0]
+            .messages.unshift(message);
+        this.forceUpdate()
+    }
+
+    connectionStatusChangeCallback = (isConnected) => {
+        if (isConnected)
+            this.state.setUserStatus('online')
+        else
+            this.state.setUserStatus('offline')
     }
 
     async handleConversationSelection(conversation) {
@@ -60,8 +78,9 @@ export default class App extends Component {
 
         const logged = (
             <div className="logged" >
+                <WebSocketConnection topicId={this.state.user.id} subscriptionCallback={this.subsciptionCallback.bind(this)} statusChangeCallback={this.connectionStatusChangeCallback.bind(this)} />
                 <ConversationsList conversations={this.state.conversations} select={this.handleConversationSelection.bind(this)} />
-                <Chat user={this.state.user} conversation={this.state.targetConversation} setUserStatus={this.state.setUserStatus}></Chat>
+                <Chat user={this.state.user} conversation={this.state.targetConversation}></Chat>
             </div >
         )
 
