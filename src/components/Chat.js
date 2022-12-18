@@ -2,9 +2,9 @@ import './Chat.css'
 import SockJS from 'sockjs-client'
 import { Stomp } from '@stomp/stompjs'
 import React from 'react';
-import { v4 } from 'uuid'
 import { AiOutlineSend } from 'react-icons/ai';
 import Message from '../domains/Message';
+import { postConversationMessage } from '../utils/fetch';
 
 // const serverHost = 'localhost'
 const serverHost = '192.168.0.24'
@@ -102,22 +102,17 @@ export default class Chat extends React.Component {
     handleSendMessage(e) {
         e.preventDefault();
 
-        let author = this.state.user.id;
-        let target = this.state.target.id;
         let content = e.target[0].value
-        if (target && content) {
-            let message = {
-                id: v4(),
-                author: author,
-                target: target,
-                content: content
-            }
-
-            this.stompClient.send("/app/chat/", {}, JSON.stringify(message));
-            e.target[0].value = ''
-        } else {
-            console.log("target or content is null");
+        if (!this.state.conversation) {
+            console.error('Select Conversation before sending the Message.')
+            return;
+        } if (!content) {
+            console.error('Empty Message cannot be sent.')
+            return;
         }
+
+        postConversationMessage(this.state.conversation.id, content)
+        e.target[0].value = ''
     }
 
     render() {
