@@ -1,11 +1,10 @@
 import './Header.css'
-import { FiSettings } from 'react-icons/fi';
+import { CgMenuGridR } from 'react-icons/cg';
 import Img from '../resources/wip-avatar.jpg'
 import { useEffect, useState } from 'react';
 
 export default function Header(props) {
     let [userHeader, setUserHeader] = useState()
-
 
     useEffect(() => {
         if (!props.user) return;
@@ -29,12 +28,14 @@ export default function Header(props) {
         )
     }, [props.user, props.userStatus])
 
+    const handleClick = () => {
+        props.setMenuInvoked(!props.isMenuInvoked)
+    }
+
     return (
         <div className="Header">
             <div className='left'>
-                <FiSettings
-                    size={'36'}
-                ></FiSettings>
+                <CgMenuGridR onClick={handleClick} size={'36'} />
                 {userHeader}
             </div>
             <div className='right'>
