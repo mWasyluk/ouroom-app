@@ -1,13 +1,25 @@
 import React from 'react'
-import './App.css'
+import '../Root.css'
 import { getUserAccountWithProfile } from '../utils/fetch';
 
+const cookieExpirationTime = 7 * 24 * 3600 * 1000; // 1 week
 export default class LoginForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             setAccount: props.setAccount,
             setAuthToken: props.setAuthToken,
+        }
+
+        if (document.cookie) {
+            let cookies = document.cookie.split(';');
+            let user = JSON.parse(cookies[0].split('user=')[1]);
+            let token = cookies[1].split('token=')[1];
+
+            if (user.profile && token) {
+                this.state.setAccount(user);
+                this.state.setAuthToken(token);
+            }
         }
     }
 
@@ -16,6 +28,9 @@ export default class LoginForm extends React.Component {
         if (account.profile) {
             this.state.setAccount(account);
             this.state.setAuthToken(token);
+            let expirationDate = new Date(new Date().getTime() + cookieExpirationTime)
+            document.cookie = 'user=' + JSON.stringify(account) + ';expires=' + expirationDate + ';domain=localhost;SameSite=Lax'
+            document.cookie = 'token=' + token + ';expires=' + expirationDate + ';domain=localhost;SameSite=Lax'
         }
     }
 
