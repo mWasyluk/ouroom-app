@@ -10,6 +10,7 @@ export default class Chat extends React.Component {
         this.state = {
             user: props.user,
             conversation: props.conversation,
+            authToken: props.authToken,
             page: 0
         }
     }
@@ -30,7 +31,7 @@ export default class Chat extends React.Component {
 
         if (isTop) {
             let requiredPage = parseInt(this.state.conversation.messages.length / messagesInPage, 10);
-            let messages = await getConversationMessages(this.state.conversation.id, requiredPage);
+            let messages = await getConversationMessages(this.state.authToken, this.state.conversation.id, requiredPage);
 
             let filtered = messages.filter(message =>
                 this.state.conversation.messages.filter((m) => m.id === message.id).length === 0
@@ -55,7 +56,7 @@ export default class Chat extends React.Component {
             return;
         }
 
-        postConversationMessage(this.state.conversation.id, content)
+        postConversationMessage(this.state.authToken, this.state.conversation.id, content)
         e.target[0].value = ''
     }
 
