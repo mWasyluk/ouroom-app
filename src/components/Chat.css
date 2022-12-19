@@ -45,10 +45,12 @@
     background-color: rgb(201, 201, 201);
     margin-left: 100px;
     align-self: flex-end;
+    text-align: end;
 }
 
 .messages .received {
     margin-right: 100px;
     background-color: rgb(136, 211, 255);
     align-self: flex-start;
+    text-align: start;
 }
