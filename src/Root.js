@@ -3,6 +3,7 @@ import useWindowDimensions from './utils/window-resizer';
 import Header from './components/Header';
 import App from './components/App';
 import { useState } from 'react';
+import LoginForm from './components/LoginForm';
 
 function Root() {
   const { height, width } = useWindowDimensions();
@@ -10,11 +11,21 @@ function Root() {
 
   let [user, setUser] = useState()
   let [userStatus, setUserStatus] = useState('offline')
+  let [authToken, setAuthToken] = useState();
 
-  // user = {
-  //   id: '6b84e369-28fa-456d-83ff-b19de75ad6bb',
-  //   name: 'Marek Wasyluk'
-  // }
+  let loginView = (
+    <div className="login">
+      <LoginForm setAccount={setUser} setAuthToken={setAuthToken} />
+    </div>
+  )
+
+  let appView = (
+    <>
+      <Header user={user} userStatus={userStatus}></Header>
+      <App user={user} setUserStatus={setUserStatus} authToken={authToken}></App>
+    </>
+  )
+
 
   return (
     <div className="root" style={{
@@ -23,8 +34,7 @@ function Root() {
       height: height - 2 * margin,
       minWidth: "500px",
     }}>
-      <Header user={user} userStatus={userStatus}></Header>
-      <App user={user} setUser={setUser} setUserStatus={setUserStatus}></App>
+      {user === undefined ? loginView : appView}
     </div >
   );
 }
