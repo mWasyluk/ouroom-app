@@ -10,17 +10,6 @@ export default class LoginForm extends React.Component {
             setAccount: props.setAccount,
             setAuthToken: props.setAuthToken,
         }
-
-        if (document.cookie) {
-            let cookies = document.cookie.split(';');
-            let user = JSON.parse(cookies[0].split('user=')[1]);
-            let token = cookies[1].split('token=')[1];
-
-            if (user.profile && token) {
-                this.state.setAccount(user);
-                this.state.setAuthToken(token);
-            }
-        }
     }
 
     getAccount = async (token) => {
@@ -29,8 +18,8 @@ export default class LoginForm extends React.Component {
             this.state.setAccount(account);
             this.state.setAuthToken(token);
             let expirationDate = new Date(new Date().getTime() + cookieExpirationTime)
-            document.cookie = 'user=' + JSON.stringify(account) + ';expires=' + expirationDate + ';domain=localhost;SameSite=Lax'
-            document.cookie = 'token=' + token + ';expires=' + expirationDate + ';domain=localhost;SameSite=Lax'
+            document.cookie = 'user=' + JSON.stringify(account) + ';expires=' + expirationDate + ';domain=localhost;SameSite=Strict'
+            document.cookie = 'token=' + token + ';expires=' + expirationDate + ';domain=localhost;SameSite=Strict'
         }
     }
 

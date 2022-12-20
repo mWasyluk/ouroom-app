@@ -9,24 +9,25 @@ export default class Menu extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            menuSelectionCallback: props.menuSelectionCallback,
             options: [
                 {
-                    id: 0,
+                    id: 'menu-item-settings',
                     icon: <FiSettings className='icon' />,
                     description: 'Ustawienia'
                 },
                 {
-                    id: 1,
+                    id: 'menu-item-profile',
                     icon: <CgProfile className='icon' />,
                     description: 'Profil'
                 },
                 {
-                    id: 2,
+                    id: 'menu-item-information',
                     icon: <GoInfo className='icon' />,
                     description: 'Informacje'
                 },
                 {
-                    id: 3,
+                    id: 'menu-item-logout',
                     icon: <BiLogOut className='icon' />,
                     description: 'Wyloguj się'
                 },
@@ -35,24 +36,8 @@ export default class Menu extends React.Component {
     }
 
     handleOptionSelection = (e) => {
-        const option = e.currentTarget;
-
-        switch (option.id) {
-            case '0':
-                console.log('invoke settings')
-                break;
-            case '1':
-                console.log('invoke profile')
-                break;
-            case '2':
-                console.log('invoke info')
-                break;
-            case '3':
-                console.log('invoke logout')
-                break;
-            default:
-                console.log('none of the options')
-        }
+        const optionId = e.currentTarget.id;
+        this.props.menuSelectionCallback(optionId);
     }
 
     render() {
