@@ -25,6 +25,8 @@ function Root() {
         document.cookie = 'token=;expires=' + date + ';SameSite=Strict;';
         window.location.reload()
         break;
+      default:
+        console.error(optionId, 'cannot be handled as an option')
     }
   }
 
@@ -50,13 +52,14 @@ function Root() {
   )
 
   let header = <Header user={user} userStatus={userStatus} isMenuInvoked={isMenuInvoked} setMenuInvoked={setMenuInvoked}></Header>
-  let menu = <Menu menuSelectionCallback={menuSelectionCallback}></Menu>
-  let app = <App user={user} setUserStatus={setUserStatus} authToken={authToken}></App>
+  let menu = (isVisible) => <Menu styles={{ display: isVisible ? 'flex' : 'none' }} menuSelectionCallback={menuSelectionCallback}></Menu>
+  let app = (isVisible) => <App styles={{ display: isVisible ? 'flex' : 'none' }} user={user} setUserStatus={setUserStatus} authToken={authToken}></App>
 
   let appView = (
     <>
       {header}
-      {isMenuInvoked ? menu : app}
+      {menu(isMenuInvoked)}
+      {app(!isMenuInvoked)}
     </>
   )
 

@@ -49,7 +49,7 @@ export default class Menu extends React.Component {
         )
 
         return (
-            <div className="Menu">
+            <div className="Menu" style={this.props.styles}>
                 {optionsView}
             </div>
         )

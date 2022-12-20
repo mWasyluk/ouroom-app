@@ -48,7 +48,7 @@ export default class App extends Component {
 
     render() {
         return (
-            <div className="logged">
+            <div className="logged" style={this.props.styles}>
                 <WebSocketConnection topicId={this.state.user.profile.id} subscriptionCallback={this.subsciptionCallback.bind(this)} statusChangeCallback={this.connectionStatusChangeCallback.bind(this)} />
                 <ConversationsList conversations={this.state.conversations} select={this.handleConversationSelection.bind(this)} />
                 <Chat user={this.state.user} conversation={this.state.targetConversation} authToken={this.state.authToken}></Chat>
