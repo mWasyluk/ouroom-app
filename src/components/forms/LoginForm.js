@@ -1,6 +1,6 @@
 import React from 'react'
 import AuthDetails from '../../domains/AuthDetails';
-import '../styles/form-styles.css'
+import '../../styles/form-styles.css'
 import AuthService from '../../services/AuthService';
 
 export default class LoginForm extends React.Component {

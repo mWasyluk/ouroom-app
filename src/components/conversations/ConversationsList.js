@@ -1,7 +1,7 @@
 import { Component } from "react";
 import Conversation from "../../domains/Conversation";
 import ConversationItem from "./ConversationItem";
-import '../styles/ConversationsList.css'
+import '../../styles/ConversationsList.css'
 
 export default class ConversationsList extends Component {
     state = {
