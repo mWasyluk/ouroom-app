@@ -2,8 +2,9 @@ import Conversation from "../domains/Conversation";
 import Message from "../domains/Message";
 import Profile from "../domains/Profile";
 import Account from "../domains/Account";
+import { apiUrl } from "./api-dao";
 
-const apiHostUrl = 'http://localhost:8080';
+const apiHostUrl = apiUrl;
 
 function headers(authToken) {
     return {

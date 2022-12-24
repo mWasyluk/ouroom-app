@@ -1,7 +1,7 @@
-import './Chat.css'
+import '../styles/Chat.css'
 import React from 'react';
 import { AiOutlineSend } from 'react-icons/ai';
-import { getConversationMessages, postConversationMessage } from '../utils/fetch';
+import { getConversationMessages, postConversationMessage } from '../../utils/fetch';
 
 export default class Chat extends React.Component {
     constructor(props) {

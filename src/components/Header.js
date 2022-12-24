@@ -1,4 +1,4 @@
-import './Header.css'
+import '../styles/Header.css'
 import { CgMenuGridR } from 'react-icons/cg';
 import Img from '../resources/wip-avatar.jpg'
 import { useEffect, useState } from 'react';

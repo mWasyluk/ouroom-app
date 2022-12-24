@@ -1,24 +1,24 @@
-import './App.css'
-import { Component } from "react";
-import Chat from './Chat';
-import ConversationsList from './ConversationsList';
+import '../styles/App.css'
+import React from 'react';
+import Chat from './conversations/Chat';
+import ConversationsList from './conversations/ConversationsList';
 import { getConversationMessages, getUserConversations } from '../utils/fetch'
 import '../utils/websocket.js'
 import WebSocketConnection from '../utils/websocket.js';
 import Message from '../domains/Message';
+import AuthService from '../services/AuthService';
 
-export default class App extends Component {
+export default class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             user: props.user,
             setUserStatus: props.setUserStatus,
-            authToken: props.authToken,
             conversations: [],
             targetConversation: null
         }
 
-        getUserConversations(this.state.authToken).then(conversations =>
+        getUserConversations(AuthService.getAuthToken()).then(conversations =>
             this.setState({ conversations: conversations })
         );
     }
@@ -39,7 +39,7 @@ export default class App extends Component {
     }
 
     async handleConversationSelection(conversation) {
-        let messages = await getConversationMessages(this.state.authToken, conversation.id);
+        let messages = await getConversationMessages(AuthService.getAuthToken(), conversation.id);
         let target = this.state.conversations
             .filter(conv => conv.id === conversation.id)[0]
         target.messages = messages;

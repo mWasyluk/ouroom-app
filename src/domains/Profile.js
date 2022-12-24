@@ -1,8 +1,12 @@
 export default class Profile {
-    constructor(profile) {
-        this.id = profile.id;
-        this.avatar = profile.avatar;
-        this.lastName = profile.lastName;
-        this.firstName = profile.firstName;
+    constructor({ id, avatar, lastName, firstName } = {}) {
+        this.id = id;
+        this.avatar = avatar;
+        this.lastName = lastName;
+        this.firstName = firstName;
+    }
+
+    isComplete() {
+        return (this.avatar && this.firstName && this.lastName) ? true : false;
     }
 }

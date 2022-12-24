@@ -2,66 +2,74 @@ import './Root.css';
 import useWindowDimensions from './utils/window-resizer';
 import Header from './components/Header';
 import App from './components/App';
-import { useState } from 'react';
-import LoginForm from './components/LoginForm';
+import LoginForm from './components/forms/LoginForm';
 import Menu from './components/Menu';
+import AuthService from './services/AuthService';
+import { useEffect, useState } from 'react';
 import Account from './domains/Account';
 
 function Root() {
   const { height, width } = useWindowDimensions();
   const margin = 10;
 
-  let [user, setUser] = useState()
+  let [user, setUser] = useState(null)
   let [userStatus, setUserStatus] = useState('offline')
   let [authToken, setAuthToken] = useState();
   let [isMenuInvoked, setMenuInvoked] = useState(false);
+  let [view, setView] = useState(<></>);
 
   // handles each of the Menu options
   let menuSelectionCallback = (optionId) => {
     switch (optionId) {
       case 'menu-item-logout':
-        let date = new Date(0)
-        document.cookie = 'user=;expires=' + date + ';SameSite=Strict;';
-        document.cookie = 'token=;expires=' + date + ';SameSite=Strict;';
-        window.location.reload()
+        AuthService.logout();
+        window.location.reload();
         break;
       default:
         console.error(optionId, 'cannot be handled as an option')
     }
   }
 
-  // checks if the cookies contain any user if non is logged in and set the user if needed
-  if (document.cookie && (!user || !authToken)) {
-    let cookies = document.cookie.split(';');
-    let userValue = cookies[0].split('user=')[1];
-    let tokenValue = cookies[1].split('token=')[1]
+  useEffect(() => {
+    async function checkUserAndSetView() {
+      const isAuth = AuthService.isAuthenticated();
 
-    if (userValue && tokenValue) {
-      let userObject = new Account(JSON.parse(userValue));
-      let token = tokenValue;
+      if (!isAuth) {
+        console.warn('Unauthenticated.', user, '. Pushing Login Form...');
+        setView(
+          <div className="popup">
+            <LoginForm setAccount={setUser} setAuthToken={setAuthToken} />
+          </div>
+        );
+      }
 
-      setUser(userObject);
-      setAuthToken(token);
+      else if (!user || !user.profile) {
+        console.warn('User has no profile', user, 'but isAuthenticated', isAuth, '. Requesting Account...');
+        const auth = await AuthService.requestAccount();
+        if (auth.profile)
+          setUser(auth);
+      }
+
+      else if (!new Account(user).profile.isComplete()) {
+        console.warn('User profile is not complete', user, 'but isAuthenticated', isAuth, '. Pushing Profile Form...');
+        setView(<>dodawanie profilu</>)
+      }
+
+      else if (new Account(user).profile.isComplete()) {
+        console.log('Account Profile is complete. Pushing App view...');
+        setView(
+          <>
+            <Header user={user} userStatus={userStatus} isMenuInvoked={isMenuInvoked} setMenuInvoked={setMenuInvoked}></Header>
+            <Menu styles={{ display: isMenuInvoked ? 'flex' : 'none' }} menuSelectionCallback={menuSelectionCallback}></Menu>
+            <App styles={{ display: !isMenuInvoked ? 'flex' : 'none' }} user={user} setUserStatus={setUserStatus}></App>
+          </>
+        );
+      }
     }
-  }
 
-  let loginView = (
-    <div className="login">
-      <LoginForm setAccount={setUser} setAuthToken={setAuthToken} />
-    </div>
-  )
-
-  let header = <Header user={user} userStatus={userStatus} isMenuInvoked={isMenuInvoked} setMenuInvoked={setMenuInvoked}></Header>
-  let menu = (isVisible) => <Menu styles={{ display: isVisible ? 'flex' : 'none' }} menuSelectionCallback={menuSelectionCallback}></Menu>
-  let app = (isVisible) => <App styles={{ display: isVisible ? 'flex' : 'none' }} user={user} setUserStatus={setUserStatus} authToken={authToken}></App>
-
-  let appView = (
-    <>
-      {header}
-      {menu(isMenuInvoked)}
-      {app(!isMenuInvoked)}
-    </>
-  )
+    console.log("Setting up the view...")
+    checkUserAndSetView()
+  }, [user, userStatus, authToken, isMenuInvoked]);
 
   return (
     <div className="root" style={{
@@ -70,7 +78,7 @@ function Root() {
       height: height - 2 * margin,
       minWidth: "500px"
     }}>
-      {user === undefined ? loginView : appView}
+      {view}
     </div >
   );
 }

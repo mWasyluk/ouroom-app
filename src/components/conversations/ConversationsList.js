@@ -1,7 +1,7 @@
 import { Component } from "react";
-import Conversation from "../domains/Conversation";
+import Conversation from "../../domains/Conversation";
 import ConversationItem from "./ConversationItem";
-import './ConversationsList.css'
+import '../styles/ConversationsList.css'
 
 export default class ConversationsList extends Component {
     state = {
@@ -55,13 +55,15 @@ export default class ConversationsList extends Component {
     }
 
     render() {
-        const list = this.state.conversations.map(conversation =>
-            <p key={conversation.id}>
-                <ConversationItem conversation={conversation}
-                    handleSelection={this.handleSelection.bind(this)}
-                />
-            </p>
-        )
+        let list = []
+        if (this.state.conversations.length)
+            list = this.state.conversations.map(conversation =>
+                <p key={conversation.id}>
+                    <ConversationItem conversation={conversation}
+                        handleSelection={this.handleSelection.bind(this)}
+                    />
+                </p>
+            )
         return (
             <div className="conversations-list">
                 {list}

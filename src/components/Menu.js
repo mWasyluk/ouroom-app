@@ -1,5 +1,5 @@
 import React from "react";
-import './Menu.css'
+import '../styles/Menu.css'
 import { BiLogOut } from 'react-icons/bi'
 import { FiSettings } from 'react-icons/fi'
 import { GoInfo } from 'react-icons/go'
