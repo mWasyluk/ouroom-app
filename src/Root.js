@@ -1,4 +1,4 @@
-import './Root.css';
+import './styles/Root.css';
 import useWindowDimensions from './utils/window-resizer';
 import Header from './components/Header';
 import App from './components/App';
