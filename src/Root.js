@@ -2,11 +2,13 @@ import './styles/Root.css';
 import useWindowDimensions from './utils/window-resizer';
 import Header from './components/Header';
 import App from './components/App';
-import LoginForm from './components/forms/LoginForm';
 import Menu from './components/Menu';
 import AuthService from './services/AuthService';
 import { useEffect, useState } from 'react';
 import Account from './domains/Account';
+import AuthPopup from './components/forms/AuthPopup'
+
+export const appTitle = 'OuRoom'
 
 function Root() {
   const { height, width } = useWindowDimensions();
@@ -14,7 +16,6 @@ function Root() {
 
   let [user, setUser] = useState(null)
   let [userStatus, setUserStatus] = useState('offline')
-  let [authToken, setAuthToken] = useState();
   let [isMenuInvoked, setMenuInvoked] = useState(false);
   let [view, setView] = useState(<></>);
 
@@ -37,9 +38,7 @@ function Root() {
       if (!isAuth) {
         console.warn('Unauthenticated.', user, '. Pushing Login Form...');
         setView(
-          <div className="popup">
-            <LoginForm setAccount={setUser} setAuthToken={setAuthToken} />
-          </div>
+          <AuthPopup></AuthPopup>
         );
       }
 
@@ -69,7 +68,7 @@ function Root() {
 
     console.log("Setting up the view...")
     checkUserAndSetView()
-  }, [user, userStatus, authToken, isMenuInvoked]);
+  }, [user, userStatus, isMenuInvoked]);
 
   return (
     <div className="root" style={{

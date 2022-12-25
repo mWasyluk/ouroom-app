@@ -32,6 +32,13 @@ const AuthService = {
     logout() {
         StorageService.removeAuthToken();
     },
+    async register({ email, password }) {
+        const response = await requestRegistration({ email, password })
+        if (response.status === 201) {
+            return new Account(response.data.body);
+        }
+        return null;
+    },
     isAuthenticated() {
         return StorageService.getAuthToken() ? true : false;
     },
@@ -49,6 +56,18 @@ async function requestAuthentiaction(token) {
     }
     return await axios.get(
         apiUrl + '/accounts', config).catch(err => {
+            return { status: 400 }
+        });
+}
+
+async function requestRegistration({ email, password }) {
+    const config = {
+        headers: {
+            'Accept': 'application/json'
+        }
+    }
+    return await axios.post(
+        apiUrl + '/accounts/register', { email, password }, config).catch(err => {
             return { status: 400 }
         });
 }

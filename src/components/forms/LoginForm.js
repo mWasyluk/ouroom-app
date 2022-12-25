@@ -2,16 +2,13 @@ import React from 'react'
 import AuthDetails from '../../domains/AuthDetails';
 import '../../styles/form-styles.css'
 import AuthService from '../../services/AuthService';
+import { useState } from 'react';
+import { appTitle } from '../../Root';
 
-export default class LoginForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            rememberMe: false,
-        }
-    }
+const LoginForm = (props) => {
+    const [rememberMe, setRememberMe] = useState(false);
 
-    handleSubmit = async () => {
+    const handleSubmit = async () => {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
@@ -19,24 +16,27 @@ export default class LoginForm extends React.Component {
         if (!details.isValid()) {
             return;
         }
-        document.getElementById('password').value = ''
-        const account = await AuthService.login(details, this.state.rememberMe);
-        this.props.setAccount(account);
+        let auth = await AuthService.login(details, rememberMe);
+        if (auth === null) {
+            document.getElementById('password').value = '';
+        } else {
+            window.location.reload();
+        }
     }
 
-    handleCheckboxChange = () => {
-        this.setState({ rememberMe: !this.state.rememberMe })
-    }
-
-    render() {
-        return (
-            <div className="login">
-                <span>Zaloguj się do<strong>OurRoom!</strong></span>
-                <input type="text" name="email" id="email" placeholder="E-mail..." />
-                <input type="password" name="password" id="password" placeholder="Hasło..." />
-                <button type='submit' onClick={this.handleSubmit} id="submit">Zaloguj się</button>
-                <label id='remember-me'> <input type="checkbox" checked={this.state.rememberMe} onChange={this.handleCheckboxChange} /> Zapamiętaj mnie </label>
-            </div>
-        )
-    }
+    return (
+        <div className="popup-form">
+            <span>Zaloguj się do<strong>{appTitle}!</strong></span>
+            <input type="text" name="email" id="email" placeholder="E-mail..." />
+            <input type="password" name="password" id="password" placeholder="Hasło..." />
+            <label id='remember-me'> <input type="checkbox" checked={rememberMe} onChange={setRememberMe} /> Zapamiętaj mnie </label>
+            <button type='submit' onClick={handleSubmit} id="submit">Zaloguj się</button>
+            <p className='footer-text'>
+                Nie masz jeszcze konta?
+                <strong onClick={props.switch} className='text-button'>Zarejestruj się</strong>
+            </p>
+        </div>
+    )
 }
+
+export default LoginForm;
