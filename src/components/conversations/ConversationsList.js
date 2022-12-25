@@ -2,6 +2,7 @@ import { Component } from "react";
 import Conversation from "../../domains/Conversation";
 import ConversationItem from "./ConversationItem";
 import '../../styles/ConversationsList.css'
+import CreateConversationButton from "./CreateConversationButton";
 
 export default class ConversationsList extends Component {
     state = {
@@ -12,6 +13,7 @@ export default class ConversationsList extends Component {
         super(props)
 
         this.state = ({
+            user: props.user,
             conversations: props.conversations,
             select: props.select,
             selectedConversation: null
@@ -66,6 +68,7 @@ export default class ConversationsList extends Component {
             )
         return (
             <div className="conversations-list">
+                <CreateConversationButton user={this.state.user}></CreateConversationButton>
                 {list}
             </div>
         )

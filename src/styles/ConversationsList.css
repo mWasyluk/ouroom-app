@@ -11,6 +11,16 @@
     border-radius: 0 0 0 10px;
 }
 
+.new-conversation-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
 .conversation {
     display: block;
     width: 24vw;
@@ -20,6 +30,7 @@
     align-items: center;
     border-radius: 10px;
     word-break: break-all;
+    cursor: pointer;
 }
 
 .conversation input {
@@ -41,9 +52,9 @@
     -webkit-box-orient: vertical;
 }
 
-.conversation:hover {
+.conversation:hover,
+.new-conversation-button:hover {
     background-color: rgb(239, 239, 239);
-    cursor: pointer;
 }
 
 @media only screen and (max-width: 720px) {

@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import '../../styles/form-styles.css'
 import RegistrationDetails from '../../domains/RegistrationDetails';
 import { appTitle } from '../../Root';
 import AuthService from '../../services/AuthService';
-import { registerAccount } from '../../utils/fetch.js'
 
 const RegisterForm = (props) => {
     const handleSubmit = async () => {

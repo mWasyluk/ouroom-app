@@ -2,6 +2,7 @@ import '../../styles/Chat.css'
 import React from 'react';
 import { AiOutlineSend } from 'react-icons/ai';
 import { getConversationMessages, postConversationMessage } from '../../utils/fetch';
+import AuthService from '../../services/AuthService';
 
 export default class Chat extends React.Component {
     constructor(props) {
@@ -31,7 +32,7 @@ export default class Chat extends React.Component {
 
         if (isTop) {
             let requiredPage = parseInt(this.state.conversation.messages.length / messagesInPage, 10);
-            let messages = await getConversationMessages(this.state.authToken, this.state.conversation.id, requiredPage);
+            let messages = await getConversationMessages(AuthService.getAuthToken(), this.state.conversation.id, requiredPage);
 
             let filtered = messages.filter(message =>
                 this.state.conversation.messages.filter((m) => m.id === message.id).length === 0
@@ -56,7 +57,7 @@ export default class Chat extends React.Component {
             return;
         }
 
-        postConversationMessage(this.state.authToken, this.state.conversation.id, content)
+        postConversationMessage(AuthService.getAuthToken(), this.state.conversation.id, content)
         e.target[0].value = ''
     }
 
