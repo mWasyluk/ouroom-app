@@ -7,6 +7,7 @@ import AuthService from './services/AuthService';
 import { useEffect, useState } from 'react';
 import Account from './domains/Account';
 import AuthPopup from './components/forms/AuthPopup'
+import ProfileForm from './components/forms/ProfileForm';
 
 export const appTitle = 'OuRoom'
 
@@ -51,7 +52,7 @@ function Root() {
 
       else if (!new Account(user).profile.isComplete()) {
         console.warn('User profile is not complete', user, 'but isAuthenticated', isAuth, '. Pushing Profile Form...');
-        setView(<>dodawanie profilu</>)
+        setView(<ProfileForm setUser={setUser}></ProfileForm>)
       }
 
       else if (new Account(user).profile.isComplete()) {
