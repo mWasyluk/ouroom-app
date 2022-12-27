@@ -13,7 +13,6 @@ export const appTitle = 'OuRoom'
 
 function Root() {
   const { height, width } = useWindowDimensions();
-  const margin = 10;
 
   let [user, setUser] = useState(null)
   let [userStatus, setUserStatus] = useState('offline')
@@ -56,7 +55,6 @@ function Root() {
       }
 
       else if (new Account(user).profile.isComplete()) {
-        console.log('Account Profile is complete. Pushing App view...');
         setView(
           <>
             <Header user={user} userStatus={userStatus} isMenuInvoked={isMenuInvoked} setMenuInvoked={setMenuInvoked}></Header>
@@ -67,17 +65,16 @@ function Root() {
       }
     }
 
-    console.log("Setting up the view...")
     checkUserAndSetView()
   }, [user, userStatus, isMenuInvoked]);
 
   return (
     <div className="root" style={{
-      margin: margin + "px",
-      width: width - 2 * margin,
-      height: height - 2 * margin,
-      minWidth: "500px"
+      width: width,
+      height: height,
+      minWidth: "200px"
     }}>
+      <div className='sliding-background'></div>
       {view}
     </div >
   );
