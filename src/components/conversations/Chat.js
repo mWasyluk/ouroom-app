@@ -2,6 +2,7 @@ import '../../styles/Chat.css'
 import React from 'react';
 import { AiOutlineSend } from 'react-icons/ai';
 import ConversationService from '../../services/ConversationService';
+import MessagesGroup from './MessagesGroup';
 
 export default class Chat extends React.Component {
     constructor(props) {
@@ -66,14 +67,13 @@ export default class Chat extends React.Component {
     }
 
     render() {
-        let conversation = this.state.conversation;
-        let messagesList = []
-        if (conversation) {
-            messagesList = conversation.messages.map(message => {
-                let positionClass = message.sender === this.state.user.profile.id ?
-                    'sent' : 'received'
-                return <div className={positionClass} key={message.id}>{message.content}</div>
-            });
+        const messagesGroups = this.state.conversation.messagesGroups;
+        let groupsOfMessagesView = []
+        if (messagesGroups.length) {
+            groupsOfMessagesView = messagesGroups.map((group, index) => {
+                const site = group.sender.id === this.state.user.profile.id ? 'right' : 'left';
+                return <MessagesGroup key={index} messages={group.messages} sender={group.sender} site={site}></MessagesGroup>
+            })
         }
 
         return (
@@ -83,7 +83,7 @@ export default class Chat extends React.Component {
                     <button className='send' type="submit"><AiOutlineSend size={'2.5em'} /></button>
                 </form>
                 <div onScroll={this.handleScroll} className='messages'>
-                    {messagesList}
+                    {groupsOfMessagesView}
                 </div>
             </div>
         )

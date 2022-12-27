@@ -19,4 +19,23 @@ export default class Conversation {
         name += participators[participators.length - 1].firstName;
         return name;
     }
+
+    get messagesGroups() {
+        let groups = []
+        if (this.participators.length && this.messages.length) {
+            let sender = {}
+            let groupMessages = []
+            for (const m of this.messages) {
+                const lastSender = sender;
+                sender = this.participators.filter(p => p.id === m.sender)[0];
+                if (groupMessages.length && lastSender !== sender) {
+                    groups.push({ sender: lastSender, messages: groupMessages })
+                    groupMessages = [];
+                }
+                groupMessages.unshift(m);
+            }
+            groups.push({ sender: sender, messages: groupMessages })
+        }
+        return groups;
+    }
 }

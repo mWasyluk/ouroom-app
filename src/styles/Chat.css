@@ -5,9 +5,11 @@
 }
 
 .content-bar {
+    background-color: rgb(0, 255, 207, 0.4);
+
     display: flex;
     justify-content: center;
-
+    z-index: 9;
     padding: 10px;
 }
 
@@ -32,25 +34,102 @@
     display: flex;
     flex-direction: column-reverse;
     overflow-y: auto;
+    padding-bottom: 8px;
+    padding-top: 8px;
 }
 
-.messages * {
-    margin: 5px 10px;
-    padding: 10px;
-    border-radius: 10px;
-    width: fit-content;
+.messages-group {
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    padding: 5px 0;
 }
 
-.messages .sent {
-    background-color: rgb(201, 201, 201);
-    margin-left: 100px;
+.messages-group .group-bottom {
+    display: flex;
+    flex-direction: row;
+    align-content: flex-start;
+}
+
+.messages-group .group-top {
+    margin: 0 70px;
+}
+
+.messages-group.left-group {
+    align-self: flex-start;
+}
+
+.messages-group.left-group>* {
+    justify-content: start;
+}
+
+.messages-group.right-group>* {
+    justify-content: end;
+}
+
+.messages-group.left-group .group-bottom {
+    flex-direction: row-reverse;
+}
+
+.messages-group.right-group {
     align-self: flex-end;
+}
+
+.messages-group.left-group .group-message,
+.messages-group.left-group .group-top {
+    text-align: start;
+}
+
+.messages-group.right-group .group-message,
+.messages-group.right-group .group-top {
     text-align: end;
 }
 
-.messages .received {
-    margin-right: 100px;
-    background-color: rgb(136, 211, 255);
-    align-self: flex-start;
-    text-align: start;
+.messages-group .group-messages {
+    display: flex;
+    flex-direction: column;
+    max-width: 50vw;
+}
+
+.messages-group.right-group .group-messages {
+    align-items: flex-end;
+}
+
+.messages-group .group-avatar {
+    margin: 0 10px;
+}
+
+.messages-group .group-message {
+    margin-top: 2px;
+    width: fit-content;
+    max-width: 90%;
+    word-wrap: break-word;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.messages-group .group-message,
+.messages-group .group-avatar {
+    box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.messages-group.left-group .group-message {
+    background-color: rgb(179, 203, 255);
+    padding: 10px 20px 10px 10px;
+    border-radius: 10px 20px 20px 10px;
+}
+
+.messages-group.right-group .group-message {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 10px 10px 10px 20px;
+    border-radius: 20px 10px 10px 20px;
+}
+
+@media screen and (max-width: 820px) {
+    .messages-group {
+        width: 100%;
+    }
+
+    .messages-group .group-messages {
+        max-width: 70vw;
+    }
 }
