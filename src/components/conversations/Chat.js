@@ -1,8 +1,7 @@
 import '../../styles/Chat.css'
 import React from 'react';
 import { AiOutlineSend } from 'react-icons/ai';
-import { getConversationMessages, postConversationMessage } from '../../utils/fetch';
-import AuthService from '../../services/AuthService';
+import ConversationService from '../../services/ConversationService';
 
 export default class Chat extends React.Component {
     constructor(props) {
@@ -11,7 +10,6 @@ export default class Chat extends React.Component {
         this.state = {
             user: props.user,
             conversation: props.conversation,
-            authToken: props.authToken,
             page: 0
         }
     }
@@ -32,16 +30,21 @@ export default class Chat extends React.Component {
 
         if (isTop) {
             let requiredPage = parseInt(this.state.conversation.messages.length / messagesInPage, 10);
-            let messages = await getConversationMessages(AuthService.getAuthToken(), this.state.conversation.id, requiredPage);
+            let messages = await ConversationService.getConversationMessages(this.state.conversation.id, requiredPage);
 
-            let filtered = messages.filter(message =>
-                this.state.conversation.messages.filter((m) => m.id === message.id).length === 0
-            );
+            if (messages) {
+                let filtered = messages.filter(message =>
+                    this.state.conversation.messages.filter((m) => m.id === message.id).length === 0
+                );
 
-            if (filtered.length > 0) {
-                this.state.conversation.messages = [...this.state.conversation.messages, ...filtered];
-                this.forceUpdate()
-            };
+                if (filtered.length > 0) {
+                    const messages = [...this.state.conversation.messages, ...filtered];
+                    const conversation = this.state.conversation;
+                    conversation.messages = messages;
+                    this.setState({ conversation: conversation })
+                    this.forceUpdate()
+                };
+            }
         }
     }
 
@@ -57,7 +60,8 @@ export default class Chat extends React.Component {
             return;
         }
 
-        postConversationMessage(AuthService.getAuthToken(), this.state.conversation.id, content)
+        ConversationService.sendConversationMessage(this.state.conversation.id, content)
+
         e.target[0].value = ''
     }
 

@@ -2,11 +2,11 @@ import '../styles/App.css'
 import React from 'react';
 import Chat from './conversations/Chat';
 import ConversationsList from './conversations/ConversationsList';
-import { getConversationMessages, getUserConversations } from '../utils/fetch'
 import '../utils/websocket.js'
 import WebSocketConnection from '../utils/websocket.js';
 import Message from '../domains/Message';
-import AuthService from '../services/AuthService';
+import AppWelcome from './AppWelcome';
+import ConversationService from '../services/ConversationService';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -18,9 +18,15 @@ export default class App extends React.Component {
             targetConversation: null
         }
 
-        getUserConversations(AuthService.getAuthToken()).then(conversations =>
-            this.setState({ conversations: conversations })
-        );
+        this.setConversations();
+    }
+
+    setConversations = async () => {
+        const conversations = await ConversationService.getUserConversations()
+        if (conversations) {
+            this.setState({ conversations: conversations });
+        }
+        else this.setState({ conversations: [] });
     }
 
     subsciptionCallback = (plainMessage) => {
@@ -39,10 +45,13 @@ export default class App extends React.Component {
     }
 
     async handleConversationSelection(conversation) {
-        let messages = await getConversationMessages(AuthService.getAuthToken(), conversation.id);
+        let messages = await ConversationService.getConversationMessages(conversation.id);
         let target = this.state.conversations
             .filter(conv => conv.id === conversation.id)[0]
-        target.messages = messages;
+        if (messages)
+            target.messages = messages;
+        else
+            target.messages = []
         this.setState({ targetConversation: target })
     }
 
@@ -51,7 +60,9 @@ export default class App extends React.Component {
             <div className="logged" style={this.props.styles}>
                 <WebSocketConnection topicId={this.state.user.profile.id} subscriptionCallback={this.subsciptionCallback.bind(this)} statusChangeCallback={this.connectionStatusChangeCallback.bind(this)} />
                 <ConversationsList user={this.state.user} conversations={this.state.conversations} select={this.handleConversationSelection.bind(this)} />
-                <Chat user={this.state.user} conversation={this.state.targetConversation} authToken={this.state.authToken}></Chat>
+                {this.state.targetConversation ?
+                    <Chat user={this.state.user} conversation={this.state.targetConversation} ></Chat> :
+                    <AppWelcome />}
             </div >
 
         )
