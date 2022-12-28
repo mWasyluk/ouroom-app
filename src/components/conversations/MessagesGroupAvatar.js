@@ -7,7 +7,7 @@ const MessagesGroupAvatar = (props) => {
         borderRadius: '50%',
     }
     return (
-        <img src={avatar} style={style} className={props.className}></img>
+        <img alt='' src={avatar} style={style} className={props.className}></img>
     )
 }
 

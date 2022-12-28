@@ -5,10 +5,6 @@ import '../../styles/ConversationsList.css'
 import CreateConversationButton from "./CreateConversationButton";
 
 export default class ConversationsList extends Component {
-    state = {
-        friends: [],
-    }
-
     constructor(props) {
         super(props)
 
@@ -18,6 +14,10 @@ export default class ConversationsList extends Component {
             select: props.select,
             selectedConversation: null
         })
+    }
+
+    componentDidMount() {
+        this.baseWidth = this.state.conversations[0]
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -41,7 +41,7 @@ export default class ConversationsList extends Component {
                 selectedConversation: selected
             },
             () => {
-                this.setColor(this.state.selectedConversation.id, '#47a3ff')
+                this.setColor(this.state.selectedConversation.id, '#00ffcf')
                 this.state.select(this.state.selectedConversation)
             }
         );

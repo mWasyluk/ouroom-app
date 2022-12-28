@@ -29,7 +29,7 @@ const LoginForm = (props) => {
     }
 
     return (
-        <div className="popup-form">
+        <div className="popup-form white05">
             <span>Zaloguj się do<strong>{appTitle}!</strong></span>
             <input type="text" name="email" id="email" placeholder="E-mail..." />
             <input type="password" name="password" id="password" placeholder="Hasło..." />

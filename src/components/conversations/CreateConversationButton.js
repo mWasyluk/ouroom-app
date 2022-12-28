@@ -41,13 +41,6 @@ const CreateConversationButton = (props) => {
         }
     }
 
-    let popupChilder = [
-        <span>Wprowadź identyfikator(y) osób, które będą miały dostęp do konwersacji:</span>,
-        generateFields(),
-        <BsPlusCircle style={{ alignSelf: 'center' }} onClick={addField}></BsPlusCircle>,
-        <button type='submit' onClick={handleCreateConversation}>Stwórz konwersację</button>
-    ]
-
     const handleSwitch = (e) => {
         const targetClassName = e.target.className;
         const currentTargetClassName = e.currentTarget.className;
@@ -60,12 +53,15 @@ const CreateConversationButton = (props) => {
     return (
         <>
             <div className='new-conversation-button' onClick={handleSwitch}>
-                <BsPlusCircle></BsPlusCircle>
-                <span>Dodaj nową konwersację</span>
+                <BsPlusCircle size={'30px'}></BsPlusCircle>
+                <span>Nowa konwersacja</span>
             </div>
             <div className='popup-background' onClick={handleSwitch} style={{ display: isClicked ? 'initial' : 'none' }}>
-                <div className='popup-form'>
-                    {popupChilder}
+                <div className='popup-form white08'>
+                    <span>Wprowadź identyfikator(y) osób, które będą miały dostęp do konwersacji:</span>
+                    {generateFields()}
+                    <BsPlusCircle style={{ alignSelf: 'center' }} onClick={addField}></BsPlusCircle>
+                    <button type='submit' onClick={handleCreateConversation}>Stwórz konwersację</button>
                 </div>
             </div>
         </>

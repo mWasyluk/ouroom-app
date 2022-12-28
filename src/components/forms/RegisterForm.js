@@ -24,7 +24,7 @@ const RegisterForm = (props) => {
     }
 
     return (
-        <div className="popup-form">
+        <div className="popup-form white05">
             <span>Zarejestruj się w<strong>{appTitle}!</strong></span>
             <input type="text" name="registration-email" id="registration-email" placeholder="E-mail..." />
             <input type="password" name="registration-password" id="registration-password" placeholder="Hasło..." />

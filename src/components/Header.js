@@ -12,9 +12,9 @@ export default function Header(props) {
         let colorStyle = { backgroundColor: 'grey' }
         if (props.userStatus) {
             if (props.userStatus === 'offline') {
-                colorStyle = { backgroundColor: 'red' }
+                colorStyle = { backgroundColor: '#b92e2e' }
             } else if (props.userStatus === 'online') {
-                colorStyle = { backgroundColor: 'green' }
+                colorStyle = { backgroundColor: '#019301' }
             }
         }
         const status = <span className='status' style={colorStyle}></span>;
@@ -35,7 +35,7 @@ export default function Header(props) {
     return (
         <div className="Header">
             <div className='left'>
-                <CgMenuGridR onClick={handleClick} size={'36'} />
+                <CgMenuGridR className='menu-button' onClick={handleClick} size={'36'} />
                 {userHeader}
             </div>
             <div className='right'>

@@ -19,7 +19,7 @@ const ProfileForm = (props) => {
     }
 
     return (
-        <div className="popup-form">
+        <div className="popup-form white05">
             <span>Stwórz swój profil, aby w pełni korzystać z<strong>{appTitle}</strong></span>
             <input type="text" name="first-name" id="first-name" placeholder="Imię..." />
             <input type="text" name="last-name" id="last-name" placeholder="Nazwisko..." />

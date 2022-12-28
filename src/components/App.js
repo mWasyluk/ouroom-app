@@ -7,6 +7,7 @@ import WebSocketConnection from '../utils/websocket.js';
 import Message from '../domains/Message';
 import AppWelcome from './AppWelcome';
 import ConversationService from '../services/ConversationService';
+import Conversation from '../domains/Conversation';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -52,7 +53,7 @@ export default class App extends React.Component {
             target.messages = messages;
         else
             target.messages = []
-        this.setState({ targetConversation: target })
+        this.setState({ targetConversation: new Conversation(target) })
     }
 
     render() {
