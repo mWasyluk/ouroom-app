@@ -1,8 +1,8 @@
-import StorageService from "./StorageService";
-import AuthDetails from "../domains/AuthDetails";
-import { apiUrl } from "../utils/api-dao";
-import axios from 'axios'
 import Account from "../domains/Account";
+import AuthDetails from "../domains/AuthDetails";
+import StorageService from "./StorageService";
+import { apiUrl } from "../utils/server-info";
+import axios from 'axios'
 
 const AuthService = {
     async login({ email, password } = {}, rememberMe = false) {

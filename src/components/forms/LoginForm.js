@@ -1,9 +1,10 @@
-import React from 'react'
-import AuthDetails from '../../domains/AuthDetails';
 import '../../styles/form-styles.css'
+
+import AuthDetails from '../../domains/AuthDetails';
 import AuthService from '../../services/AuthService';
-import { useState } from 'react';
+import React from 'react'
 import { appTitle } from '../../Root';
+import { useState } from 'react';
 
 const LoginForm = (props) => {
     const [rememberMe, setRememberMe] = useState(false);
