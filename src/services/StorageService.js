@@ -20,7 +20,6 @@ const StorageService = {
         }
 
         cookie.set(authTokenCookieName, token, options);
-        console.log('auth-token cookie set to', token, 'with options', options);
     },
 
     getAuthToken() {

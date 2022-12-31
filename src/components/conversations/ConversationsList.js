@@ -1,8 +1,9 @@
+import '../../styles/ConversationsList.css'
+
 import { Component } from "react";
 import Conversation from "../../domains/Conversation";
 import ConversationItem from "./ConversationItem";
-import '../../styles/ConversationsList.css'
-import CreateConversationButton from "./CreateConversationButton";
+import NewConversationButton from "./new/NewConversationButton";
 
 export default class ConversationsList extends Component {
     constructor(props) {
@@ -68,7 +69,7 @@ export default class ConversationsList extends Component {
             )
         return (
             <div className="conversations-list">
-                <CreateConversationButton user={this.state.user}></CreateConversationButton>
+                <NewConversationButton userId={this.state.user.profile.id} />
                 {list}
             </div>
         )

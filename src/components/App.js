@@ -1,13 +1,14 @@
 import '../styles/App.css'
-import React from 'react';
-import Chat from './conversations/Chat';
-import ConversationsList from './conversations/ConversationsList';
 import '../utils/websocket.js'
-import WebSocketConnection from '../utils/websocket.js';
-import Message from '../domains/Message';
+
 import AppWelcome from './AppWelcome';
-import ConversationService from '../services/ConversationService';
+import Chat from './chat/Chat';
 import Conversation from '../domains/Conversation';
+import ConversationService from '../services/ConversationService';
+import ConversationsList from './conversations/ConversationsList';
+import Message from '../domains/Message';
+import React from 'react';
+import WebSocketConnection from '../utils/websocket.js';
 
 export default class App extends React.Component {
     constructor(props) {

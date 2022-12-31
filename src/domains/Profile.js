@@ -1,7 +1,9 @@
+import Img from '../resources/wip-avatar.jpg'
+
 export default class Profile {
     constructor({ id, avatar, lastName, firstName } = {}) {
         this.id = id;
-        this.avatar = avatar;
+        this.avatar = { imageUrl: Img };
         this.lastName = lastName;
         this.firstName = firstName;
     }

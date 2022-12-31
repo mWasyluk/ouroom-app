@@ -1,8 +1,8 @@
-import axios from "axios";
+import AuthService from "./AuthService";
 import Conversation from "../domains/Conversation";
 import Message from "../domains/Message";
-import { apiUrl } from "../utils/api-dao";
-import AuthService from "./AuthService";
+import { apiUrl } from "../utils/server-info";
+import axios from "axios";
 
 const ConversationService = {
     async createConversation(conversationParticipators = []) {

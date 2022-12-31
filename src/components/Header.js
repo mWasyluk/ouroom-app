@@ -1,7 +1,8 @@
 import '../styles/Header.css'
-import { CgMenuGridR } from 'react-icons/cg';
-import Img from '../resources/wip-avatar.jpg'
+
 import { useEffect, useState } from 'react';
+
+import { CgMenuGridR } from 'react-icons/cg';
 
 export default function Header(props) {
     let [userHeader, setUserHeader] = useState()
@@ -21,7 +22,7 @@ export default function Header(props) {
         const userFullName = props.user.profile.firstName + ' ' + props.user.profile.lastName;
         setUserHeader(
             <div className='user'>
-                <img alt='User Avatar' className='avatar' src={Img}></img>
+                <img alt='User Avatar' className='avatar' src={props.user.profile.avatar.imageUrl}></img>
                 <span className='name'>{userFullName}</span>
                 {status}
             </div>

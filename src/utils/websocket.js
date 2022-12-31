@@ -32,7 +32,6 @@ export default class WebSocketConnection extends React.Component {
     }
 
     stompOnConnectCallBack = () => {
-        console.log("WebSocket is connected.")
         this.state.statusChangeCallback(true)
         this.stompClient.subscribe(
             '/topic/' + this.state.topicId,

@@ -1,13 +1,15 @@
 import './styles/Root.css';
-import useWindowDimensions from './utils/window-resizer';
-import Header from './components/Header';
-import App from './components/App';
-import Menu from './components/Menu';
-import AuthService from './services/AuthService';
+
 import { useEffect, useState } from 'react';
+
 import Account from './domains/Account';
+import App from './components/App';
 import AuthPopup from './components/forms/AuthPopup'
+import AuthService from './services/AuthService';
+import Header from './components/Header';
+import Menu from './components/Menu';
 import ProfileForm from './components/forms/ProfileForm';
+import useWindowDimensions from './utils/window-resizer';
 
 export const appTitle = 'OuRoom'
 
@@ -43,7 +45,6 @@ function Root() {
       }
 
       else if (!user || !user.profile) {
-        console.warn('User has no profile', user, 'but isAuthenticated', isAuth, '. Requesting Account...');
         const auth = await AuthService.requestAccount();
         if (auth.profile)
           setUser(auth);
