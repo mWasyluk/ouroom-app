@@ -3,7 +3,7 @@ import '../../styles/ConversationsList.css'
 import { Component } from "react";
 import Conversation from "../../domains/Conversation";
 import ConversationItem from "./ConversationItem";
-import NewConversationButton from "./new/NewConversationButton";
+import NewConversationButton from "./NewConversationButton";
 
 export default class ConversationsList extends Component {
     constructor(props) {

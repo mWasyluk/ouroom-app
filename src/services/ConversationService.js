@@ -1,6 +1,6 @@
 import AuthService from "./AuthService";
-import Conversation from "../domains/Conversation";
-import Message from "../domains/Message";
+import Conversation from "../models/Conversation";
+import Message from "../models/Message";
 import { apiUrl } from "../utils/server-info";
 import axios from "axios";
 

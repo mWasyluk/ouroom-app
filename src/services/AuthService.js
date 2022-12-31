@@ -1,5 +1,5 @@
-import Account from "../domains/Account";
-import AuthDetails from "../domains/AuthDetails";
+import Account from "../models/Account";
+import AuthDetails from "../models/AuthDetails";
 import StorageService from "./StorageService";
 import { apiUrl } from "../utils/server-info";
 import axios from 'axios'
