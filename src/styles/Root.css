@@ -22,7 +22,7 @@ body {
   position: absolute;
   width: 7000px;
   height: 100vh;
-  background-image: url(../resources/blue-background-long.jpg);
+  background-image: url(../assets/blue-background-long.jpg);
   animation: slide 100s linear infinite;
   z-index: -99;
 }

@@ -1,7 +1,7 @@
 import '../../styles/ConversationsList.css'
 
 import { Component } from "react";
-import Conversation from "../../domains/Conversation";
+import Conversation from "../../models/Conversation";
 import ConversationItem from "./ConversationItem";
 import NewConversationButton from "./NewConversationButton";
 

@@ -2,13 +2,13 @@ import './styles/Root.css';
 
 import { useEffect, useState } from 'react';
 
-import Account from './domains/Account';
+import Account from './models/Account';
 import App from './components/App';
-import AuthPopup from './components/forms/AuthPopup'
+import AuthPopup from './components/popups/AuthPopup'
 import AuthService from './services/AuthService';
 import Header from './components/Header';
 import Menu from './components/Menu';
-import ProfileForm from './components/forms/ProfileForm';
+import ProfileForm from './components/popups/ProfileForm';
 import useWindowDimensions from './utils/window-resizer';
 
 export const appTitle = 'OuRoom'

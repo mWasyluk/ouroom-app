@@ -1,7 +1,8 @@
 import '../../styles/form-styles.css'
-import ProfileDetails from "../../domains/ProfileDetails";
-import { appTitle } from "../../Root";
+
+import ProfileDetails from "../../models/ProfileDetails";
 import ProfileService from '../../services/ProfileService';
+import { appTitle } from "../../Root";
 
 const ProfileForm = (props) => {
     const handleSubmit = async () => {

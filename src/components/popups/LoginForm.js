@@ -1,6 +1,6 @@
 import '../../styles/form-styles.css'
 
-import AuthDetails from '../../domains/AuthDetails';
+import AuthDetails from '../../models/AuthDetails';
 import AuthService from '../../services/AuthService';
 import React from 'react'
 import { appTitle } from '../../Root';

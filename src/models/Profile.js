@@ -1,4 +1,4 @@
-import Img from '../resources/wip-avatar.jpg'
+import Img from '../assets/wip-avatar.jpg'
 
 export default class Profile {
     constructor({ id, avatar, lastName, firstName } = {}) {

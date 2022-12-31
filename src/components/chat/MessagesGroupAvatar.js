@@ -1,4 +1,4 @@
-import avatar from '../../resources/wip-avatar.jpg'
+import avatar from '../../assets/wip-avatar.jpg'
 
 const MessagesGroupAvatar = (props) => {
     const style = {

@@ -1,4 +1,4 @@
-import avatar from "../resources/wip-conversation.png"
+import avatar from "../assets/wip-conversation.png"
 
 export default class Conversation {
     constructor(conversation) {

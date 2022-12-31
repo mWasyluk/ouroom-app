@@ -3,10 +3,10 @@ import '../utils/websocket.js'
 
 import AppWelcome from './AppWelcome';
 import Chat from './chat/Chat';
-import Conversation from '../domains/Conversation';
+import Conversation from '../models/Conversation';
 import ConversationService from '../services/ConversationService';
 import ConversationsList from './conversations/ConversationsList';
-import Message from '../domains/Message';
+import Message from '../models/Message';
 import React from 'react';
 import WebSocketConnection from '../utils/websocket.js';
 
