@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-import ProfileItem from "./ProfileItem";
 import ProfileService from "../../services/ProfileService";
 import ProfilesList from "../conversations/ProfilesList";
 

@@ -1,7 +1,7 @@
 import '../../styles/popup.css'
 
 const FormPopup = (props = {
-    addClassName: '', outsideBg: true, insideBg: true,
+    outsideBg: true, insideBg: true,
     onClickBg: () => { },
     onSubmit: () => { }
 }) => {
@@ -21,7 +21,7 @@ const FormPopup = (props = {
     }
 
     return (
-        <div className={"popup " + props.addClassName} >
+        <div className={"popup"} >
             {props.outsideBg && bg}
             <form className='popup-content' style={insideStyle} onSubmit={props.onSubmit}>
                 {props.children}

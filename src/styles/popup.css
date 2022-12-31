@@ -1,5 +1,5 @@
 * {
-    --row-gap: 40px;
+    --row-gap: 0px;
 }
 
 .popup {
@@ -35,16 +35,74 @@
 
     min-width: 300px;
     width: 30vw;
-    padding: 80px 20px;
+    padding: 20px 20px;
 
     border-radius: 20px;
     border: 3px solid rgb(255, 255, 255);
 }
 
+.popup-group {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+
+.popup-content * {
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.popup-content button,
+.popup-content input {
+    border-style: solid;
+    border-color: rgb(46, 83, 204);
+}
+
+.popup-content button {
+    width: 80%;
+    min-width: 200px;
+    align-self: center;
+}
+
+.popup-content button:hover,
+.popup-content input:hover {
+    background-color: rgb(224, 224, 224);
+}
+
+.popup-content button:active {
+    background-color: rgb(204, 204, 204);
+}
+
+.popup-content input:focus {
+    /* outline: none !important; */
+}
+
+#remember-me {
+    align-self: flex-end;
+    padding: 0;
+    margin: 0;
+}
+
+.text-button {
+    font-size: 1.1em;
+    color: rgb(1, 13, 194);
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+
+.text-button:hover {
+    color: rgb(50, 60, 196);
+}
+
+.text-button:active {
+    color: rgb(110, 114, 172);
+}
 
 .dropdown-options {
     height: 0px;
     margin-top: calc(-1 * var(--row-gap));
+    padding: 0;
 }
 
 .dropdown-options ul {
