@@ -1,9 +1,12 @@
-import Img from '../assets/wip-avatar.jpg'
+import { getAvatarImageUrlById, getDefaultAvatarImageUrl } from '../utils/avatars-url-resolver';
 
 export default class Profile {
     constructor({ id, avatar, lastName, firstName } = {}) {
         this.id = id;
-        this.avatar = { imageUrl: Img };
+        if (avatar)
+            this.avatar = { imageUrl: getAvatarImageUrlById(avatar.id) }
+        else
+            this.avatar = { imageUrl: getDefaultAvatarImageUrl() }
         this.lastName = lastName;
         this.firstName = firstName;
     }
