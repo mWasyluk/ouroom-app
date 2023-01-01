@@ -38,18 +38,22 @@ const InputDropdown = (props) => {
     }
 
     useEffect(() => {
+        if (foundProfiles.length > 0) {
+            setDisplayDropdown(true);
+        } else {
+            setDisplayDropdown(false)
+        }
+    }, [foundProfiles])
+
+    useEffect(() => {
         async function fetchProfiles() {
             const searchResult = await ProfileService.searchProfilesByNamesPrefixes(searchPrefixes);
             setFoundProfiles(searchResult);
-            if (searchResult.length === 0) {
-                setDisplayDropdown(false)
-            }
         }
-        fetchProfiles();
-        if (foundProfiles.length > 0)
-            setDisplayDropdown(true);
+        if (searchPrefixes[0] !== '' || searchPrefixes[1] !== '')
+            fetchProfiles();
         else
-            setDisplayDropdown(false)
+            setFoundProfiles([])
     }, [searchPrefixes])
 
     const onClickBg = (e) => {
