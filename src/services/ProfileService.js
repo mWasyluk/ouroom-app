@@ -2,6 +2,7 @@ import AuthService from "./AuthService"
 import Profile from "../models/Profile";
 import { apiUrl } from "../utils/server-info";
 import axios from "axios";
+import { baseAvatarsUrl } from "../utils/avatars-url-resolver";
 
 const ProfileService = {
     async createProfile({ firstName, lastName, birthDate, avatar } = {}) {
@@ -14,6 +15,13 @@ const ProfileService = {
         const response = await requestProfilesByNamesPrefixes(prefixes);
         return response.status === 200
             ? response.data.body.map((profile) => new Profile(profile))
+            : null;
+    },
+
+    async updateProfileAvatar(formData) {
+        const response = await requestAvatarUpdate(formData);
+        return response.status === 200
+            ? new Profile(response.data.body)
             : null;
     }
 }
@@ -47,6 +55,19 @@ async function requestProfilesByNamesPrefixes(prefixes = []) {
         config).catch(err => {
             return { status: 400 }
         });
+}
+
+async function requestAvatarUpdate(form) {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'content-type': 'multipart/form-data',
+            'Authorization': AuthService.getAuthToken()
+        }
+    }
+    return await axios.post(
+        baseAvatarsUrl + "/update", form, config
+    ).catch((error) => ({ status: 400 }));
 }
 
 export default ProfileService;
