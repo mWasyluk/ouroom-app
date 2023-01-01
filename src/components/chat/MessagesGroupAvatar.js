@@ -1,5 +1,3 @@
-import avatar from '../../assets/wip-avatar.jpg'
-
 const MessagesGroupAvatar = (props) => {
     const style = {
         width: '48px',
@@ -7,7 +5,7 @@ const MessagesGroupAvatar = (props) => {
         borderRadius: '50%',
     }
     return (
-        <img alt='' src={avatar} style={style} className={props.className}></img>
+        <img alt='' src={props.url} style={style} className={props.className}></img>
     )
 }
 
