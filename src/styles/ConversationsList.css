@@ -36,6 +36,7 @@
 .conversation {
     display: block;
     width: 24vw;
+    min-width: 200px;
     max-width: 440px;
     background-color: rgba(255, 255, 255, 0.9);
     padding: 10px;

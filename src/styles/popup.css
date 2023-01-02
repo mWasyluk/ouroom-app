@@ -33,8 +33,9 @@
     left: 50%;
     transform: translate(-50%, -50%);
 
-    min-width: 300px;
+    min-width: 315px;
     width: 30vw;
+    max-width: 400px;
     padding: 20px 20px;
 
     border-radius: 20px;
