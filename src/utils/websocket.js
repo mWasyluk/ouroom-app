@@ -1,9 +1,9 @@
 import React from 'react';
 import SockJS from 'sockjs-client'
 import { Stomp } from '@stomp/stompjs'
-import { hostname } from './server-info';
+import { apiUrl } from './server-info';
 
-const serverUrl = 'http://' + hostname + ':8080/ouroom';
+const serverUrl = apiUrl + '/ouroom';
 
 export default class WebSocketConnection extends React.Component {
     constructor(props) {
