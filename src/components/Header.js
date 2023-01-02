@@ -4,33 +4,40 @@ import { useEffect, useState } from 'react';
 
 import { CgMenuGridR } from 'react-icons/cg';
 
-export default function Header(props) {
+const Header = (props) => {
+    const {
+        user = {},
+        userStatus = 'offline',
+        isMenuInvoked = false,
+        setMenuInvoked = () => { }
+    } = props
+
     let [userHeader, setUserHeader] = useState()
 
     useEffect(() => {
-        if (!props.user) return;
+        if (!user) return;
 
         let colorStyle = { backgroundColor: 'grey' }
-        if (props.userStatus) {
-            if (props.userStatus === 'offline') {
+        if (userStatus) {
+            if (userStatus === 'offline') {
                 colorStyle = { backgroundColor: '#b92e2e' }
-            } else if (props.userStatus === 'online') {
+            } else if (userStatus === 'online') {
                 colorStyle = { backgroundColor: '#019301' }
             }
         }
         const status = <span className='status' style={colorStyle}></span>;
-        const userFullName = props.user.profile.firstName + ' ' + props.user.profile.lastName;
+        const userFullName = user.profile.firstName + ' ' + user.profile.lastName;
         setUserHeader(
             <div className='user'>
-                <img alt='User Avatar' className='avatar' src={props.user.profile.avatar.imageUrl}></img>
+                <img alt='User Avatar' className='avatar' src={user.profile.avatar.imageUrl}></img>
                 <span className='name'>{userFullName}</span>
                 {status}
             </div>
         )
-    }, [props.user, props.userStatus])
+    }, [user, userStatus])
 
     const handleClick = () => {
-        props.setMenuInvoked(!props.isMenuInvoked)
+        setMenuInvoked(!isMenuInvoked)
     }
 
     return (
@@ -45,3 +52,5 @@ export default function Header(props) {
         </div >
     )
 }
+
+export default Header;

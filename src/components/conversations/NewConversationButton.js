@@ -6,6 +6,10 @@ import NewConversationPopup from './NewConversationPopup'
 import { useState } from 'react'
 
 const NewConversationButton = (props) => {
+    const {
+        userId = ''
+    } = props
+
     const [displayPopup, setDisplayPopup] = useState(false);
 
     const handleSwitch = () => {
@@ -19,7 +23,7 @@ const NewConversationButton = (props) => {
                 <span>Nowa konwersacja</span>
             </div>
             {displayPopup
-                ? <NewConversationPopup dismissPopup={handleSwitch} userId={props.userId} />
+                ? <NewConversationPopup dismissPopup={handleSwitch} userId={userId} />
                 : null}
         </>
     )

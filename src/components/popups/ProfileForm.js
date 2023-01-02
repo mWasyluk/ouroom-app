@@ -4,6 +4,10 @@ import ProfileService from '../../services/ProfileService';
 import { appTitle } from "../../Root";
 
 const ProfileForm = (props) => {
+    const {
+        setUser = () => { }
+    } = props;
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const firstName = document.getElementById('first-name').value.trim();
@@ -14,7 +18,7 @@ const ProfileForm = (props) => {
         if (profileDetails.isValid()) {
             let profileResponse = await ProfileService.createProfile(profileDetails);
             if (profileResponse !== null) {
-                props.setUser(profileResponse);
+                setUser(profileResponse);
             }
         }
     }

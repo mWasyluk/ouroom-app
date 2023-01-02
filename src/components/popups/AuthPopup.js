@@ -12,8 +12,8 @@ const AuthPopup = () => {
     return (
         <>
             {isLogin ?
-                <LoginForm switch={switchView} /> :
-                <RegisterForm switch={switchView} />
+                <LoginForm switchView={switchView} /> :
+                <RegisterForm switchView={switchView} />
             }
         </>
     )

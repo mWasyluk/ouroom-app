@@ -1,8 +1,9 @@
 import '../../styles/Chat.css'
-import React from 'react';
+
 import { AiOutlineSend } from 'react-icons/ai';
 import ConversationService from '../../services/ConversationService';
 import MessagesGroup from './MessagesGroup';
+import React from 'react';
 
 export default class Chat extends React.Component {
     constructor(props) {

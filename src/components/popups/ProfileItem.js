@@ -1,5 +1,8 @@
 const ProfileItem = (props) => {
-    const { profile, onClick } = props;
+    const {
+        profile = {},
+        onClick = () => { }
+    } = props;
 
     return (
         <li key={profile.id} id={profile.id} className='profile-item' onClick={onClick}>

@@ -1,7 +1,10 @@
 import ProfileItem from "../popups/ProfileItem";
 
 const ProfilesList = (props) => {
-    const { profiles, onItemClick } = props;
+    const {
+        profiles = [],
+        onItemClick = () => { }
+    } = props;
 
     return (
         <ul className="profile-list">

@@ -5,7 +5,11 @@ import ProfilesList from "./ProfilesList";
 import { useState } from "react";
 
 const NewConversationPopup = (props) => {
-    const { dismissPopup, userId } = props;
+    const {
+        dismissPopup = () => { },
+        userId = ''
+    } = props;
+
     const [selectedProfiles, setSelectedProfiles] = useState([])
 
     const selectProfile = (profile) => {

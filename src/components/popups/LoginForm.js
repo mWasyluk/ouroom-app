@@ -6,6 +6,10 @@ import { appTitle } from '../../Root';
 import { useState } from 'react';
 
 const LoginForm = (props) => {
+    const {
+        switchView = () => { }
+    } = props;
+
     const [rememberMe, setRememberMe] = useState(false);
 
     const handleSubmit = async (e) => {
@@ -42,7 +46,7 @@ const LoginForm = (props) => {
 
             <p className='footer-text'>
                 Nie masz jeszcze konta?
-                <strong onClick={props.switch} className='text-button'>Zarejestruj się</strong>
+                <strong onClick={switchView} className='text-button'>Zarejestruj się</strong>
             </p>
         </FormPopup>
     )

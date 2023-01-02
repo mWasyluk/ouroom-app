@@ -4,7 +4,10 @@ import ProfileService from "../../services/ProfileService";
 import ProfilesList from "../conversations/ProfilesList";
 
 const InputDropdown = (props) => {
-    const { selectProfile } = props;
+    const {
+        selectProfile = () => { }
+    } = props;
+
     const [displayDropdown, setDisplayDropdown] = useState(false);
     const [foundProfiles, setFoundProfiles] = useState([])
     const [searchPrefixes, setSearchPrefixes] = useState(['', '']);

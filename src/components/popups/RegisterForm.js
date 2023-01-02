@@ -5,6 +5,10 @@ import RegistrationDetails from '../../models/RegistrationDetails';
 import { appTitle } from '../../Root';
 
 const RegisterForm = (props) => {
+    const {
+        switchView = () => { }
+    } = props;
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const email = document.getElementById('registration-email').value.trim();
@@ -17,7 +21,7 @@ const RegisterForm = (props) => {
             let auth = await AuthService.register({ email: registrationDetails.email, password: registrationDetails.encodedPassword })
             if (auth !== null) {
                 console.log("Account has been registered.", auth)
-                props.switch();
+                switchView();
             } else {
                 console.log("Account could not be registered.")
             }
@@ -35,7 +39,7 @@ const RegisterForm = (props) => {
             </div>
             <p className='footer-text'>
                 Masz już konto?
-                <strong onClick={props.switch} className='text-button'>Zaloguj się</strong>
+                <strong onClick={switchView} className='text-button'>Zaloguj się</strong>
             </p>
         </FormPopup >
     )
