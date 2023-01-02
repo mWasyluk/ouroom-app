@@ -1,7 +1,7 @@
 import ConversationService from "../../services/ConversationService";
 import FormPopup from "../popups/FormPopup"
-import InputDropdown from "../popups/InputDropdown";
-import ProfilesList from "./ProfilesList";
+import InputDropdown from "../profiles/InputDropdown";
+import ProfilesList from "../profiles/ProfilesList";
 import { useState } from "react";
 
 const NewConversationPopup = (props) => {

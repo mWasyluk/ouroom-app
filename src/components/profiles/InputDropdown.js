@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import ProfileService from "../../services/ProfileService";
-import ProfilesList from "../conversations/ProfilesList";
+import ProfilesList from "../profiles/ProfilesList";
 
 const InputDropdown = (props) => {
     const {

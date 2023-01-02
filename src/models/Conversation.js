@@ -1,9 +1,10 @@
+import Profile from "./Profile";
 import avatar from "../assets/wip-conversation.png"
 
 export default class Conversation {
     constructor(conversation) {
         this.id = conversation.id;
-        this.participators = conversation.participators;
+        this.participators = conversation.participators.map(part => new Profile(part));
         this.name = this.#getNameByParticipators(conversation.participators);
         this.avatarUrl = avatar;
         this.messages = conversation.messages;

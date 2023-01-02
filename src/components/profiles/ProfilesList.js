@@ -1,4 +1,4 @@
-import ProfileItem from "../popups/ProfileItem";
+import ProfileItem from "./ProfileItem";
 
 const ProfilesList = (props) => {
     const {

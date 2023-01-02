@@ -3,8 +3,8 @@ import { getAvatarImageUrlById, getDefaultAvatarImageUrl } from '../utils/avatar
 export default class Profile {
     constructor({ id, avatar, lastName, firstName } = {}) {
         this.id = id;
-        if (avatar)
-            this.avatar = { imageUrl: getAvatarImageUrlById(avatar.id) }
+        if (avatar && avatar.id)
+            this.avatar = { id: avatar.id, imageUrl: getAvatarImageUrlById(avatar.id) }
         else
             this.avatar = { imageUrl: getDefaultAvatarImageUrl() }
         this.lastName = lastName;
