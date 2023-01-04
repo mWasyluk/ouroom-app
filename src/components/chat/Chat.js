@@ -12,6 +12,7 @@ export default class Chat extends React.Component {
         this.state = {
             user: props.user,
             conversation: props.conversation,
+            updateConversation: props.updateConversation,
             page: 0,
             isScrollBlocked: false,
         }
@@ -43,11 +44,9 @@ export default class Chat extends React.Component {
                 );
 
                 if (filtered.length > 0) {
-                    const messages = [...this.state.conversation.messages, ...filtered];
                     const conversation = this.state.conversation;
-                    conversation.messages = messages;
-                    this.setState({ conversation: conversation })
-                    this.forceUpdate()
+                    conversation.messages = [...this.state.conversation.messages, ...filtered];
+                    this.state.updateConversation(conversation);
                 };
             }
             this.setState({ isScrollBlocked: false })

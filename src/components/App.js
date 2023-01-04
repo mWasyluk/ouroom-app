@@ -31,12 +31,28 @@ export default class App extends React.Component {
         else this.setState({ conversations: [] });
     }
 
+    updateConversation = (newState) => {
+        const conversations = this.state.conversations;
+        const toUpdate = conversations.filter(conv => conv.id === newState.id)[0];
+        if (toUpdate) {
+            const index = conversations.indexOf(toUpdate);
+            conversations[index] = newState;
+        }
+        this.setState({ conversations: conversations });
+    }
+
     subsciptionCallback = (plainMessage) => {
         let message = new Message(JSON.parse(plainMessage.body))
 
-        this.state.conversations.filter((conv) => conv.id === message.conversationId)[0]
-            .messages.unshift(message);
-        this.forceUpdate()
+        const toUpdate = this.state.conversations.filter((conv) => conv.id === message.conversationId)[0];
+        if (!toUpdate) {
+            console.warn("Received a message that could not be applied to any existing conversation.")
+            return;
+        }
+        else {
+            toUpdate.messages.unshift(message);
+            this.updateConversation(toUpdate);
+        }
     }
 
     connectionStatusChangeCallback = (isConnected) => {
@@ -63,7 +79,7 @@ export default class App extends React.Component {
                 <WebSocketConnection topicId={this.state.user.profile.id} subscriptionCallback={this.subsciptionCallback.bind(this)} statusChangeCallback={this.connectionStatusChangeCallback.bind(this)} />
                 <ConversationsList user={this.state.user} conversations={this.state.conversations} select={this.handleConversationSelection.bind(this)} />
                 {this.state.targetConversation ?
-                    <Chat user={this.state.user} conversation={this.state.targetConversation} ></Chat> :
+                    <Chat user={this.state.user} conversation={this.state.targetConversation} updateConversation={this.updateConversation.bind(this)}></Chat> :
                     <AppWelcome />}
             </div >
 
