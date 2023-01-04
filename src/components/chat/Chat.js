@@ -16,6 +16,8 @@ export default class Chat extends React.Component {
             page: 0,
             isScrollBlocked: false,
         }
+
+        this.canFetchNewPage = true;
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -32,7 +34,11 @@ export default class Chat extends React.Component {
         const isTop = e.target.scrollHeight + e.target.scrollTop === e.target.clientHeight;
         const messagesInPage = 30;
 
-        if (isTop) {
+        if (!isTop) {
+            this.canFetchNewPage = true;
+        }
+
+        if (isTop && this.canFetchNewPage) {
             this.setState({ isScrollBlocked: true })
 
             let requiredPage = parseInt(this.state.conversation.messages.length / messagesInPage, 10);
@@ -50,6 +56,7 @@ export default class Chat extends React.Component {
                 };
             }
             this.setState({ isScrollBlocked: false })
+            this.canFetchNewPage = false;
         }
     }
 
