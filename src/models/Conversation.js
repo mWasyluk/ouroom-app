@@ -7,7 +7,9 @@ export default class Conversation {
         this.participators = conversation.participators.map(part => new Profile(part));
         this.name = this.#getNameByParticipators(conversation.participators);
         this.avatarUrl = avatar;
-        this.messages = conversation.messages;
+        conversation.messages ?
+            this.messages = conversation.messages :
+            this.messages = [];
     }
 
     #getNameByParticipators = function (participators = []) {
