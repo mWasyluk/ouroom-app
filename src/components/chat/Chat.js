@@ -12,7 +12,8 @@ export default class Chat extends React.Component {
         this.state = {
             user: props.user,
             conversation: props.conversation,
-            page: 0
+            page: 0,
+            isScrollBlocked: false,
         }
     }
 
@@ -31,6 +32,8 @@ export default class Chat extends React.Component {
         const messagesInPage = 30;
 
         if (isTop) {
+            this.setState({ isScrollBlocked: true })
+
             let requiredPage = parseInt(this.state.conversation.messages.length / messagesInPage, 10);
             let messages = await ConversationService.getConversationMessages(this.state.conversation.id, requiredPage);
 
@@ -47,6 +50,7 @@ export default class Chat extends React.Component {
                     this.forceUpdate()
                 };
             }
+            this.setState({ isScrollBlocked: false })
         }
     }
 
@@ -76,9 +80,9 @@ export default class Chat extends React.Component {
                 return <MessagesGroup key={index} messages={group.messages} sender={group.sender} site={site}></MessagesGroup>
             })
         }
-
+        const style = this.state.isScrollBlocked ? { overflow: 'hidden' } : {};
         return (
-            <div className='chat'>
+            <div className='chat' style={style}>
                 <form className='content-bar' onSubmit={this.sendMessage.bind(this)}>
                     <input className='content' type="text" placeholder="Treść wiadomości" />
                     <button className='send' type="submit"><AiOutlineSend size={'2.5em'} /></button>
