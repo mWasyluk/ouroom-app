@@ -12,6 +12,7 @@ import ProfileForm from './components/popups/ProfileForm';
 import useWindowDimensions from './utils/window-resizer';
 
 export const appTitle = 'OuRoom'
+document.title = appTitle;
 
 function Root() {
   const { height, width } = useWindowDimensions();
@@ -46,7 +47,7 @@ function Root() {
 
       else if (!user || !user.profile) {
         const auth = await AuthService.requestAccount();
-        if (auth.profile)
+        if (auth && auth.profile)
           setUser(auth);
       }
 
