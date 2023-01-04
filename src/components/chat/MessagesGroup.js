@@ -7,8 +7,6 @@ const MessagesGroup = (props) => {
         site = 'left'
     } = props
 
-    console.log(site)
-
     let messagesViewList = [];
     if (messages.length) {
         messagesViewList = messages.map((message) =>

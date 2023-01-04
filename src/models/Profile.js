@@ -1,4 +1,4 @@
-import { getAvatarImageUrlById, getDefaultAvatarImageUrl } from '../utils/avatars-url-resolver';
+import { getAvatarImageUrlById, getDefaultAvatarImageUrl } from '../utils/avatar-utils';
 
 export default class Profile {
     constructor({ id, avatar, lastName, firstName } = {}) {

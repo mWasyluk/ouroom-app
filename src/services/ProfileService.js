@@ -2,7 +2,7 @@ import AuthService from "./AuthService"
 import Profile from "../models/Profile";
 import { apiUrl } from "../utils/server-info";
 import axios from "axios";
-import { baseAvatarsUrl } from "../utils/avatars-url-resolver";
+import { baseAvatarsUrl } from "../utils/avatar-utils";
 
 const ProfileService = {
     async createProfile({ firstName, lastName, birthDate, avatar } = {}) {
