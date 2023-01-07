@@ -31,7 +31,23 @@
     row-gap: var(--row-delimeter);
     justify-content: center;
     width: 100%;
-    transition: margin 1s ease-in-out;
+    animation: band-appear 1s ease;
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes band-appear {
+    0% {
+        opacity: 0;
+        transform: rotateX(90deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: rotateX(0deg);
+    }
 }
 
 .center-band .header-group {

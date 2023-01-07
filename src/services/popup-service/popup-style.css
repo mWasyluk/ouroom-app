@@ -1,3 +1,15 @@
+@keyframes bg-appear {
+    0% {
+        opacity: 0;
+    }
+}
+
+@keyframes content-appear {
+    0% {
+        top: -100%
+    }
+}
+
 .popup-layer {
     position: absolute;
     height: 100vh;
@@ -11,6 +23,8 @@
     height: 100vh;
     width: 100vw;
     background-color: rgba(0, 0, 0, 0.4);
+
+    animation: bg-appear 1s ease-in-out;
 }
 
 .popup-content {
@@ -36,4 +50,6 @@
     padding: 20px;
 
     font-weight: 500;
+
+    animation: content-appear 1s ease-in-out;
 }
