@@ -46,7 +46,7 @@ const NewConversationPopup = (props) => {
         <span>Wpisz imiona znajomych, których chesz dodać do konwersacji:</span>
     )
     const inputDropdown = (
-        <InputDropdown selectProfile={selectProfile} />
+        <InputDropdown selectedProfiles={selectedProfiles} selectProfile={selectProfile} />
     )
     const selectedProfilesView = (
         <div className="selected-profiles">
@@ -59,11 +59,6 @@ const NewConversationPopup = (props) => {
     )
 
     return (
-        // <AuthScreen
-        //     outsideBg={{ opacity: .5 }}
-        //     insideBg={{ opacity: .8 }}
-        //     onClickBg={dismissPopup}
-        //     onSubmit={handleCreateConversation}></AuthScreen>
         PopupService.centerPopup(
             <div className='new-conversation-popup'>
                 {header}

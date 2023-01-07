@@ -5,18 +5,22 @@ import ProfilesList from "../profiles/ProfilesList";
 
 const InputDropdown = (props) => {
     const {
+        selectedProfiles = [],
         selectProfile = () => { }
     } = props;
 
     const [displayDropdown, setDisplayDropdown] = useState(false);
     const [foundProfiles, setFoundProfiles] = useState([])
+    const [idsToHide, setIdsToHide] = useState();
     const [searchPrefixes, setSearchPrefixes] = useState(['', '']);
 
     const select = (e) => {
-        if (e.currentTarget.id)
+        if (e.currentTarget.id) {
             selectProfile(foundProfiles.filter(profile =>
-                profile.id === e.currentTarget.id)[0]
-            )
+                profile.id === e.currentTarget.id)[0]);
+            document.getElementById('profile-input').value = '';
+            setSearchPrefixes(['', '']);
+        }
         else
             console.error("The selected option does not match any of the available ones.")
     }
@@ -35,13 +39,22 @@ const InputDropdown = (props) => {
 
     const handleClickInput = (e) => {
         const input = e.target.value.trim();
-        if (input) {
+        if (input && foundProfiles.length > 0) {
             setDisplayDropdown(true);
         }
     }
 
     useEffect(() => {
-        if (foundProfiles.length > 0) {
+        setIdsToHide(selectedProfiles.map(p => p.id));
+    }, [selectedProfiles])
+
+    useEffect(() => {
+        const noHiden = foundProfiles.filter(profile => !idsToHide.includes(profile.id));
+        setFoundProfiles(noHiden);
+    }, [idsToHide])
+
+    useEffect(() => {
+        if (foundProfiles.length > 0 && document.activeElement.id === 'profile-input') {
             setDisplayDropdown(true);
         } else {
             setDisplayDropdown(false)
@@ -51,7 +64,8 @@ const InputDropdown = (props) => {
     useEffect(() => {
         async function fetchProfiles() {
             const searchResult = await ProfileService.searchProfilesByNamesPrefixes(searchPrefixes);
-            setFoundProfiles(searchResult);
+            const profilesToDisplay = searchResult.filter(profile => !idsToHide.includes(profile.id))
+            setFoundProfiles(profilesToDisplay);
         }
         if (searchPrefixes[0] !== '' || searchPrefixes[1] !== '')
             fetchProfiles();
