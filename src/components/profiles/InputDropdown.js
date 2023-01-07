@@ -66,14 +66,14 @@ const InputDropdown = (props) => {
 
     return (
         <>
-            <input type='text' onChange={handleNameInput} onClick={handleClickInput} placeholder='Imię i nazwisko...'></input>
+            <input className="our-input" id="profile-input" type='text' onChange={handleNameInput} onClick={handleClickInput} placeholder='Imię i nazwisko...'></input>
             {displayDropdown &&
-                <>
+                <label htmlFor="profile-input" className="dropdown">
                     <div className='dropdown-background' onClick={onClickBg}></div>
                     <div className="dropdown-options">
                         <ProfilesList profiles={foundProfiles} onItemClick={select}></ProfilesList>
                     </div >
-                </>
+                </label>
             }
         </>
     )

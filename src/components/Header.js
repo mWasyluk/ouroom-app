@@ -1,4 +1,4 @@
-import '../styles/Header.css'
+import './header-style.css'
 
 import { useEffect, useState } from 'react';
 

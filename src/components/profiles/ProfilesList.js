@@ -7,7 +7,7 @@ const ProfilesList = (props) => {
     } = props;
 
     return (
-        <ul className="profile-list">
+        <ul className="profile-list our-selectable-box-shadow">
             {profiles.map(profile => <ProfileItem key={profile.id} profile={profile} onClick={onItemClick}></ProfileItem>)}
         </ul>
     )

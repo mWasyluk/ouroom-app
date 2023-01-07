@@ -1,5 +1,8 @@
+import '../../styles/our-styles.css'
+
+import AuthScreen from "./AuthScreen";
+import AuthService from '../../services/AuthService';
 import AvatarSelector from "./AvatarSelector";
-import FormPopup from "./FormPopup";
 import ProfileDetails from "../../models/ProfileDetails";
 import ProfileService from '../../services/ProfileService';
 import { appTitle } from "../../Root";
@@ -44,17 +47,24 @@ const ProfileForm = (props) => {
         return await ProfileService.updateProfileAvatar(formData)
     }
 
+    const cancel = () => {
+        AuthService.logout();
+        window.location.reload();
+    }
+
     return (
-        <FormPopup outsideBg={false} insideBg={{ opacity: 0.5 }} onSubmit={handleSubmit}>
-            <span>Stwórz swój profil, aby w pełni korzystać z<strong>{appTitle}</strong></span>
-            <div className="popup-group">
-                <AvatarSelector selectFile={setAvatarFile}></AvatarSelector>
-                <input type="text" name="first-name" id="first-name" placeholder="Imię..." />
-                <input type="text" name="last-name" id="last-name" placeholder="Nazwisko..." />
-                <input type="date" name="birth-date" id="birth-date" />
-                <button type='submit' id="submit">Zapisz profil</button>
-            </div>
-        </FormPopup>
+        <AuthScreen
+            header={<span>Stwórz swój profil, aby w pełni korzystać z <strong className='app-title'>{appTitle}!</strong></span>}
+            center={
+                <form className='auth-form' onSubmit={handleSubmit}>
+                    <AvatarSelector selectFile={setAvatarFile}></AvatarSelector>
+                    <input className='our-input' type="text" name="first-name" id="first-name" placeholder="Imię..." />
+                    <input className='our-input' type="text" name="last-name" id="last-name" placeholder="Nazwisko..." />
+                    <input className='our-input our-short-input' type="date" name="birth-date" id="birth-date" placeholder='Data urodzenia' />
+                    <button className="our-button" type='submit' id="submit">Zapisz profil</button>
+                </form>}
+            footer={<span>Chcesz dokończyć później? <strong onClick={cancel} className='our-text-button'>Wyloguj się</strong></span>}
+        />
     )
 }
 

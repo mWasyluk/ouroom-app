@@ -1,6 +1,8 @@
+import './new-conversation-style.css'
+
 import ConversationService from "../../services/ConversationService";
-import FormPopup from "../popups/FormPopup"
 import InputDropdown from "../profiles/InputDropdown";
+import PopupService from "../../services/popup-service/PopupService";
 import ProfilesList from "../profiles/ProfilesList";
 import { useState } from "react";
 
@@ -40,22 +42,36 @@ const NewConversationPopup = (props) => {
         }
     }
 
-    const header = <span>Wpisz imiona znajomych, aby dodać ich do konwersacji:</span>;
-    const inputDropdown = <InputDropdown selectProfile={selectProfile} />
-    const selectedProfilesView = <div className="selected-profiles"><ProfilesList profiles={selectedProfiles} onItemClick={(e) => unselectProfileById(e.currentTarget.id)} /></div>
-    const button = <button type='submit'>Stwórz konwersację</button>
+    const header = (
+        <span>Wpisz imiona znajomych, których chesz dodać do konwersacji:</span>
+    )
+    const inputDropdown = (
+        <InputDropdown selectProfile={selectProfile} />
+    )
+    const selectedProfilesView = (
+        <div className="selected-profiles">
+            <span>Wybrane osoby:</span>
+            <ProfilesList profiles={selectedProfiles} onItemClick={(e) => unselectProfileById(e.currentTarget.id)} />
+        </div>
+    )
+    const button = (
+        <button className="our-button" type='submit' onClick={handleCreateConversation}>Stwórz konwersację</button>
+    )
 
     return (
-        <FormPopup
-            outsideBg={{ opacity: .5 }}
-            insideBg={{ opacity: .8 }}
-            onClickBg={dismissPopup}
-            onSubmit={handleCreateConversation}>
-            {header}
-            {inputDropdown}
-            {selectedProfilesView}
-            {button}
-        </FormPopup>
+        // <AuthScreen
+        //     outsideBg={{ opacity: .5 }}
+        //     insideBg={{ opacity: .8 }}
+        //     onClickBg={dismissPopup}
+        //     onSubmit={handleCreateConversation}></AuthScreen>
+        PopupService.centerPopup(
+            <div className='new-conversation-popup'>
+                {header}
+                {inputDropdown}
+                {selectedProfilesView}
+                {button}
+            </div>,
+            dismissPopup)
     )
 }
 

@@ -1,0 +1,116 @@
+.new-conversation-popup * {
+    --item-height: 40px;
+    --items-to-show: 8;
+    --items-list-height: calc(var(--item-height) * var(--items-to-show) + 3px);
+}
+
+.new-conversation-popup {
+    display: flex;
+    flex-direction: column;
+
+    row-gap: 20px;
+}
+
+.new-conversation-popup span {
+    font-size: 1.1em;
+}
+
+.dropdown {
+    margin: -10px 0;
+}
+
+.dropdown-background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.dropdown-options {
+    position: absolute;
+    width: calc(100% - 40px);
+    padding: 0;
+    margin-top: -30px;
+
+
+}
+
+.dropdown-options ul {
+    max-height: var(--items-list-height);
+    width: 100%;
+    padding: 0;
+
+    background-color: rgb(255, 255, 255);
+    box-sizing: border-box;
+    border: 2px solid rgb(0, 43, 136);
+    border-radius: var(--light-border-radius);
+
+    overflow: hidden;
+    overflow-y: auto;
+    padding: 5px 10px;
+}
+
+.selected-profiles {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.selected-profiles span {
+    align-self: flex-start;
+    margin-bottom: 5px;
+}
+
+.selected-profiles ul {
+    overflow: hidden;
+    overflow-y: auto;
+
+    height: var(--items-list-height);
+
+    margin: 0;
+    padding: 0;
+
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: var(--light-border-radius);
+    padding: 10px;
+}
+
+.dropdown-options li+li,
+.selected-profiles li+li {
+    margin-top: 5px;
+}
+
+.dropdown-options .profile-item,
+.selected-profiles .profile-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.9em;
+
+    height: var(--item-height);
+    padding: 0 15px;
+    transition: .2s ease-in-out;
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+
+    border-bottom: solid 1px rgba(0, 0, 0, 0.3);
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.selected-profiles .profile-item {
+    margin-bottom: 10px;
+}
+
+.dropdown-options .profile-item:hover,
+.selected-profiles .profile-item:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-options .profile-item .profile-avatar,
+.selected-profiles .profile-avatar {
+    height: calc(var(--item-height) - 5px);
+    width: calc(var(--item-height) - 5px);
+    border-radius: 100%;
+    margin-right: 15px;
+}

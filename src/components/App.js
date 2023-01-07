@@ -1,4 +1,4 @@
-import '../styles/App.css'
+import './app-style.css'
 import '../utils/websocket.js'
 
 import AppWelcome from './AppWelcome';

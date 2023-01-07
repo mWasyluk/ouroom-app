@@ -1,9 +1,10 @@
-import React from "react";
-import '../styles/Menu.css'
+import './menu-style.css'
+
 import { BiLogOut } from 'react-icons/bi'
+import { CgProfile } from 'react-icons/cg'
 import { FiSettings } from 'react-icons/fi'
 import { GoInfo } from 'react-icons/go'
-import { CgProfile } from 'react-icons/cg'
+import React from "react";
 
 export default class Menu extends React.Component {
     constructor(props) {

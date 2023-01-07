@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import RegisterForm from './RegisterForm';
 import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
+import { useState } from 'react'
 
 const AuthPopup = () => {
     const [isLogin, setIsLogin] = useState(true);

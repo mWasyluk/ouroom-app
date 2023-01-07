@@ -1,5 +1,5 @@
+import AuthScreen from './AuthScreen';
 import AuthService from '../../services/AuthService';
-import FormPopup from './FormPopup';
 import React from 'react'
 import RegistrationDetails from '../../models/RegistrationDetails';
 import { appTitle } from '../../Root';
@@ -29,19 +29,19 @@ const RegisterForm = (props) => {
     }
 
     return (
-        <FormPopup outsideBg={false} insideBg={{ opacity: 0.5 }} onSubmit={handleSubmit}>
-            <span>Zarejestruj się w<strong>{appTitle}!</strong></span>
-            <div className="popup-group">
-                <input type="text" name="registration-email" id="registration-email" placeholder="E-mail..." />
-                <input type="password" name="registration-password" id="registration-password" placeholder="Hasło..." />
-                <input type="password" name="registration-password-repeat" id="registration-password-repeat" placeholder="Potwierdź hasło..." />
-                <button type='submit' id="submit">Zarejestruj się</button>
-            </div>
-            <p className='footer-text'>
-                Masz już konto?
-                <strong onClick={switchView} className='text-button'>Zaloguj się</strong>
-            </p>
-        </FormPopup >
+        <AuthScreen
+            header={<span>Zarejestruj się w <strong className='app-title'>{appTitle}!</strong></span>}
+            center={
+                <form className='auth-form' onSubmit={handleSubmit}>
+                    <input className='our-input' type="text" name="registration-email" id="registration-email" placeholder="E-mail..." />
+                    <input className='our-input' type="password" name="registration-password" id="registration-password" placeholder="Hasło..." />
+                    <input className='our-input' type="password" name="registration-password-repeat" id="registration-password-repeat" placeholder="Potwierdź hasło..." />
+                    <button className='our-button' type='submit' id="submit">Zarejestruj się</button>
+                </form>}
+            footer={<span>
+                Masz już konto? <strong onClick={switchView} className='our-text-button'>Zaloguj się</strong>
+            </span>}
+        />
     )
 }
 

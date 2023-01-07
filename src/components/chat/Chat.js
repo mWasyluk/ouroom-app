@@ -1,4 +1,4 @@
-import '../../styles/Chat.css'
+import './chat-style.css'
 
 import { AiOutlineSend } from 'react-icons/ai';
 import ConversationService from '../../services/ConversationService';

@@ -1,5 +1,4 @@
-import '../../styles/popup.css'
-import '../../styles/ConversationsList.css'
+import './conversation-style.css'
 
 import { BsPlusCircle } from 'react-icons/bs'
 import NewConversationPopup from './NewConversationPopup'

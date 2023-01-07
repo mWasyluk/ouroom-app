@@ -1,14 +1,14 @@
-import './styles/Root.css';
+import './styles/root-style.css';
 
 import { useEffect, useState } from 'react';
 
 import Account from './models/Account';
 import App from './components/App';
-import AuthPopup from './components/popups/AuthPopup'
 import AuthService from './services/AuthService';
+import AuthSwitch from './components/auth/AuthSwitch'
 import Header from './components/Header';
-import Menu from './components/Menu';
-import ProfileForm from './components/popups/ProfileForm';
+import Menu from './components/menu/Menu';
+import ProfileForm from './components/auth/ProfileForm';
 import useWindowDimensions from './utils/window-resizer';
 
 export const appTitle = 'OuRoom'
@@ -41,7 +41,7 @@ function Root() {
       if (!isAuth) {
         console.warn('Unauthenticated.', user, '. Pushing Login Form...');
         setView(
-          <AuthPopup></AuthPopup>
+          <AuthSwitch></AuthSwitch>
         );
       }
 

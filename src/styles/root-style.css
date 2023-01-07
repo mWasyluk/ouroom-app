@@ -2,6 +2,10 @@
   --app-height: 100%;
 }
 
+* {
+  font-size: 0.99em;
+}
+
 html,
 body {
   padding: 0;
@@ -10,6 +14,7 @@ body {
   width: 100vw;
   height: 100vh;
   height: var(--app-height);
+
 }
 
 body {

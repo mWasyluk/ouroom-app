@@ -34,11 +34,12 @@ const AvatarSelector = (props) => {
         <div className="avatar-selector">
             <input type='file' className="avatar-input" onChange={handleInputChange} name="image" id='avatar-input' accept="image/jpeg, image/png"></input>
 
-            <label htmlFor="avatar-input" className="avatar-image">
+            <label htmlFor="avatar-input" id='avatar-label' className="avatar-image">
                 <img alt='Avatar preview' src={src}></img>
-            </label>
-            <label htmlFor="avatar-input" className="avatar-image-cover">
-                {editFileIcon}
+
+                <i className="avatar-image-cover">
+                    {editFileIcon}
+                </i>
             </label>
         </div >
     )

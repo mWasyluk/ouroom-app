@@ -1,4 +1,4 @@
-import '../../styles/ConversationsList.css'
+import './conversation-style.css'
 
 import { Component } from "react";
 import Conversation from "../../models/Conversation";
