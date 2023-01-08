@@ -30,7 +30,7 @@ export default class App extends React.Component {
     setConversations = async () => {
         const conversations = await ConversationService.getUserConversations()
         if (conversations) {
-            this.setState({ conversations: conversations });
+            this.setState({ conversations: conversations.reverse() });
         }
         else this.setState({ conversations: [] });
     }
