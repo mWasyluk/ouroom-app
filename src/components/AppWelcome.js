@@ -11,7 +11,7 @@ const AppWelcome = () => {
     }
 
     return (
-        <div style={style}>
+        <div style={style} className='our-min-width'>
             <h2 style={{ color: '#3340d9' }}>Witaj w aplikacji <strong>{appTitle}!</strong></h2>
             <span style={{ fontSize: '1.2em' }}>Funkcje, które są aktualnie dostępne to:</span>
             <ul style={{ fontSize: '1.1em' }}>

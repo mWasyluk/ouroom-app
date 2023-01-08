@@ -1,4 +1,5 @@
 import './styles/root-style.css';
+import './styles/our-styles.css';
 
 import { useEffect, useState } from 'react';
 

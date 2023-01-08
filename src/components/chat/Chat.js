@@ -88,7 +88,7 @@ export default class Chat extends React.Component {
         }
         const style = this.state.isScrollBlocked ? { overflow: 'hidden' } : {};
         return (
-            <div className='chat' style={style}>
+            <div className='chat our-min-width' style={style}>
                 <form className='content-bar' onSubmit={this.sendMessage.bind(this)}>
                     <input className='content' type="text" placeholder="Treść wiadomości" />
                     <button className='send' type="submit"><AiOutlineSend size={'2.5em'} /></button>

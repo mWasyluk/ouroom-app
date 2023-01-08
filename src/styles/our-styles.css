@@ -6,6 +6,10 @@
     --light-border-radius: 20px;
 }
 
+.our-min-width {
+    min-width: 320px;
+}
+
 .our-selectable-box-shadow {
     box-shadow: var(--selectable-box-shadow);
 }
