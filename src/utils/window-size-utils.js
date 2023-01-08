@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function getWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
@@ -8,7 +8,7 @@ function getWindowDimensions() {
     };
 }
 
-export default function useWindowDimensions() {
+export function useWindowDimensions() {
     const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 
     useEffect(() => {
@@ -21,4 +21,8 @@ export default function useWindowDimensions() {
     }, []);
 
     return windowDimensions;
+}
+
+export function isMobileScreen() {
+    return window.matchMedia('(pointer: coarse)').matches;
 }

@@ -10,7 +10,7 @@ import AuthSwitch from './components/auth/AuthSwitch'
 import Header from './components/Header';
 import Menu from './components/menu/Menu';
 import ProfileForm from './components/auth/ProfileForm';
-import useWindowDimensions from './utils/window-resizer';
+import { useWindowDimensions } from './utils/window-size-utils';
 
 export const appTitle = 'OuRoom'
 document.title = appTitle;
@@ -19,9 +19,9 @@ function Root() {
   const { height, width } = useWindowDimensions();
 
   let [user, setUser] = useState(null)
-  let [userStatus, setUserStatus] = useState('offline')
-  let [isMenuInvoked, setMenuInvoked] = useState(false);
-  let [view, setView] = useState(<></>);
+  const [userStatus, setUserStatus] = useState('offline')
+  const [isMenuInvoked, setMenuInvoked] = useState(false);
+  const [view, setView] = useState(<></>);
 
   // handles each of the Menu options
   let menuSelectionCallback = (optionId) => {
