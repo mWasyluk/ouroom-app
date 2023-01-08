@@ -8,6 +8,8 @@ import ConversationsList from './conversations/ConversationsList';
 import Message from '../models/Message';
 import React from 'react';
 import WebSocketConnection from '../utils/websocket.js';
+import { isMobileScreen } from '../utils/window-size-utils.js';
+import { IoArrowBackOutline } from 'react-icons/io5'
 
 export default class App extends React.Component {
     constructor(props) {
@@ -16,7 +18,10 @@ export default class App extends React.Component {
             user: props.user,
             setUserStatus: props.setUserStatus,
             conversations: [],
-            targetConversation: null
+            targetConversation: null,
+            setHeaderIcon: props.setHeaderIcon,
+            setOnHeaderIconClick: props.setOnHeaderIconClick,
+            resetHeaderIcon: props.resetHeaderIcon,
         }
 
         this.setConversations();
@@ -70,13 +75,24 @@ export default class App extends React.Component {
         else
             target.messages = []
         this.setState({ targetConversation: new Conversation(target) })
+
+        if (isMobileScreen()) {
+            this.setState({ isConversationsListHiden: true })
+            this.state.setHeaderIcon(<IoArrowBackOutline />)
+            this.state.setOnHeaderIconClick(() => this.backToList.bind(this));
+        }
+    }
+
+    backToList = () => {
+        this.state.resetHeaderIcon();
+        this.setState({ isConversationsListHiden: false })
     }
 
     render() {
         return (
             <div className="logged" style={this.props.styles}>
                 <WebSocketConnection topicId={this.state.user.profile.id} subscriptionCallback={this.subsciptionCallback.bind(this)} statusChangeCallback={this.connectionStatusChangeCallback.bind(this)} />
-                <ConversationsList user={this.state.user} conversations={this.state.conversations} select={this.handleConversationSelection.bind(this)} />
+                {!this.state.isConversationsListHiden && <ConversationsList user={this.state.user} conversations={this.state.conversations} select={this.handleConversationSelection.bind(this)} />}
                 {this.state.targetConversation ?
                     <Chat user={this.state.user} conversation={this.state.targetConversation} updateConversation={this.updateConversation.bind(this)}></Chat> :
                     <AppWelcome />}

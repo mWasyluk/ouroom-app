@@ -71,12 +71,14 @@
     font-weight: 900;
 }
 
-.menu-button {
+.header-button {
+    display: flex;
     transition: 0.2s ease-in-out;
     cursor: pointer;
+    font-size: 1.5em;
 }
 
-.menu-button:hover {
+.header-button:hover {
     transform: scale(1.2);
 }
 
@@ -85,12 +87,12 @@
         max-width: 32vw;
     }
 
-    .menu-button {
+    .header-button {
         transform: scale(1.3);
         margin: 0 0 0 5px;
     }
 
-    .menu-button:hover {
+    .header-button:hover {
         transform: scale(1.5);
     }
 

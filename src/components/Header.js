@@ -2,14 +2,12 @@ import './header-style.css'
 
 import { useEffect, useState } from 'react';
 
-import { CgMenuGridR } from 'react-icons/cg';
-
 const Header = (props) => {
     const {
         user = {},
         userStatus = 'offline',
-        isMenuInvoked = false,
-        setMenuInvoked = () => { }
+        icon = <></>,
+        onIconClick = () => { },
     } = props
 
     let [userHeader, setUserHeader] = useState()
@@ -36,14 +34,10 @@ const Header = (props) => {
         )
     }, [user, userStatus])
 
-    const handleClick = () => {
-        setMenuInvoked(!isMenuInvoked)
-    }
-
     return (
         <div className="Header">
             <div className='left'>
-                <CgMenuGridR className='menu-button' onClick={handleClick} size={'36'} />
+                <i className='header-button' onClick={onIconClick}>{icon}</i>
                 {userHeader}
             </div>
             <div className='right'>

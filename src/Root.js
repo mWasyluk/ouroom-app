@@ -11,9 +11,12 @@ import Header from './components/Header';
 import Menu from './components/menu/Menu';
 import ProfileForm from './components/auth/ProfileForm';
 import { useWindowDimensions } from './utils/window-size-utils';
+import { CgMenuGridR } from 'react-icons/cg';
 
 export const appTitle = 'OuRoom'
 document.title = appTitle;
+
+const defaultHeaderIcon = <CgMenuGridR />;
 
 function Root() {
   const { height, width } = useWindowDimensions();
@@ -21,6 +24,8 @@ function Root() {
   let [user, setUser] = useState(null)
   const [userStatus, setUserStatus] = useState('offline')
   const [isMenuInvoked, setMenuInvoked] = useState(false);
+  const [headerIcon, setHeaderIcon] = useState(defaultHeaderIcon);
+  const [onHeaderIconClick, setOnHeaderIconClick] = useState();
   const [view, setView] = useState(<></>);
 
   // handles each of the Menu options
@@ -39,6 +44,11 @@ function Root() {
       default:
         console.error(optionId, 'cannot be handled as an option')
     }
+  }
+
+  const resetHeaderIcon = () => {
+    setHeaderIcon(defaultHeaderIcon);
+    setOnHeaderIconClick(() => { });
   }
 
   useEffect(() => {
@@ -64,18 +74,20 @@ function Root() {
       }
 
       else if (new Account(user).profile.isComplete()) {
+        const action = onHeaderIconClick ? onHeaderIconClick : () => { setMenuInvoked(!isMenuInvoked) };
+        const headerUtils = { setHeaderIcon, setOnHeaderIconClick, resetHeaderIcon };
         setView(
           <>
-            <Header user={user} userStatus={userStatus} isMenuInvoked={isMenuInvoked} setMenuInvoked={setMenuInvoked}></Header>
+            <Header user={user} userStatus={userStatus} isMenuInvoked={isMenuInvoked} setMenuInvoked={setMenuInvoked} icon={headerIcon} onIconClick={action}></Header>
             <Menu styles={{ display: isMenuInvoked ? 'flex' : 'none' }} menuSelectionCallback={menuSelectionCallback}></Menu>
-            <App styles={{ display: !isMenuInvoked ? 'flex' : 'none' }} user={user} setUserStatus={setUserStatus}></App>
+            <App styles={{ display: !isMenuInvoked ? 'flex' : 'none' }} user={user} setUserStatus={setUserStatus} {...headerUtils}></App>
           </>
         );
       }
     }
 
     checkUserAndSetView()
-  }, [user, userStatus, isMenuInvoked]);
+  }, [user, userStatus, isMenuInvoked, headerIcon,]);
 
   return (
     <div className="root" style={{
