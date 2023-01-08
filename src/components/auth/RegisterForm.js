@@ -1,5 +1,6 @@
 import AuthScreen from './AuthScreen';
 import AuthService from '../../services/AuthService';
+import PopupService from '../../services/popup-service/PopupService';
 import React from 'react'
 import RegistrationDetails from '../../models/RegistrationDetails';
 import { appTitle } from '../../Root';
@@ -16,16 +17,18 @@ const RegisterForm = (props) => {
         const passwordRepeat = document.getElementById('registration-password-repeat').value;
 
         let registrationDetails = new RegistrationDetails({ email, password, passwordRepeat });
-        if (registrationDetails.isValid()) {
-            console.log(registrationDetails.encodedPassword)
-            let auth = await AuthService.register({ email: registrationDetails.email, password: registrationDetails.encodedPassword })
-            if (auth !== null) {
-                console.log("Account has been registered.", auth)
-                switchView();
-            } else {
-                console.log("Account could not be registered.")
-            }
+        if (!registrationDetails.isValid()) {
+            PopupService.invokeErrorMessage('Wprowadzone przez Ciebie dane są niezgodne z kryteriami. Wprowadź poprawne dane i spróbuj ponownie.')
+            return;
         }
+
+        let auth = await AuthService.register({ email: registrationDetails.email, password: registrationDetails.encodedPassword })
+        if (auth === null) {
+            PopupService.invokeErrorMessage('Niestety, konto o takim adresie e-mail już istnieje. Wprowadź inny adres e-mail lub przejdź do okna logowania.')
+            return;
+        }
+
+        window.location.reload();
     }
 
     return (

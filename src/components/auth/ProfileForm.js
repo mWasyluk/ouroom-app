@@ -3,6 +3,7 @@ import '../../styles/our-styles.css'
 import AuthScreen from "./AuthScreen";
 import AuthService from '../../services/AuthService';
 import AvatarSelector from "./AvatarSelector";
+import PopupService from '../../services/popup-service/PopupService';
 import ProfileDetails from "../../models/ProfileDetails";
 import ProfileService from '../../services/ProfileService';
 import { appTitle } from "../../Root";
@@ -22,22 +23,26 @@ const ProfileForm = (props) => {
         const birthDate = document.getElementById('birth-date').value;
 
         let profileDetails = new ProfileDetails({ firstName, lastName, birthDate });
-        if (profileDetails.isValid()) {
-            let profileResponse = await ProfileService.createProfile(profileDetails);
-            if (!profileResponse) {
-                return;
-            }
-
-            if (avatarFile) {
-                const uploadResult = await uploadAvatar(avatarFile);
-                if (uploadResult) {
-                    setUser(uploadResult);
-                    return;
-                }
-            }
-
-            setUser(profileResponse);
+        if (!profileDetails.isValid()) {
+            PopupService.invokeErrorMessage('Wprowadzone przez Ciebie dane są niezgodne z kryteriami. Wprowadź poprawne dane i spróbuj ponownie.')
+            return;
         }
+        let profileResponse = await ProfileService.createProfile(profileDetails);
+        if (!profileResponse) {
+            PopupService.invokeErrorMessage('Niestety, nie udało nam się zapisać Twojego profilu. Odśwież stronę i spróbuj ponownie.')
+            return;
+        }
+
+        if (avatarFile) {
+            const uploadResult = await uploadAvatar(avatarFile);
+            if (uploadResult) {
+                setUser(uploadResult);
+            } else (
+                PopupService.invokeWarningMessage('Niestety, nie udało nam się zapisać Twojego avatara. Możesz zmienić domyślny obraz w dowolnym momencie w ustawieniach profilu.')
+            )
+        }
+
+        setUser(profileResponse);
     }
 
     const uploadAvatar = async (file) => {

@@ -30,16 +30,21 @@ const NewConversationPopup = (props) => {
 
     const handleCreateConversation = async (e) => {
         e.preventDefault()
+
         let selectedProfilesIds = selectedProfiles.map(profile => { return { id: profile.id } });
-        if (selectedProfilesIds.length > 0) {
-            selectedProfilesIds.push({ id: userId })
-            const response = await ConversationService.createConversation(selectedProfilesIds);
-            if (response !== null) {
-                window.location.reload();
-            }
-        } else {
-            console.error("Invalid selected profiles IDs. Conversation cannot be created.")
+        if (selectedProfilesIds.length <= 0) {
+            PopupService.invokeErrorMessage('Przed utworzeniem konwersacji należy wybrać co najmniej jedego uczestnika.');
+            return;
         }
+
+        selectedProfilesIds.push({ id: userId })
+        const response = await ConversationService.createConversation(selectedProfilesIds);
+        if (response === null) {
+            PopupService.invokeErrorMessage('Konwersacja ze wskazanymi uczestnikami już istnieje.')
+            return;
+        }
+
+        window.location.reload();
     }
 
     const header = (

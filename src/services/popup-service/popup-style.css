@@ -6,7 +6,7 @@
 
 @keyframes content-appear {
     0% {
-        top: -100%
+        top: -40%
     }
 }
 
@@ -16,6 +16,9 @@
     width: 100vw;
     top: 0;
     left: 0;
+
+    z-index: 9999;
+    text-align: center;
 }
 
 .popup-background {
@@ -44,12 +47,28 @@
     box-shadow: var(--popup-box-shadow);
     border: 3px solid rgb(255, 255, 255);
     border-radius: 20px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.9);
 
     row-gap: 20px;
     padding: 20px;
 
     font-weight: 500;
 
-    animation: content-appear 1s ease-in-out;
+    animation: content-appear 0.5s ease-in-out;
+}
+
+.popup-content.top {
+    top: 10vh;
+}
+
+.popup-content.error {
+    background-color: rgba(255, 155, 155);
+    border: 3px solid rgb(133, 33, 33);
+    box-shadow: 0 0 25px rgb(133, 33, 33);
+}
+
+.popup-content.warning {
+    background-color: rgb(255, 220, 155);
+    border: 3px solid rgb(133, 123, 33);
+    box-shadow: 0 0 25px rgb(133, 123, 33);
 }

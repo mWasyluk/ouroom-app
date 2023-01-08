@@ -1,6 +1,7 @@
 import AuthDetails from '../../models/AuthDetails';
 import AuthScreen from './AuthScreen';
 import AuthService from '../../services/AuthService';
+import PopupService from '../../services/popup-service/PopupService';
 import React from 'react'
 import { appTitle } from '../../Root';
 import { useState } from 'react';
@@ -19,10 +20,12 @@ const LoginForm = (props) => {
 
         const details = new AuthDetails({ email: email, password: password })
         if (!details.isValid()) {
+            PopupService.invokeErrorMessage('Wprowadzone przez Ciebie dane są niezgodne z kryteriami. Wprowadź poprawne dane i spróbuj ponownie.')
             return;
         }
         let auth = await AuthService.login(details, rememberMe);
         if (auth === null) {
+            PopupService.invokeErrorMessage('Niestety, nie udało nam się odnaleźć takiego konta. Sprawdź, czy wprowadzone dane są prawidłowe i spróbuj ponownie.')
             document.getElementById('password').value = '';
         } else {
             window.location.reload();

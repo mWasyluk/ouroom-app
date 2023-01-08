@@ -29,6 +29,12 @@ function Root() {
         AuthService.logout();
         window.location.reload();
         break;
+      case 'menu-item-settings':
+        break;
+      case 'menu-item-profile':
+        break;
+      case 'menu-item-information':
+        break;
       default:
         console.error(optionId, 'cannot be handled as an option')
     }

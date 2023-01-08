@@ -2,6 +2,7 @@ import { apiUrl } from "./server-info";
 
 export const baseAvatarsUrl = apiUrl + "/images/avatars"
 export const supportedAvatarTypes = ['image/jpeg', 'image/png']
+export const supportedAvatarExtensionsAsString = '.png, .jpg, .jpeg, .jpe .jif, .jfif, .jfi'
 export const maxAvatarSizeInKB = 300;
 export const maxAvatarSize = maxAvatarSizeInKB * 1024;
 export const avatarParamName = 'image';

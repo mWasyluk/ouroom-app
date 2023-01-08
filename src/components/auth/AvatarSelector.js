@@ -1,7 +1,8 @@
-import { maxAvatarSize, maxAvatarSizeInKB, supportedAvatarTypes } from '../../utils/avatar-utils'
+import { maxAvatarSize, maxAvatarSizeInKB, supportedAvatarExtensionsAsString, supportedAvatarTypes } from '../../utils/avatar-utils'
 
 import DefaultAvatar from '../../assets/default-avatar.png'
 import { FaPencilAlt } from 'react-icons/fa'
+import PopupService from '../../services/popup-service/PopupService';
 import { useState } from 'react'
 
 const editFileIcon = <FaPencilAlt></FaPencilAlt>;
@@ -16,18 +17,20 @@ const AvatarSelector = (props) => {
     const handleInputChange = (e) => {
         const file = e.target.files[0];
         if (!supportedAvatarTypes.includes(file.type)) {
-            console.error("The file type is not supported yet.")
+            PopupService.invokeErrorMessage('Format wybranego przez Ciebie pliku nie jest aktualnie wspierany. Obsługiwane formaty to: ' + supportedAvatarExtensionsAsString + '.')
+            return;
         }
-        else if (file.size > maxAvatarSize) {
-            console.error("The file is too large. Max. size is", maxAvatarSizeInKB + "KB.")
+
+        if (file.size > maxAvatarSize) {
+            PopupService.invokeErrorMessage('Wybrany przez Ciebie plik jest za duży. Wybierz obraz, który ma rozmiar nie większy niż ' + maxAvatarSizeInKB + 'KB.')
+            return;
         }
-        else {
-            reader.readAsDataURL(file);
-            reader.onload = e => {
-                setSrc(e.target.result);
-            }
-            selectFile(file);
+
+        reader.readAsDataURL(file);
+        reader.onload = e => {
+            setSrc(e.target.result);
         }
+        selectFile(file);
     }
 
     return (
