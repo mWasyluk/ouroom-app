@@ -3,12 +3,13 @@ import ProfileItem from "./ProfileItem";
 const ProfilesList = (props) => {
     const {
         profiles = [],
-        onItemClick = () => { }
+        onItemClick = () => { },
+        itemIcon = <></>
     } = props;
 
     return (
         <ul className="profile-list our-selectable-box-shadow">
-            {profiles.map(profile => <ProfileItem key={profile.id} profile={profile} onClick={onItemClick}></ProfileItem>)}
+            {profiles.map(profile => <ProfileItem key={profile.id} profile={profile} onClick={onItemClick} icon={itemIcon}></ProfileItem>)}
         </ul>
     )
 }

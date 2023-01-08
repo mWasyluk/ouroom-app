@@ -6,7 +6,8 @@ import ProfilesList from "../profiles/ProfilesList";
 const InputDropdown = (props) => {
     const {
         selectedProfiles = [],
-        selectProfile = () => { }
+        selectProfile = () => { },
+        itemIcon = {}
     } = props;
 
     const [displayDropdown, setDisplayDropdown] = useState(false);
@@ -85,7 +86,7 @@ const InputDropdown = (props) => {
                 <label htmlFor="profile-input" className="dropdown">
                     <div className='dropdown-background' onClick={onClickBg}></div>
                     <div className="dropdown-options">
-                        <ProfilesList profiles={foundProfiles} onItemClick={select}></ProfilesList>
+                        <ProfilesList profiles={foundProfiles} onItemClick={select} itemIcon={itemIcon}></ProfilesList>
                     </div >
                 </label>
             }

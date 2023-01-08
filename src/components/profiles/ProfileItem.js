@@ -1,13 +1,19 @@
+import './profile-list-style.css'
+
 const ProfileItem = (props) => {
     const {
         profile = {},
-        onClick = () => { }
+        onClick = () => { },
+        icon = { iconElement: <></>, color: '#fff' }
     } = props;
 
     return (
         <li key={profile.id} id={profile.id} className='profile-item' onClick={onClick}>
-            <img className="profile-avatar" src={profile.avatar.imageUrl}></img>
-            {profile.firstName + " " + profile.lastName}
+            <div className="profile-details">
+                <img className="profile-avatar" src={profile.avatar.imageUrl}></img>
+                {profile.firstName + " " + profile.lastName}
+            </div>
+            <i className="item-icon" style={{ color: icon.color }}>{icon.iconElement}</i>
         </li>
     )
 }

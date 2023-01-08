@@ -1,10 +1,15 @@
 import './new-conversation-style.css'
 
+import { FaMinusCircle, FaPlusCircle } from 'react-icons/fa'
+
 import ConversationService from "../../services/ConversationService";
 import InputDropdown from "../profiles/InputDropdown";
 import PopupService from "../../services/popup-service/PopupService";
 import ProfilesList from "../profiles/ProfilesList";
 import { useState } from "react";
+
+const addItemIcon = { iconElement: <FaPlusCircle />, color: '#009726' };
+const removeItemIcon = { iconElement: <FaMinusCircle />, color: '#970000' }
 
 const NewConversationPopup = (props) => {
     const {
@@ -51,12 +56,12 @@ const NewConversationPopup = (props) => {
         <span>Wpisz imiona znajomych, których chesz dodać do konwersacji:</span>
     )
     const inputDropdown = (
-        <InputDropdown selectedProfiles={selectedProfiles} selectProfile={selectProfile} />
+        <InputDropdown selectedProfiles={selectedProfiles} selectProfile={selectProfile} itemIcon={addItemIcon} />
     )
     const selectedProfilesView = (
         <div className="selected-profiles">
             <span>Wybrane osoby:</span>
-            <ProfilesList profiles={selectedProfiles} onItemClick={(e) => unselectProfileById(e.currentTarget.id)} />
+            <ProfilesList profiles={selectedProfiles} onItemClick={(e) => unselectProfileById(e.currentTarget.id)} itemIcon={removeItemIcon} />
         </div>
     )
     const button = (

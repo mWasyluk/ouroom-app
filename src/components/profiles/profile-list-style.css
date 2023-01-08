@@ -1,0 +1,14 @@
+.profile-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-item .profile-details {
+    display: flex;
+    align-items: center;
+}
+
+.profile-item .item-icon {
+    display: inline-flex;
+    font-size: 1.4em;
+}
