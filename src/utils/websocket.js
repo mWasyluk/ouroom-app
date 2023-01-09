@@ -5,6 +5,7 @@ import { apiUrl } from './server-info';
 
 const serverUrl = apiUrl + '/ouroom';
 
+// TODO: refactor to custom hook returning connection status and callbacks for messages
 export default class WebSocketConnection extends React.Component {
     constructor(props) {
         super(props)
@@ -51,17 +52,6 @@ export default class WebSocketConnection extends React.Component {
             this.connectStomp();
         }, 2500);
     }
-
-    // async stompSubscriptionCallBack(subscriptionMessage) {
-    //     if (subscriptionMessage.body) {
-    //         let message = new Message(JSON.parse(subscriptionMessage.body));
-
-    //         // TODO: send to correct conversation if its different than selected
-    //         this.state.conversation.messages.unshift(message);
-    //         this.forceUpdate();
-    //     }
-    // }
-
 
     stompErrorCallBack = (err) => {
         setTimeout(() => {
