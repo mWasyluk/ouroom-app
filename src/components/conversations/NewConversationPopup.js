@@ -49,7 +49,7 @@ const NewConversationPopup = (props) => {
             return;
         }
 
-        window.location.reload();
+        dismissPopup();
     }
 
     const header = (

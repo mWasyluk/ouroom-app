@@ -10,7 +10,8 @@ export default class WebSocketConnection extends React.Component {
         super(props)
         this.state = {
             topicId: props.topicId,
-            subscriptionCallback: props.subscriptionCallback,
+            subscriptionMessageCallback: props.subscriptionMessageCallback,
+            subscriptionConversationCallback: props.subscriptionConversationCallback,
             statusChangeCallback: props.statusChangeCallback
         }
     }
@@ -34,8 +35,12 @@ export default class WebSocketConnection extends React.Component {
     stompOnConnectCallBack = () => {
         this.state.statusChangeCallback(true)
         this.stompClient.subscribe(
-            '/topic/' + this.state.topicId,
-            (message) => this.state.subscriptionCallback(message)
+            '/topic/messages/' + this.state.topicId,
+            (message) => this.state.subscriptionMessageCallback(message)
+        );
+        this.stompClient.subscribe(
+            '/topic/conversations/' + this.state.topicId,
+            (conversation) => this.state.subscriptionConversationCallback(conversation)
         );
     }
 

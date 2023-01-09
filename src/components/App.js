@@ -5,11 +5,11 @@ import Chat from './chat/Chat';
 import Conversation from '../models/Conversation';
 import ConversationService from '../services/ConversationService';
 import ConversationsList from './conversations/ConversationsList';
+import { IoArrowBackOutline } from 'react-icons/io5'
 import Message from '../models/Message';
 import React from 'react';
 import WebSocketConnection from '../utils/websocket.js';
 import { isMobileScreen } from '../utils/window-size-utils.js';
-import { IoArrowBackOutline } from 'react-icons/io5'
 
 export default class App extends React.Component {
     constructor(props) {
@@ -45,7 +45,7 @@ export default class App extends React.Component {
         this.setState({ conversations: conversations });
     }
 
-    subsciptionCallback = (plainMessage) => {
+    subscriptionMessageCallback = (plainMessage) => {
         let message = new Message(JSON.parse(plainMessage.body))
 
         const toUpdate = this.state.conversations.filter((conv) => conv.id === message.conversationId)[0];
@@ -56,6 +56,20 @@ export default class App extends React.Component {
         else {
             toUpdate.messages.unshift(message);
             this.updateConversation(toUpdate);
+        }
+    }
+
+    subscriptionConversationCallback = (plainConversation) => {
+        let conversation = new Conversation(JSON.parse(plainConversation.body))
+
+        if (!conversation) {
+            console.warn("Received an invalid conversation from the subscription.")
+            return;
+        }
+        else {
+            const conversations = this.state.conversations;
+            conversations.unshift(conversation);
+            this.setState({ conversations: conversations });
         }
     }
 
@@ -91,7 +105,7 @@ export default class App extends React.Component {
     render() {
         return (
             <div className="logged" style={this.props.styles}>
-                <WebSocketConnection topicId={this.state.user.profile.id} subscriptionCallback={this.subsciptionCallback.bind(this)} statusChangeCallback={this.connectionStatusChangeCallback.bind(this)} />
+                <WebSocketConnection topicId={this.state.user.profile.id} subscriptionMessageCallback={this.subscriptionMessageCallback.bind(this)} subscriptionConversationCallback={this.subscriptionConversationCallback.bind(this)} statusChangeCallback={this.connectionStatusChangeCallback.bind(this)} />
                 {!this.state.isConversationsListHiden && <ConversationsList user={this.state.user} conversations={this.state.conversations} select={this.handleConversationSelection.bind(this)} />}
                 {this.state.targetConversation ?
                     <Chat user={this.state.user} conversation={this.state.targetConversation} updateConversation={this.updateConversation.bind(this)}></Chat> :
@@ -101,3 +115,4 @@ export default class App extends React.Component {
         )
     }
 }
+
