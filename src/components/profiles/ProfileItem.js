@@ -10,7 +10,7 @@ const ProfileItem = (props) => {
     return (
         <li key={profile.id} id={profile.id} className='profile-item' onClick={onClick}>
             <div className="profile-details">
-                <img className="profile-avatar" src={profile.avatar.imageUrl}></img>
+                <img alt='Profile avatar' className="profile-avatar" src={profile.avatar.imageUrl}></img>
                 {profile.firstName + " " + profile.lastName}
             </div>
             <i className="item-icon" style={{ color: icon.color }}>{icon.iconElement}</i>

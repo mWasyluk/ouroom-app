@@ -1,9 +1,8 @@
 import React from 'react';
 import SockJS from 'sockjs-client'
 import { Stomp } from '@stomp/stompjs'
-import { apiUrl } from './server-info';
 
-const serverUrl = apiUrl + '/ouroom';
+const handshakeEndpoint = '/ouroom';
 
 // TODO: refactor to custom hook returning connection status and callbacks for messages
 export default class WebSocketConnection extends React.Component {
@@ -22,7 +21,7 @@ export default class WebSocketConnection extends React.Component {
     }
 
     connectStomp = () => {
-        this.stompClient = Stomp.over(() => new SockJS(serverUrl));
+        this.stompClient = Stomp.over(() => new SockJS(handshakeEndpoint));
         this.stompClient.debug = () => { }
 
         this.stompClient.connect(

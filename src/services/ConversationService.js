@@ -1,7 +1,6 @@
 import AuthService from "./AuthService";
 import Conversation from "../models/Conversation";
 import Message from "../models/Message";
-import { apiUrl } from "../utils/server-info";
 import axios from "axios";
 
 const ConversationService = {
@@ -51,7 +50,7 @@ const config = {
 
 async function requestCreation(participators = {}) {
     return await axios.post(
-        apiUrl + '/conversations/create',
+        '/conversations/create',
         participators,
         config
     ).catch(err => {
@@ -61,7 +60,7 @@ async function requestCreation(participators = {}) {
 
 async function requestGetConversations() {
     const response = await axios.get(
-        apiUrl + '/conversations',
+        '/conversations',
         config
     ).catch(err => {
         return { response: { status: 400 } }
@@ -71,7 +70,7 @@ async function requestGetConversations() {
 
 async function requestSendConversationMessage(conversationId, message = {}) {
     let response = await axios.post(
-        apiUrl + '/messages/send/conversation/' + conversationId,
+        '/messages/send/conversation/' + conversationId,
         message,
         config
     ).catch(err => {
@@ -82,7 +81,7 @@ async function requestSendConversationMessage(conversationId, message = {}) {
 
 async function requestGetConversationMessages(conversationId, page = 0) {
     let response = await axios.get(
-        apiUrl + '/messages/conversation/' + conversationId + '?page=' + page,
+        '/messages/conversation/' + conversationId + '?page=' + page,
         config
     ).catch(err => {
         return { response: { status: 400, error: err } }

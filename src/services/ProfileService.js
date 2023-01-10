@@ -1,6 +1,5 @@
 import AuthService from "./AuthService"
 import Profile from "../models/Profile";
-import { apiUrl } from "../utils/server-info";
 import axios from "axios";
 import { baseAvatarsUrl } from "../utils/avatar-utils";
 
@@ -34,7 +33,7 @@ async function requestCreateProfile(profile) {
         }
     }
     return await axios.post(
-        apiUrl + '/profiles/create', profile, config).catch(err => {
+        '/profiles/create', profile, config).catch(err => {
             return { status: 400 }
         });
 }
@@ -51,7 +50,7 @@ async function requestProfilesByNamesPrefixes(prefixes = []) {
         }
     }
     return await axios.get(
-        apiUrl + '/profiles/search?q=' + prefixesQuery,
+        '/profiles/search?q=' + prefixesQuery,
         config).catch(err => {
             return { status: 400 }
         });

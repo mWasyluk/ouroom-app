@@ -1,6 +1,4 @@
-import { apiUrl } from "./server-info";
-
-export const baseAvatarsUrl = apiUrl + "/images/avatars"
+export const baseAvatarsUrl = "/images/avatars"
 export const supportedAvatarTypes = ['image/jpeg', 'image/png']
 export const supportedAvatarExtensionsAsString = '.png, .jpg, .jpeg, .jpe .jif, .jfif, .jfi'
 export const maxAvatarSizeInKB = 300;

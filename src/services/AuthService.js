@@ -1,7 +1,6 @@
 import Account from "../models/Account";
 import AuthDetails from "../models/AuthDetails";
 import StorageService from "./StorageService";
-import { apiUrl } from "../utils/server-info";
 import axios from 'axios'
 
 const AuthService = {
@@ -55,7 +54,7 @@ async function requestAuthentiaction(token) {
         }
     }
     return await axios.get(
-        apiUrl + '/accounts', config).catch(err => {
+        '/accounts', config).catch(err => {
             return { status: 400 }
         });
 }
@@ -67,7 +66,7 @@ async function requestRegistration({ email, password }) {
         }
     }
     return await axios.post(
-        apiUrl + '/accounts/register', { email, password }, config).catch(err => {
+        '/accounts/register', { email, password }, config).catch(err => {
             return { status: 400 }
         });
 }

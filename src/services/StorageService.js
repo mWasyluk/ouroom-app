@@ -1,5 +1,4 @@
 import Cookie from 'universal-cookie'
-import { hostname } from '../utils/server-info';
 
 const cookie = new Cookie();
 const authTokenCookieName = 'auth-token';
@@ -8,7 +7,7 @@ const cookieExpirationTimeInSeconds = 3600 * 24 * 7; // 1 week
 const StorageService = {
     setAuthToken(token, rememberMe) {
         let options = {
-            domain: hostname,
+            domain: window.location.hostname,
             sameSite: 'strict'
         }
 

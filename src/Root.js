@@ -7,11 +7,11 @@ import Account from './models/Account';
 import App from './components/App';
 import AuthService from './services/AuthService';
 import AuthSwitch from './components/auth/AuthSwitch'
+import { CgMenuGridR } from 'react-icons/cg';
 import Header from './components/Header';
 import Menu from './components/menu/Menu';
 import ProfileForm from './components/auth/ProfileForm';
 import { useWindowDimensions } from './utils/window-size-utils';
-import { CgMenuGridR } from 'react-icons/cg';
 
 export const appTitle = 'OuRoom'
 document.title = appTitle;
@@ -87,7 +87,7 @@ function Root() {
     }
 
     checkUserAndSetView()
-  }, [user, userStatus, isMenuInvoked, headerIcon,]);
+  }, [user, userStatus, isMenuInvoked, headerIcon, onHeaderIconClick]);
 
   return (
     <div className="root" style={{
