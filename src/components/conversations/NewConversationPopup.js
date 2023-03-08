@@ -4,7 +4,9 @@ import { FaMinusCircle, FaPlusCircle } from 'react-icons/fa'
 
 import ConversationService from "../../services/ConversationService";
 import InputDropdown from "../profiles/InputDropdown";
-import PopupService from "../../services/popup-service/PopupService";
+import ModalPortal from '../modals/ModalPortal';
+import { ModalPositions } from '../modals/ModalPortal';
+import ModalUtils from '../../utils/ModalUtils';
 import ProfilesList from "../profiles/ProfilesList";
 import { useState } from "react";
 
@@ -17,7 +19,7 @@ const NewConversationPopup = (props) => {
         userId = ''
     } = props;
 
-    const [selectedProfiles, setSelectedProfiles] = useState([])
+    const [selectedProfiles, setSelectedProfiles] = useState([]);
 
     const selectProfile = (profile) => {
         setSelectedProfiles([...selectedProfiles, profile]);
@@ -38,14 +40,18 @@ const NewConversationPopup = (props) => {
 
         let selectedProfilesIds = selectedProfiles.map(profile => { return { id: profile.id } });
         if (selectedProfilesIds.length <= 0) {
-            PopupService.invokeErrorMessage('Przed utworzeniem konwersacji należy wybrać co najmniej jedego uczestnika.');
+            ModalUtils.pushSimpleInfoTopModal(
+                <span>przed utworzeniem konwersacji <strong style={{ color: 'firebrick' }}>należy wybrać co najmniej jedego uczestnika.</strong></span>
+            );
             return;
         }
 
         selectedProfilesIds.push({ id: userId })
         const response = await ConversationService.createConversation(selectedProfilesIds);
         if (response === null) {
-            PopupService.invokeErrorMessage('Konwersacja ze wskazanymi uczestnikami już istnieje.')
+            ModalUtils.pushSimpleInfoTopModal(
+                <span>konwersacja ze wskazanymi uczestnikami już istnieje.</span>
+            );
             return;
         }
 
@@ -69,14 +75,14 @@ const NewConversationPopup = (props) => {
     )
 
     return (
-        PopupService.centerPopup(
+        <ModalPortal id={'new-conversation-modal'} onBgClick={dismissPopup} position={ModalPositions.CENTER}>
             <div className='new-conversation-popup'>
                 {header}
                 {inputDropdown}
                 {selectedProfilesView}
                 {button}
-            </div>,
-            dismissPopup)
+            </div>
+        </ModalPortal>
     )
 }
 

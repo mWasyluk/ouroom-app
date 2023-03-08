@@ -2,7 +2,7 @@ import { maxAvatarSize, maxAvatarSizeInKB, supportedAvatarExtensionsAsString, su
 
 import DefaultAvatar from '../../assets/default-avatar.png'
 import { FaPencilAlt } from 'react-icons/fa'
-import PopupService from '../../services/popup-service/PopupService';
+import ModalUtils from '../../utils/ModalUtils';
 import { useState } from 'react'
 
 const editFileIcon = <FaPencilAlt></FaPencilAlt>;
@@ -12,17 +12,21 @@ const AvatarSelector = (props) => {
     const {
         selectFile = () => { }
     } = props
-    const [src, setSrc] = useState(DefaultAvatar)
+    const [src, setSrc] = useState(DefaultAvatar);
 
     const handleInputChange = (e) => {
         const file = e.target.files[0];
         if (!supportedAvatarTypes.includes(file.type)) {
-            PopupService.invokeErrorMessage('Format wybranego przez Ciebie pliku nie jest aktualnie wspierany. Obsługiwane formaty to: ' + supportedAvatarExtensionsAsString + '.')
+            ModalUtils.pushSimpleInfoTopModal(
+                <span>format wybranego przez Ciebie pliku nie jest aktualnie wspierany. Obsługiwane formaty to: <strong style={{ color: 'firebrick' }}>{supportedAvatarExtensionsAsString}.</strong></span>
+            );
             return;
         }
 
         if (file.size > maxAvatarSize) {
-            PopupService.invokeErrorMessage('Wybrany przez Ciebie plik jest za duży. Wybierz obraz, który ma rozmiar nie większy niż ' + maxAvatarSizeInKB + 'KB.')
+            ModalUtils.pushSimpleInfoTopModal(
+                <span>wybrany przez Ciebie plik jest za duży. Wybierz obraz, który ma <strong style={{ color: 'firebrick' }}>rozmiar nie większy niż {maxAvatarSizeInKB} KB.</strong></span>
+            );
             return;
         }
 

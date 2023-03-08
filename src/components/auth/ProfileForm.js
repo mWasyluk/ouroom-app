@@ -3,7 +3,7 @@ import '../../styles/our-styles.css'
 import AuthScreen from "./AuthScreen";
 import AuthService from '../../services/AuthService';
 import AvatarSelector from "./AvatarSelector";
-import PopupService from '../../services/popup-service/PopupService';
+import ModalUtils from '../../utils/ModalUtils';
 import ProfileDetails from "../../models/ProfileDetails";
 import ProfileService from '../../services/ProfileService';
 import { appTitle } from "../../Root";
@@ -24,12 +24,16 @@ const ProfileForm = (props) => {
 
         let profileDetails = new ProfileDetails({ firstName, lastName, birthDate });
         if (!profileDetails.isValid()) {
-            PopupService.invokeErrorMessage('Wprowadzone przez Ciebie dane są niezgodne z kryteriami. Wprowadź poprawne dane i spróbuj ponownie.')
+            ModalUtils.pushSimpleInfoTopModal(
+                <span>wprowadzone przez Ciebie <strong style={{ color: 'firebrick' }}>dane są niezgodne z kryteriami.</strong> Popraw zaznaczone pola i spróbuj ponownie.</span>
+            );
             return;
         }
         let profileResponse = await ProfileService.createProfile(profileDetails);
         if (!profileResponse) {
-            PopupService.invokeErrorMessage('Niestety, nie udało nam się zapisać Twojego profilu. Odśwież stronę i spróbuj ponownie.')
+            ModalUtils.pushSimpleInfoTopModal(
+                <span><strong style={{ color: 'firebrick' }}>nie udało nam się zapisać Twojego profilu.</strong> Odśwież stronę i spróbuj ponownie.</span>
+            );
             return;
         }
 
@@ -37,9 +41,11 @@ const ProfileForm = (props) => {
             const uploadResult = await uploadAvatar(avatarFile);
             if (uploadResult) {
                 setUser(uploadResult);
-            } else (
-                PopupService.invokeWarningMessage('Niestety, nie udało nam się zapisać Twojego avatara. Możesz zmienić domyślny obraz w dowolnym momencie w ustawieniach profilu.')
-            )
+            } else {
+                ModalUtils.pushSimpleInfoTopModal(
+                    <span><strong style={{ color: 'firebrick' }}>nie udało nam się zapisać Twojego avatara.</strong> Możesz zmienić domyślny obraz w dowolnym momencie w ustawieniach profilu.</span>
+                );
+            }
         }
 
         setUser(profileResponse);
