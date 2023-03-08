@@ -54,7 +54,7 @@ async function requestAuthentiaction(token) {
         }
     }
     return await axios.get(
-        'api/accounts', config).catch(err => {
+        '/api/accounts', config).catch(err => {
             return { status: 400 }
         });
 }
@@ -66,7 +66,7 @@ async function requestRegistration({ email, password }) {
         }
     }
     return await axios.post(
-        'api/accounts/register', { email, password }, config).catch(err => {
+        '/api/accounts/register', { email, password }, config).catch(err => {
             return { status: 400 }
         });
 }

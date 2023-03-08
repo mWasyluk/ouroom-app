@@ -33,7 +33,7 @@ async function requestCreateProfile(profile) {
         }
     }
     return await axios.post(
-        'api/profiles/create', profile, config).catch(err => {
+        '/api/profiles/create', profile, config).catch(err => {
             return { status: 400 }
         });
 }
@@ -50,7 +50,7 @@ async function requestProfilesByNamesPrefixes(prefixes = []) {
         }
     }
     return await axios.get(
-        'api/profiles/search?q=' + prefixesQuery,
+        '/api/profiles/search?q=' + prefixesQuery,
         config).catch(err => {
             return { status: 400 }
         });

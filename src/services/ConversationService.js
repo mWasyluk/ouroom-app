@@ -50,7 +50,7 @@ const config = {
 
 async function requestCreation(participators = {}) {
     return await axios.post(
-        'api/conversations/create',
+        '/api/conversations/create',
         participators,
         config
     ).catch(err => {
@@ -60,7 +60,7 @@ async function requestCreation(participators = {}) {
 
 async function requestGetConversations() {
     const response = await axios.get(
-        'api/conversations',
+        '/api/conversations',
         config
     ).catch(err => {
         return { response: { status: 400 } }
@@ -70,7 +70,7 @@ async function requestGetConversations() {
 
 async function requestSendConversationMessage(conversationId, message = {}) {
     let response = await axios.post(
-        'api/messages/send/conversation/' + conversationId,
+        '/api/messages/send/conversation/' + conversationId,
         message,
         config
     ).catch(err => {
@@ -81,7 +81,7 @@ async function requestSendConversationMessage(conversationId, message = {}) {
 
 async function requestGetConversationMessages(conversationId, page = 0) {
     let response = await axios.get(
-        'api/messages/conversation/' + conversationId + '?page=' + page,
+        '/api/messages/conversation/' + conversationId + '?page=' + page,
         config
     ).catch(err => {
         return { response: { status: 400, error: err } }
