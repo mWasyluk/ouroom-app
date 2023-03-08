@@ -50,11 +50,6 @@ const InputDropdown = (props) => {
     }, [selectedProfiles])
 
     useEffect(() => {
-        const noHiden = foundProfiles.filter(profile => !idsToHide.includes(profile.id));
-        setFoundProfiles(noHiden);
-    }, [idsToHide])
-
-    useEffect(() => {
         if (foundProfiles.length > 0 && document.activeElement.id === 'profile-input') {
             setDisplayDropdown(true);
         } else {
@@ -66,13 +61,14 @@ const InputDropdown = (props) => {
         async function fetchProfiles() {
             const searchResult = await ProfileService.searchProfilesByNamesPrefixes(searchPrefixes);
             const profilesToDisplay = searchResult.filter(profile => !idsToHide.includes(profile.id))
-            setFoundProfiles(profilesToDisplay);
+            const noHiden = profilesToDisplay.filter(profile => !idsToHide.includes(profile.id));
+            setFoundProfiles(noHiden);
         }
         if (searchPrefixes[0] !== '' || searchPrefixes[1] !== '')
             fetchProfiles();
         else
             setFoundProfiles([])
-    }, [searchPrefixes])
+    }, [searchPrefixes, idsToHide])
 
     const onClickBg = (e) => {
         e.stopPropagation()
