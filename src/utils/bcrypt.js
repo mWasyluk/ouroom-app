@@ -1,9 +1,9 @@
 import bcryptjs from 'bcryptjs';
 
-const bcrypt = {
+const Bcrypt = {
     hash(value) {
         return bcryptjs.hashSync(value, 12);
     },
 }
 
-export default bcrypt;
+export default Bcrypt;

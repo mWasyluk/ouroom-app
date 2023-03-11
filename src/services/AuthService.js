@@ -1,21 +1,19 @@
 import Account from "../models/Account";
-import AuthDetails from "../models/AuthDetails";
+import { Base64 } from "js-base64";
+import Bcrypt from '../utils/bcrypt'
 import StorageService from "./StorageService";
 import axios from 'axios'
 
 const AuthService = {
-    async login({ email, password } = {}, rememberMe = false) {
-        const details = new AuthDetails({ email, password })
-        if (details.isValid()) {
-            const toEncode = details.email + ':' + details.password;
-            const encodedDetails = window.btoa(toEncode);
-            const authToken = 'Basic ' + encodedDetails;
+    async login(details, rememberMe = false) {
+        const toEncode = details.email + ':' + details.password;
+        const encodedDetails = Base64.encode(toEncode);
+        const authToken = 'Basic ' + encodedDetails;
 
-            let response = await requestAuthentiaction(authToken);
-            if (response.status === 200) {
-                StorageService.setAuthToken(authToken, rememberMe);
-                return new Account(response.data.body);
-            }
+        let response = await requestAuthentiaction(authToken);
+        if (response.status === 200) {
+            StorageService.setAuthToken(authToken, rememberMe);
+            return new Account(response.data.body);
         }
         return null;
     },
@@ -32,7 +30,8 @@ const AuthService = {
         StorageService.removeAuthToken();
     },
     async register({ email, password }) {
-        const response = await requestRegistration({ email, password })
+        const hashedPassword = Bcrypt.hash(password);
+        const response = await requestRegistration({ email, password: hashedPassword })
         if (response.status === 201) {
             return new Account(response.data.body);
         }
