@@ -57,7 +57,10 @@
 .center-band .center-group .auth-form {
     display: flex;
     flex-direction: column;
-    row-gap: var(--row-gap);
+}
+
+.center-band .center-group .auth-form>* {
+    margin-top: var(--row-gap);
 }
 
 /* ========================================== */

@@ -1,6 +1,7 @@
-import AuthDetails from '../../models/AuthDetails';
 import AuthScreen from './AuthScreen';
 import AuthService from '../../services/AuthService';
+import FormInputItem from './FormInputItem';
+import { InputValidationMessages } from '../../data/string-values';
 import ModalUtils from '../../utils/ModalUtils';
 import React from 'react'
 import { appTitle } from '../../Root';
@@ -12,29 +13,38 @@ const LoginForm = (props) => {
     } = props;
 
     const [rememberMe, setRememberMe] = useState(false);
+    const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const email = e.target.email.value;
+        const password = e.target.password.value;
 
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+        if (!areInputsValid(email, password)) return;
 
-        const details = new AuthDetails({ email: email, password: password })
-        if (!details.isValid()) {
-            ModalUtils.pushSimpleInfoTopModal(
-                <span>wprowadzone przez Ciebie <strong style={{ color: 'firebrick' }}>dane są niezgodne z kryteriami</strong>. Popraw zaznaczone pola i spróbuj ponownie.</span>
-            );
-            return;
-        }
-        let auth = await AuthService.login(details, rememberMe);
+        let auth = await AuthService.login({ email, password }, rememberMe);
         if (auth === null) {
             ModalUtils.pushSimpleInfoTopModal(
                 <span><strong style={{ color: 'firebrick' }}>nie udało nam się odnaleźć takiego konta</strong>. Upewnij się, że wprowadzone dane są prawidłowe i spróbuj ponownie.</span>
             );
-            document.getElementById('password').value = '';
-        } else {
-            window.location.reload();
+            return;
         }
+
+        window.location.reload();
+    }
+
+    const areInputsValid = (email, password) => {
+        let isValid = true;
+        if (!email) {
+            setEmailError(InputValidationMessages.blankValueMessage);
+            isValid = false;
+        }
+        if (!password) {
+            setPasswordError(InputValidationMessages.blankValueMessage);
+            isValid = false;
+        }
+        return isValid;
     }
 
     const handleRememberMe = () => {
@@ -49,8 +59,11 @@ const LoginForm = (props) => {
                 </span>}
             center={
                 <form className='auth-form' onSubmit={handleSubmit}>
-                    <input className='our-input' type="text" name="email" id="email" placeholder="E-mail..." />
-                    <input className='our-input' type="password" name="password" id="password" placeholder="Hasło..." />
+                    <FormInputItem name={'email'} placeholder={'E-mail...'}
+                        errorMessage={emailError} clearError={() => setEmailError('')} />
+                    <FormInputItem name={'password'} type={'password'} placeholder={'Hasło...'}
+                        errorMessage={passwordError} clearError={() => setPasswordError('')} />
+
                     <label className='our-selectable-text' id='remember-me'> <input type="checkbox" checked={rememberMe} onChange={handleRememberMe} /> Zapamiętaj mnie </label>
                     <button className="our-button" type='submit' id="submit">Zaloguj się</button>
                 </form>}

@@ -1,8 +1,11 @@
+import React, { useState } from 'react'
+
 import AuthScreen from './AuthScreen';
 import AuthService from '../../services/AuthService';
+import FormInputItem from './FormInputItem';
+import { InputValidationMessages } from '../../data/string-values';
 import ModalUtils from '../../utils/ModalUtils';
-import React from 'react'
-import RegistrationDetails from '../../models/RegistrationDetails';
+import ValidationUtils from '../../utils/ValidationUtils';
 import { appTitle } from '../../Root';
 
 const RegisterForm = (props) => {
@@ -10,21 +13,19 @@ const RegisterForm = (props) => {
         switchView = () => { }
     } = props;
 
+    const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [passwordRepetitionError, setPasswordRepetitionError] = useState('');
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const email = document.getElementById('registration-email').value.trim();
-        const password = document.getElementById('registration-password').value;
-        const passwordRepeat = document.getElementById('registration-password-repeat').value;
+        const email = e.target.email.value.trim();
+        const password = e.target.password.value;
+        const passwordRepetition = e.target.passwordRepetition.value;
 
-        let registrationDetails = new RegistrationDetails({ email, password, passwordRepeat });
-        if (!registrationDetails.isValid()) {
-            ModalUtils.pushSimpleInfoTopModal(
-                <span>wprowadzone przez Ciebie <strong style={{ color: 'firebrick' }}>dane są niezgodne z kryteriami.</strong> Popraw zaznaczone pola i spróbuj ponownie.</span>
-            );
-            return;
-        }
+        if (!areInputsValid(email, password, passwordRepetition)) return;
 
-        let auth = await AuthService.register({ email: registrationDetails.email, password: registrationDetails.encodedPassword })
+        let auth = await AuthService.register({ email, password })
         if (auth === null) {
             ModalUtils.pushSimpleInfoTopModal(
                 <span><strong style={{ color: 'firebrick' }}>konto o takim adresie e-mail już istnieje</strong>. Wprowadź inny adres e-mail lub przejdź do okna logowania.</span>
@@ -35,15 +36,52 @@ const RegisterForm = (props) => {
         window.location.reload();
     }
 
+    const areInputsValid = (email, password, passwordRepetition) => {
+        let isValid = true;
+
+        if (password !== passwordRepetition) {
+            setPasswordRepetitionError(InputValidationMessages.varyPasswords);
+            isValid = false;
+        }
+
+        if (!ValidationUtils.validateEmail(email)) {
+            setEmailError(InputValidationMessages.invalidEmail);
+            isValid = false;
+        }
+        if (!ValidationUtils.validatePassword(password)) {
+            setPasswordError(InputValidationMessages.invalidPassword);
+            isValid = false;
+        }
+
+        if (!email) {
+            setEmailError(InputValidationMessages.blankValue);
+            isValid = false;
+        }
+        if (!password) {
+            setPasswordError(InputValidationMessages.blankValue);
+            isValid = false;
+        }
+        if (!passwordRepetition) {
+            setPasswordRepetitionError(InputValidationMessages.blankValue);
+            isValid = false;
+        }
+        return isValid;
+    }
+
     return (
         <AuthScreen
             header={<span>Zarejestruj się w <strong className='app-title'>{appTitle}!</strong></span>}
             center={
                 <form className='auth-form' onSubmit={handleSubmit}>
-                    <input className='our-input' type="text" name="registration-email" id="registration-email" placeholder="E-mail..." />
-                    <input className='our-input' type="password" name="registration-password" id="registration-password" placeholder="Hasło..." />
-                    <input className='our-input' type="password" name="registration-password-repeat" id="registration-password-repeat" placeholder="Potwierdź hasło..." />
-                    <button className='our-button' type='submit' id="submit">Zarejestruj się</button>
+                    <FormInputItem name={'email'} placeholder={'E-mail...'}
+                        errorMessage={emailError} clearError={() => setEmailError('')} />
+                    <FormInputItem name={'password'} placeholder={'Hasło...'}
+                        errorMessage={passwordError} clearError={() => { setPasswordError(''); setPasswordRepetitionError('') }}
+                        type={'password'} />
+                    <FormInputItem name={'passwordRepetition'} placeholder={'Potwierdź hasło...'}
+                        errorMessage={passwordRepetitionError} clearError={() => { setPasswordRepetitionError('') }}
+                        type={'password'} />
+                    <button className='our-button' type='submit'>Zarejestruj się</button>
                 </form>}
             footer={<span>
                 Masz już konto? <strong onClick={switchView} className='our-text-button'>Zaloguj się</strong>
