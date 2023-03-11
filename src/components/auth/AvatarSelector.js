@@ -43,7 +43,6 @@ const AvatarSelector = (props) => {
 
             <label htmlFor="avatar-input" id='avatar-label' className="avatar-image">
                 <img alt='Avatar preview' src={src}></img>
-
                 <i className="avatar-image-cover">
                     {editFileIcon}
                 </i>
