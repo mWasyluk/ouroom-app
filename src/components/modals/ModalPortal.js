@@ -26,7 +26,7 @@ export default function ModalPortal({
     position = ModalPositions.TOP,
     onBgClick = () => { },
     onFgClick = () => { },
-    onKeyDown = () => { },
+    onKeyDown,
     style = {},
     children,
 }) {
@@ -61,6 +61,8 @@ export default function ModalPortal({
     }, [id])
 
     useEffect(() => {
+        if (!onKeyDown) return;
+
         const handleKeyDown = e => {
             e.preventDefault();
             onKeyDown(e.key);
