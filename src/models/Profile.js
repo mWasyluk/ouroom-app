@@ -1,12 +1,15 @@
 import { getAvatarImageUrlById, getDefaultAvatarImageUrl } from '../utils/avatar-utils';
 
+import { assert } from 'utils/assertion-utils';
+
 export default class Profile {
-    constructor({ id, avatar, lastName, firstName } = {}) {
+    constructor({ id, avatar, lastName, firstName }) {
+        assert(id && lastName && firstName, "The Profile model cannot be initialized without an ID, first name or last name")
+
         this.id = id;
-        if (avatar && avatar.id)
-            this.avatar = { id: avatar.id, imageUrl: getAvatarImageUrlById(avatar.id) }
-        else
-            this.avatar = { imageUrl: getDefaultAvatarImageUrl() }
+        this.avatar = avatar?.id
+            ? { id: avatar.id, imageUrl: getAvatarImageUrlById(avatar.id) }
+            : { imageUrl: getDefaultAvatarImageUrl() }
         this.lastName = lastName;
         this.firstName = firstName;
     }

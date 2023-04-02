@@ -1,44 +1,48 @@
+import Message from "./Message";
 import Profile from "./Profile";
-import avatar from "../assets/wip-conversation.png"
+import { assert } from "utils/assertion-utils";
+import avatar from "../assets/wip-conversation.png";
+import { generateUuid } from "utils/uuid-utils";
 
 export default class Conversation {
-    constructor(conversation) {
-        this.id = conversation.id;
-        this.participators = conversation.participators.map(part => new Profile(part));
-        this.name = this.#getNameByParticipators(conversation.participators);
+    constructor({ id, participators, messages }) {
+        assert(id && participators.length, "The Conversation model cannot be initialized without an ID or participants array")
+
+        this.id = id;
+        this.participators = participators.map(part => new Profile(part));
+        this.name = this.#getNameByParticipators(participators);
         this.avatarUrl = avatar;
-        conversation.messages ?
-            this.messages = conversation.messages :
-            this.messages = [];
+        this.messages = messages?.map(m => m instanceof Message ? m : new Message(m)) || [];
     }
 
     #getNameByParticipators = function (participators = []) {
-        let name = '';
-
-        for (let i = 0; i < participators.length - 1; i++) {
-            name += participators[i].firstName + ', ';
+        function isLastOne(p) {
+            return participators.indexOf(p) === participators.length - 1;
         }
+        const name = participators.map(p => `${p.firstName}${isLastOne(p) ? '' : ', '}`)
 
-        name += participators[participators.length - 1].firstName;
         return name;
     }
 
     get messagesGroups() {
-        let groups = []
-        if (this.participators.length && this.messages.length) {
-            let sender = {}
-            let groupMessages = []
-            for (const m of this.messages) {
-                const lastSender = sender;
-                sender = this.participators.filter(p => p.id === m.sender)[0];
-                if (groupMessages.length && lastSender !== sender) {
-                    groups.push({ sender: lastSender, messages: groupMessages })
-                    groupMessages = [];
-                }
-                groupMessages.unshift(m);
-            }
-            groups.push({ sender: sender, messages: groupMessages })
+        if (!this.messages.length) {
+            return [];
         }
-        return groups;
+
+        const result = this.messages.reduce((resultArray, message) => {
+            const lastGroup = resultArray && (resultArray[resultArray.length ? resultArray.length - 1 : 0]);
+            const currentMessageSender = this.participators.filter(p => p.id === message.sender)[0];
+            assert(currentMessageSender, 'Message group cannot be instantiated without a proper sender object');
+
+            if (!lastGroup || lastGroup.sender.id !== currentMessageSender.id) {
+                resultArray.push({ id: generateUuid(), sender: currentMessageSender, messages: [message] });
+            } else {
+                lastGroup.messages.unshift(message);
+            }
+
+            return resultArray;
+        }, [])
+
+        return result;
     }
 }

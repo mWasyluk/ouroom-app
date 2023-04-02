@@ -1,0 +1,40 @@
+.input-container {
+    display: flex;
+}
+
+#profile-input {
+    display: flex;
+    padding-left: 45px;
+    width: 100%;
+}
+
+.profile-list {
+    min-height: 100px;
+    height: 200px;
+}
+
+.profile-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-item .profile-details {
+    display: flex;
+    align-items: center;
+}
+
+.profile-item .item-icon {
+    display: inline-flex;
+    font-size: 1.4em;
+}
+
+.search-icon {
+    position: relative;
+    top: 0;
+}
+
+.search-icon>* {
+    position: fixed;
+    font-size: 2em;
+    left: 30px;
+}

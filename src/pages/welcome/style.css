@@ -1,0 +1,81 @@
+.welcome-page {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    row-gap: 30px;
+}
+
+.welcome-section,
+.cookies-section {
+    max-width: 800px;
+}
+
+.welcome-section {
+    display: flex;
+    flex-direction: row;
+
+    position: relative;
+    height: fit-content;
+    top: 0;
+}
+
+.welcome-section .image-con {
+    padding: 20px;
+    margin: auto;
+    height: fit-content;
+}
+
+.welcome-section .image-con img {
+    border-radius: 100%;
+    height: 200px;
+    width: 200px;
+}
+
+.welcome-section .text-con {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+    padding: 25px;
+    font-size: 0.86em;
+}
+
+.cookies-section {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    row-gap: 10px;
+}
+
+.cookies-section .text-con {}
+
+.cookies-section .consents-con {}
+
+.cookies-section .consents-con .consent {
+    display: flex;
+    margin: auto;
+    max-width: 400px;
+
+    font-size: 0.8em;
+}
+
+.cookies-section .confirm-con button {
+    margin: auto;
+    padding: 0;
+    width: 200px;
+    height: 30px;
+    font-size: 0.9em;
+}
+
+.footer {
+    margin-top: 20px;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    .welcome-section {
+        flex-direction: column;
+    }
+}

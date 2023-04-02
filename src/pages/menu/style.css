@@ -1,0 +1,49 @@
+.Menu {
+    margin: 20px 0;
+    padding: 20px;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    align-items: center;
+    overflow-y: auto;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.menu-item {
+    border-radius: 20px;
+    flex-grow: 1;
+    display: grid;
+    min-width: 250px;
+    width: 200px;
+    height: 200px;
+    align-items: center;
+    justify-items: center;
+    margin: 10px;
+
+    background-color: rgba(255, 255, 255, 0.5);
+    color: rgb(0, 36, 143);
+    border-color: rgba(0, 36, 143, 1);
+    border-width: 5px;
+    border-style: solid;
+    transition: .5s cubic-bezier(0.23, 1, 0.320, 1);
+    cursor: pointer;
+    box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.menu-item:hover {
+    transition: .5s cubic-bezier(0.23, 1, 0.320, 1);
+    transform: scale(1.05);
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.menu-item:active {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.icon {
+    width: 50%;
+    height: 80px;
+    justify-self: center;
+}

@@ -1,0 +1,61 @@
+.not-found {
+    height: 100%;
+    padding: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.not-found img {
+    width: 40vw;
+    min-width: 250px;
+    max-width: 350px;
+
+    margin: 0 20px 0 0;
+}
+
+.not-found .info {
+    display: flex;
+    flex-direction: column;
+
+    width: 90%;
+    max-width: fit-content;
+}
+
+.not-found .info h1,
+.not-found .info span {
+    width: fit-content;
+}
+
+.not-found .info h1 {
+    font-size: 1.6em;
+    font-weight: 500;
+}
+
+.not-found .info span {
+    font-size: 1.3em;
+    font-weight: 500;
+}
+
+.not-found .info button {
+    width: fit-content;
+    margin-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+@media screen and (max-width: 600px),
+(pointer: coarse) {
+    .not-found {
+        flex-direction: column;
+    }
+
+    .not-found img {
+        margin: 0 0 20px 0;
+    }
+
+    .not-found .info button {
+        align-self: center;
+    }
+}
