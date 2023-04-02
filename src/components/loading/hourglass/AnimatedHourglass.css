@@ -1,0 +1,72 @@
+@keyframes top-clip {
+    0% {}
+
+    50% {
+        transform: translateY(21px);
+    }
+
+    100% {
+        transform: translateY(21px);
+    }
+}
+
+@keyframes bottom-sand-path {
+    0% {}
+
+    50% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes bottom-sand-g {
+    0% {}
+
+    85% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-9px);
+    }
+}
+
+@keyframes hourglass-rotation {
+    50% {
+        transform: rotateZ(0);
+    }
+
+    100% {
+        transform: rotateZ(180deg);
+    }
+}
+
+
+.hourglass-container #top-sand #top-clip-path rect,
+.hourglass-container #bottom-sand path,
+.hourglass-container #bottom-sand g,
+.hourglass-container svg {
+    animation-duration: 5s;
+    animation-delay: 1s;
+    animation-iteration-count: infinite;
+}
+
+.hourglass-container #top-sand #top-clip-path rect {
+    animation-name: top-clip;
+}
+
+.hourglass-container #bottom-sand path {
+    transform: translateY(21px);
+    animation-name: bottom-sand-path;
+}
+
+.hourglass-container #bottom-sand g {
+    animation-name: bottom-sand-g;
+}
+
+.hourglass-container svg {
+    animation-name: hourglass-rotation;
+}

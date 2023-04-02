@@ -1,0 +1,59 @@
+.content-bar {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    column-gap: 5px;
+    padding: 5px;
+
+    background-color: rgb(0, 255, 207, 0.4);
+    border-top: 4px solid rgba(0, 0, 0, 0.4);
+}
+
+.content-bar input {
+    width: 100%;
+    font-size: 0.8em;
+}
+
+.content-bar button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 40px;
+    height: 40px;
+
+    background-color: rgba(0, 0, 0, 0.0);
+    border-radius: 20px;
+    border: 0;
+
+    transition: 0.2s ease-in-out;
+
+    cursor: pointer;
+}
+
+.content-bar button:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.content-bar button:active {
+    background-color: rgba(0, 0, 0, 0.2);
+
+}
+
+.content-bar button:disabled:hover {
+    background-color: initial;
+    cursor: default;
+}
+
+.content-bar button .button-icon {
+    color: white;
+    scale: 1.4;
+    transition: 0.2s ease-in-out;
+}
+
+.content-bar button:disabled .button-icon {
+    color: rgb(170, 170, 170);
+    scale: 1.4;
+}

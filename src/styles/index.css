@@ -1,10 +1,92 @@
-body {
-  margin: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+  font-size: 0.99em;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.2em;
+  overflow-x: hidden;
+}
+
+:root {
+  --app-height: 100%;
+}
+
+.animated-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-image: radial-gradient(circle, rgb(0, 156, 156) -50%, rgb(46, 82, 255) 100%);
+  background-size: 200% 200%;
+  animation: gradient 20s ease infinite;
+  z-index: -99;
+}
+
+.app {
+  background-color: rgba(240, 248, 255, 0);
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: column;
+
+  min-width: 320px;
+
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+  overflow-y: auto;
+
+  width: 100vw;
+  height: 100vh;
+}
+
+.app-content {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 50% -20%;
+  }
+
+  25% {
+    background-position: 120% 50%;
+  }
+
+  50% {
+    background-position: 50% 120%;
+  }
+
+  75% {
+    background-position: -20% 50%;
+  }
+
+  100% {
+    background-position: 50% -20%;
+  }
+}
+
+@media (pointer: coarse) {
+
+  .app .messages *,
+  .app .conversations-list {
+    font-size: 1.1em;
+  }
+
+  .app .messages .group-avatar {
+    scale: 1.1;
+    margin-top: 4px;
+  }
 }
