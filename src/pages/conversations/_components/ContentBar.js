@@ -10,6 +10,8 @@ import { useState } from 'react';
 function ContentBar({ targetConversationId }) {
     const { token } = useAuth();
     const [content, setContent] = useState('');
+    const canSendMessage = content ? true : false;
+    const sendButtonTitle = canSendMessage ? '' : 'Nie można wysłać pustej wiadomości'
 
     const submitMessageForm = (e) => {
         e.preventDefault();
@@ -26,7 +28,7 @@ function ContentBar({ targetConversationId }) {
         <form className='content-bar' onSubmit={submitMessageForm}>
             <button type='button'><BsEmojiLaughingFill className={'button-icon'} /></button>
             <input type={'text'} className={'our-input'} placeholder={'Treść wiadomości...'} value={content} onChange={(e) => setContent(e.target.value)}></input>
-            <button type='submit'><MdSend className='button-icon' /></button>
+            <button disabled={!canSendMessage} title={sendButtonTitle} type='submit'><MdSend className='button-icon' /></button>
         </form>
     )
 }
